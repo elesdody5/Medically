@@ -2,8 +2,8 @@ package com.medically.data.remote
 
 import com.medically.data.Result
 import com.medically.data.entity.ApiResponse
-import com.medically.data.entity.Subject
 import com.medically.data.remote.network.NetworkServices
+import com.medically.domain.model.Subject
 import javax.inject.Inject
 
 class RemoteDataSourceImp @Inject constructor(private val networkServices: NetworkServices) :
