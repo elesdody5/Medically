@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "proResult.ktject_number": "15068317615",
+    "firebase_url": "https://medrecord-783c6.firebaseio.com",
+    "project_id": "medrecord-783c6",
+    "storage_bucket": "medrecord-783c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15068317615:android:f85f4e8dc2bef4a2",
+        "android_client_info": {
+          "package_name": "com.medically"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "15068317615-vrombksgtpr2475fug64ppljgjv39ip2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medically",
+            "certificate_hash": "d661ef839997c6608b6b7cd78233b02e5a1a1145"
+          }
+        },
+        {
+          "client_id": "15068317615-78488lg9a3sd2ctbssmiof7ieplrio5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH6KCaaUxca_TfIE_UgqhPMHVxgUH0lps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "15068317615-78488lg9a3sd2ctbssmiof7ieplrio5g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "15068317615-hq23s3bnn5jkhri4ut4tt3pbrs11sof9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.medically"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-8079071584390185~3161849539"
+    }
+  ],
+  "configuration_version": "1"
+}
