@@ -1,4 +1,4 @@
-package com.medically.mediasession
+package com.medically.mediaservice
 
 import android.app.Notification
 import android.app.PendingIntent

@@ -29,4 +29,7 @@
     <string name="recommended_title">Recommended</string>
     <string name="albums_title">Albums</string>
     <string name="pause">Pause</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="duration_unknown">--:--</string>
+    <string name="duration_format">%d:%02d</string>
 </resources>
