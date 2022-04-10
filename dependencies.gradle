@@ -1,0 +1,28 @@
+ext.versions = [
+
+        kotlin            : '1.5.31',
+        coroutines        : '1.5.2',
+
+        appcompatx        : '1.4.1',
+        coil              : '2.0.0-rc02',
+        coreKtx           : '1.2.0',
+        supportAnnotations: '1.1.0',
+
+        dataStorePref     : '1.0.0',
+        compose           : '1.0.1',
+        pager             : "0.24.5-alpha",
+        navigation        : '2.4.1',
+        viewModel         : '2.4.1',
+        mockk             : '1.10.2',
+        gradle            : '7.1.2',
+        hilt              : '2.41',
+        archTesting       : '2.0.0',
+        testRunner        : '1.4.0',
+        junit             : '4.13.2'
+
+]
+
+ext.coroutines = [
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines",
+]
