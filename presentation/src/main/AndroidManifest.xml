@@ -2,4 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.medically.presentation">
 
+    <application>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label=""
+             />
+    </application>
+
 </manifest>

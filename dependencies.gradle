@@ -1,15 +1,15 @@
 ext.versions = [
 
-        kotlin            : '1.5.31',
+        kotlin            : '1.6.10',
         coroutines        : '1.5.2',
-
+        firebase          : '29.0.0',
         appcompatx        : '1.4.1',
         coil              : '2.0.0-rc02',
         coreKtx           : '1.2.0',
         supportAnnotations: '1.1.0',
 
         dataStorePref     : '1.0.0',
-        compose           : '1.0.1',
+        compose           : '1.1.1',
         pager             : "0.24.5-alpha",
         navigation        : '2.4.1',
         viewModel         : '2.4.1',
@@ -21,8 +21,40 @@ ext.versions = [
         junit             : '4.13.2'
 
 ]
-
+ext.kotlin = [
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin",
+        "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
+]
 ext.coroutines = [
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines",
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines",
+]
+// Import the BoM for the Firebase platform
+ext.firebase = "com.google.firebase:firebase-bom:$versions.firebase"
+
+
+ext.firebaseFireStore = [
+        // Declare the dependency for the Cloud Firestore library
+        // When using the BoM, you don't specify versions in Firebase library dependencies
+        'com.google.firebase:firebase-firestore-ktx',
+        'com.google.firebase:firebase-storage'
+]
+
+ext.firebaseCorutineKts = [
+        /* coroutines support for firebase operations */
+        'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
+]
+
+ext.compose = [
+        "androidx.compose.ui:ui:$versions.compose",
+        "androidx.compose.material:material:$versions.compose",
+        "androidx.compose.ui:ui-tooling-preview:$versions.compose",
+        "androidx.compose.ui:ui-tooling:$versions.compose",
+        "androidx.compose.material:material-icons-extended:$versions.compose",
+        "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.viewModel",
+        'com.google.android.material:material:1.5.0'
+]
+
+ext.coreKtx = [
+        "androidx.core:core-ktx:$versions.coreKtx"
 ]

@@ -2,6 +2,8 @@ package com.medically.core.years
 
 import com.medically.core.entities.BusinessRules
 import com.medically.core.integration.Data
+import com.medically.model.Result
+import com.medically.model.succeeded
 
 @BusinessRules
 fun YearsPort.searchSubject(subjectName: String) {
@@ -21,7 +23,8 @@ fun YearsPort.filterBySubject(subjectName: String) {
 }
 
 @BusinessRules
-suspend fun YearsPort.bindYears() {
-    years = Data.yearsRepositoryPort.getAllYears()
+suspend fun YearsPort.bindYears(yearsRepositoryPort: YearsRepositoryPort = Data.yearsRepositoryPort) {
+    val result = yearsRepositoryPort.getAllYears()
+    if (result is Result.Success) years = result.data ?: emptyList()
     filteredYears.value = years.toList()
 }

@@ -5,7 +5,7 @@ import com.medically.core.doctors.DoctorsRepositoryPort
 import com.medically.core.years.YearsRepositoryPort
 
 object Data {
-    var yearsRepositoryPort = object : YearsRepositoryPort {}
-    var doctorsRepository = object : DoctorsRepositoryPort {}
-    var chaptersRepository = object : ChaptersRepositoryPort {}
+    lateinit var yearsRepositoryPort: YearsRepositoryPort
+    lateinit var doctorsRepository: DoctorsRepositoryPort
+    lateinit var chaptersRepository: ChaptersRepositoryPort
 }

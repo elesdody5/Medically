@@ -12,7 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.medically.audioplayer.AudioPlayerScreen
-import com.medically.ui.theme.MedicallyTheme
+import com.medically.presentation.ui.theme.MedicallyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MedicallyApp() {
-    MedicallyTheme {
+    com.medically.presentation.ui.theme.MedicallyTheme {
         val allScreens = MedicallyScreens.values().toList()
         val navController = rememberNavController()
         val backstackEntry = navController.currentBackStackEntryAsState()

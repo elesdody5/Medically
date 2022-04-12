@@ -2,7 +2,7 @@ package com.medically.core.years
 
 
 import com.medically.core.entities.BusinessRule
-import com.medically.core.entities.Year
+import com.medically.model.Year
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface YearsPort {

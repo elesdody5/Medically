@@ -1,7 +1,7 @@
 package com.medically.core.doctors
 
 import com.medically.core.entities.BusinessRule
-import com.medically.core.entities.Doctor
+import com.medically.model.Doctor
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface DoctorsPort {

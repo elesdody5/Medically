@@ -1,7 +1,8 @@
 package com.medically.core.years
 
-import com.medically.core.entities.Year
+import com.medically.model.Year
+import com.medically.model.Result
 
 interface YearsRepositoryPort {
-    suspend fun getAllYears(): List<Year>
+    suspend fun getAllYears(): Result<List<Year>?>
 }
