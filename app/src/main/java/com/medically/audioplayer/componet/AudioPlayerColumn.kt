@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.medically.domain.model.Chapter
 import com.medically.domain.model.Lecture
-import com.medically.ui.theme.PrimaryColor
 import com.medically.utils.loadPicture
 
 @Composable
@@ -49,7 +49,7 @@ fun AudioPlayerColumn(
 
             Text(
                 text = lecture?.name ?: "",
-                style = TextStyle(color = PrimaryColor, fontWeight = FontWeight.Medium)
+                style = TextStyle(color = MaterialTheme.colors.primary, fontWeight = FontWeight.Medium)
             )
         }
     }

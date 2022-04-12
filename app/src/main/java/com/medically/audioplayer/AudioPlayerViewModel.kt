@@ -15,11 +15,8 @@ import com.medically.domain.model.NowPlayingMetadata
 import com.medically.extensions.*
 import com.medically.utils.timestampToMSS
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,18 +36,14 @@ class AudioPlayerViewModel
 
     private var playbackState: PlaybackStateCompat = EMPTY_PLAYBACK_STATE
 
-    private val playbackStateCollector = object : FlowCollector<PlaybackStateCompat> {
-        override suspend fun emit(value: PlaybackStateCompat) {
+    private val playbackStateCollector =
+        FlowCollector<PlaybackStateCompat> { value ->
             playbackState = value
             val metadata = musicServiceConnection.nowPlaying.value
             updateState(playbackState, metadata)
         }
-    }
-    private val mediaMetadataCollector = object : FlowCollector<MediaMetadataCompat> {
-        override suspend fun emit(value: MediaMetadataCompat) {
-            updateState(playbackState, value)
-        }
-    }
+    private val mediaMetadataCollector =
+        FlowCollector<MediaMetadataCompat> { value -> updateState(playbackState, value) }
 
     init {
         observeConnection()
@@ -59,8 +52,8 @@ class AudioPlayerViewModel
     private fun observeConnection() {
         viewModelScope.launch {
             launch { musicServiceConnection.playbackState.collect(playbackStateCollector) }
-            musicServiceConnection.nowPlaying.collect(mediaMetadataCollector)
-            checkPlaybackPosition()
+            launch { musicServiceConnection.nowPlaying.collect(mediaMetadataCollector) }
+            launch { checkPlaybackPosition() }
         }
     }
 
@@ -93,18 +86,18 @@ class AudioPlayerViewModel
      * to check the current playback position and updates the corresponding LiveData object when it
      * has changed.
      */
-    private fun checkPlaybackPosition() {
-        viewModelScope.launch {
-            withContext(Dispatchers.Default) {
-                delay(POSITION_UPDATE_INTERVAL_MILLIS)
-                val currPosition = playbackState.currentPlayBackPosition
-                if (mediaPosition != currPosition)
-                    mediaPosition = currPosition
-                if (updatePosition) {
-                    checkPlaybackPosition()
-                }
+    private suspend fun checkPlaybackPosition() {
+
+        withContext(Dispatchers.Default) {
+            delay(POSITION_UPDATE_INTERVAL_MILLIS)
+            val currPosition = playbackState.currentPlayBackPosition
+            if (mediaPosition != currPosition)
+                mediaPosition = currPosition
+            if (updatePosition) {
+                checkPlaybackPosition()
             }
         }
+
     }
 
     override fun onCleared() {

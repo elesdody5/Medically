@@ -6,7 +6,7 @@ import androidx.compose.material.icons.filled.PieChart
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
- * Screen metadata for Rally.
+ * Screen metadata for Medically.
  */
 enum class MedicallyScreens(
     val icon: ImageVector,
