@@ -38,4 +38,6 @@ dependencies {
     implementation platform ("$firebase")
     implementation firebaseFireStore
     implementation firebaseCorutineKts
+    testImplementation test
+    androidTestImplementation androidTest
 }

@@ -58,3 +58,12 @@ ext.compose = [
 ext.coreKtx = [
         "androidx.core:core-ktx:$versions.coreKtx"
 ]
+
+ext.test = [
+        'junit:junit:4.+'
+]
+
+ext.androidTest = [
+        'androidx.test.espresso:espresso-core:3.4.0',
+        'androidx.test.ext:junit:1.1.3'
+]

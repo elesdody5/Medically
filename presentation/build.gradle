@@ -58,4 +58,6 @@ dependencies {
     implementation coreKtx
     implementation compose
     implementation kotlin
+    testImplementation test
+    androidTestImplementation androidTest
 }

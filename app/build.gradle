@@ -35,7 +35,9 @@ android {
         jvmTarget = '1.8'
         useIR = true
     }
-
+    lintOptions {
+        abortOnError false
+    }
 
     compileOptions {
         sourceCompatibility java_version
