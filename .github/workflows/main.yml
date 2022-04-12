@@ -30,7 +30,12 @@ jobs:
         with:
       # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
            java-version: 1.8
-          
+      
+      
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+      
+
       - name: Build with gradle
         run : ./gradlew build
       
