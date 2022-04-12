@@ -7,7 +7,7 @@ import com.medically.remote.api.FirebaseImp
 import com.medically.remote.api.NetworkServices
 import java.lang.Exception
 
-class YearsRemoteDataSource(private val networkServices: NetworkServices = FirebaseImp()) :
+class YearsRemoteDataSourceImp(private val networkServices: NetworkServices = FirebaseImp()) :
     YearsRemoteDataSource {
     override suspend fun getAllYears(): Result<List<Year>?> {
         val response = networkServices.getAllYears()
