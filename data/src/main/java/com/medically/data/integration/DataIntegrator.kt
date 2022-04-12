@@ -1,10 +1,5 @@
 package com.medically.data.integration
 
-import com.medically.core.chapters.ChaptersRepositoryPort
-import com.medically.core.doctors.DoctorsRepositoryPort
-import com.medically.core.integration.Tracking
-import com.medically.core.years.YearsRepositoryPort
-import com.medically.core.tracking.Logger
 import com.medically.data.remote.YearsRemoteDataSource
 
 
