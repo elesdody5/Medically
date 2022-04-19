@@ -22,7 +22,7 @@ class FirebaseImp constructor(
             years.forEach { year ->
                 val collection = firebaseFirestore.collection(year).get().await()
                 val subjects = collection.documents.map {
-                    RemoteSubject(it.id, it.id)
+                    RemoteSubject(it.id, it.id, year)
                 }
                 remoteYears.add(RemoteYear(year, subjects))
             }
@@ -32,4 +32,21 @@ class FirebaseImp constructor(
         }
 
     }
+
+    override suspend fun getAllSubjects(): ApiResponse<List<Subject>> {
+        return try {
+            val remoteSubjects = mutableListOf<RemoteSubject>()
+            years.forEach { year ->
+                val collection = firebaseFirestore.collection(year).get().await()
+                collection.documents.forEach {
+                    remoteSubjects.add(RemoteSubject(it.id, it.id, year, it.getString("image")))
+                }
+            }
+            ApiResponse(data = remoteSubjects)
+        } catch (e: Exception) {
+            ApiResponse(e)
+        }
+
+    }
+
 }

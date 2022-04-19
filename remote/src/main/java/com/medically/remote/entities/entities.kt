@@ -8,4 +8,9 @@ data class RemoteYear(
     override val subjects: List<Subject>
 ) : Year()
 
-data class RemoteSubject(override val id: String, override val name: String) : Subject()
+data class RemoteSubject(
+    override val id: String,
+    override val name: String,
+    override val yearName: String,
+    override val icon: String? = null
+) : Subject()

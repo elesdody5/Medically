@@ -3,6 +3,8 @@ package com.medically.model
 abstract class Subject {
     abstract val id: String
     abstract val name: String
+    abstract val yearName: String
+    abstract val icon: String?
 }
 
 abstract class Chapter {

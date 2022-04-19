@@ -12,4 +12,8 @@ java {
 dependencies {
     implementation coroutines
     api project(":model")
+
+    testImplementation test
+    testImplementation mockk
+    testImplementation corotinesTest
 }

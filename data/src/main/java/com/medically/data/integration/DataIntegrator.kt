@@ -1,6 +1,6 @@
 package com.medically.data.integration
 
-import com.medically.data.remote.YearsRemoteDataSource
+import com.medically.data.remote.SubjectsRemoteDataSource
 
 
 @DslMarker
@@ -16,9 +16,11 @@ object DataIntegrator {
     val with = this
 
 
+
+
     @DataIntegration
-    infix fun yearsRemoteDataSource(remoteDataSource: YearsRemoteDataSource) {
-        RemoteDataSources.yearsRemoteDataSource = remoteDataSource
+    infix fun subjectsRemoteDataSource(remoteDataSource: SubjectsRemoteDataSource) {
+        RemoteDataSources.subjectsDataSource = remoteDataSource
     }
 
 }

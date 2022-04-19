@@ -3,10 +3,8 @@ package com.medically
 import android.app.Application
 import com.medically.core.integration.coreIntegration
 import com.medically.data.integration.dataIntegrator
-import com.medically.data.remote.RemoteDataSourceImp
-import com.medically.data.remote.YearsRemoteDataSource
-import com.medically.data.repository.YearsRepositoryImp
-import com.medically.remote.data_source.YearsRemoteDataSourceImp
+import com.medically.data.repository.SubjectsRepositoryImp
+import com.medically.remote.data_source.SubjectsRemoteDataSourceImp
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -17,11 +15,12 @@ class MedicallyApplication : Application(
         super.onCreate()
 
         dataIntegrator {
-            with yearsRemoteDataSource YearsRemoteDataSourceImp()
+            with subjectsRemoteDataSource SubjectsRemoteDataSourceImp()
+
         }
 
         coreIntegration {
-            with yearsRepository YearsRepositoryImp()
+            with subjectsRepository SubjectsRepositoryImp()
         }
 
     }

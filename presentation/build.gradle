@@ -55,7 +55,9 @@ android {
 }
 
 dependencies {
+    implementation project(":core")
     implementation coreKtx
+    implementation coil
     implementation compose
     implementation kotlin
     testImplementation test
