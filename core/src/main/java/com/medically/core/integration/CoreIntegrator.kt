@@ -2,7 +2,7 @@ package com.medically.core.integration
 
 import com.medically.core.chapters.ChaptersRepositoryPort
 import com.medically.core.doctors.DoctorsRepositoryPort
-import com.medically.core.years.YearsRepositoryPort
+import com.medically.core.subjects.SubjectsRepositoryPort
 import com.medically.core.tracking.Logger
 
 
@@ -19,9 +19,10 @@ object CoreIntegrator {
     val with = this
 
 
+
     @CoreIntegration
-    infix fun yearsRepository(repository: YearsRepositoryPort) {
-        Data.yearsRepositoryPort = repository
+    infix fun subjectsRepository(repository: SubjectsRepositoryPort) {
+        Data.subjectsRepositoryPort = repository
     }
 
     @CoreIntegration

@@ -11,8 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.medically.audioplayer.AudioPlayerScreen
-import com.medically.presentation.ui.theme.MedicallyTheme
+import com.medically.presentation.home.HomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,10 +36,10 @@ fun MedicallyApp() {
             NavHost(
                 navController,
                 modifier = Modifier.padding(innerPadding),
-                startDestination = MedicallyScreens.AudioPlayer.name
+                startDestination = MedicallyScreens.HomeScreen.name
             ) {
-                composable(MedicallyScreens.AudioPlayer.name) {
-                    AudioPlayerScreen()
+                composable(MedicallyScreens.HomeScreen.name) {
+                    HomeScreen()
                 }
             }
         }

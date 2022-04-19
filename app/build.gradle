@@ -133,6 +133,7 @@ dependencies {
 
 
 }
+apply plugin: 'com.google.gms.google-services'
 // Allow references to generated code
 kapt {
     correctErrorTypes = true

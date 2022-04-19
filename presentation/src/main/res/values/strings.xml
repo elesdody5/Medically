@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Medically</string>
+    <string name="continue_listen">continue listening</string>
+    <string name="subject_icon">Subject icon</string>
+    <string name="level">Level</string>
+    <string name="course">Course</string>
 </resources>
