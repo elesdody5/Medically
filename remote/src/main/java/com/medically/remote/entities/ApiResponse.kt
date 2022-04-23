@@ -1,4 +1,4 @@
-package com.medically.model
+package com.medically.remote.entities
 
 class ApiResponse<T>(
     val exception: Throwable? = null,

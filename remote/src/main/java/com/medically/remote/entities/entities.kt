@@ -1,9 +1,6 @@
 package com.medically.remote.entities
 
-import com.medically.model.Chapter
-import com.medically.model.Doctor
-import com.medically.model.Subject
-import kotlinx.serialization.Serializable
+import com.medically.model.*
 
 data class RemoteSubject(
     override val id: String,
@@ -23,3 +20,13 @@ data class RemoteChapter(
     override val doctorName: String?,
     override val imageUrl: String?
 ) : Chapter()
+
+data class RemoteVideo(
+    override val name: String?,
+    override val url: String?
+) : Video()
+
+data class RemotePdf(
+    override val name: String?,
+    override val url: String?
+) : Pdf()

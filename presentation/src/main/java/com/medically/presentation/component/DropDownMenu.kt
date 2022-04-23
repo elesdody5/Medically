@@ -1,14 +1,13 @@
 package com.medically.presentation.component
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,7 +21,6 @@ fun DropDownMenu(
     placeHolder: String,
     onItemSelected: (String) -> Unit
 ) {
-    Log.i("TAG", "DropDownMenu:$placeHolder ")
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(placeHolder) }
     Surface(
@@ -45,7 +43,7 @@ fun DropDownMenu(
                         expanded = expanded
                     )
                 },
-                textStyle = TextStyle(fontSize = 14.sp),
+                textStyle = TextStyle(fontSize = 14.sp, textAlign = TextAlign.Center),
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = MaterialTheme.colors.secondaryVariant,
                     disabledTextColor = MaterialTheme.colors.secondaryVariant,
@@ -72,7 +70,10 @@ fun DropDownMenu(
                             }
                         }
                     ) {
-                        Text(text = selectionOption, color = MaterialTheme.colors.secondaryVariant)
+                        Text(
+                            text = selectionOption,
+                            color = MaterialTheme.colors.onBackground
+                        )
                     }
                 }
             }

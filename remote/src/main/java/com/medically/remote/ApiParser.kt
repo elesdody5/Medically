@@ -1,8 +1,7 @@
 package com.medically.remote
 
-import com.medically.model.ApiResponse
 import com.medically.model.Result
-import java.lang.Exception
+import com.medically.remote.entities.ApiResponse
 
 fun <T> ApiResponse<T>.parseApiResponse(): Result<T> {
     data?.let {

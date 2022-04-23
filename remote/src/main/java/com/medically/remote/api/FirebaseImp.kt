@@ -2,14 +2,10 @@ package com.medically.remote.api
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.medically.model.*
-import com.medically.remote.entities.RemoteChapter
-import com.medically.remote.entities.RemoteDoctor
-import com.medically.remote.entities.RemoteSubject
+import com.medically.remote.entities.*
 import com.medically.remote.years
 import kotlinx.coroutines.tasks.await
 
@@ -54,7 +50,7 @@ object FirebaseImp : NetworkServices {
     }
 
     override suspend fun getChapters(doctorName: String): ApiResponse<List<Chapter>> {
-        val doctorCollection = subjectDoc.collection(doctorName)
+        doctorCollection = subjectDoc.collection(doctorName)
         runCatching {
             val chaptersList = doctorCollection.get().await()
                 .filter { it.id != "video" && it.id != "pdf" }
@@ -62,6 +58,34 @@ object FirebaseImp : NetworkServices {
                     RemoteChapter(it.id, it.id, doctorName, it.getString("image"))
                 }
             return ApiResponse(data = chaptersList)
+        }.onFailure {
+            return ApiResponse(it)
+        }
+        return ApiResponse(Exception("Unknown"))
+    }
+
+    override suspend fun getVideos(doctorName: String): ApiResponse<List<Video>> {
+        doctorCollection = subjectDoc.collection(doctorName)
+        runCatching {
+            val videoCollection = doctorCollection.document("video").collection("video")
+            val videos = videoCollection.get().await().documents.map {
+                RemoteVideo(it.getString("name"), it.getString("url"))
+            }
+            return ApiResponse(data = videos)
+        }.onFailure {
+            return ApiResponse(it)
+        }
+        return ApiResponse(Exception("Unknown"))
+    }
+
+    override suspend fun getPdfs(doctorName: String): ApiResponse<List<Pdf>> {
+        doctorCollection = subjectDoc.collection(doctorName)
+        runCatching {
+            val pdfCollection = doctorCollection.document("pdf").collection("pdf")
+            val pdfs = pdfCollection.get().await().documents.map {
+                RemotePdf(it.getString("name"), it.getString("url"))
+            }
+            return ApiResponse(data = pdfs)
         }.onFailure {
             return ApiResponse(it)
         }

@@ -3,14 +3,13 @@ package com.medically.core.chapters
 import com.medically.core.entities.BusinessRules
 import com.medically.core.integration.Data
 import com.medically.model.Result
-import com.medically.model.Subject
 import kotlinx.coroutines.launch
 
 @BusinessRules
 fun ChaptersPort.bindChapters(doctorName: String) {
     state.value = state.value.copy(isLoading = true)
     scope.launch {
-        val result = Data.chaptersRepository.getChapters(doctorName)
+        val result = Data.subjectDetailsRepository.getChapters(doctorName)
         if (result is Result.Success) {
             state.value = state.value.copy(
                 isLoading = false,
@@ -46,7 +45,7 @@ fun ChaptersPort.searchChapter(chapterName: String) {
 }
 
 @BusinessRules
-fun ChaptersPort.bindChaptersSubject() {
+fun ChaptersPort.bindCurrentSubject() {
     val subject = Data.subjectsRepositoryPort.getCurrentSubject()
     state.value = state.value.copy(subject = subject)
 }

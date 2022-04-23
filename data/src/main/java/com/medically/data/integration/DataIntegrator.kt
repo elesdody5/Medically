@@ -1,9 +1,8 @@
 package com.medically.data.integration
 
-import com.medically.data.remote.ChaptersRemoteDataSource
 import com.medically.data.remote.DoctorsRemoteDataSource
+import com.medically.data.remote.SubjectDetailsRemoteDataSource
 import com.medically.data.remote.SubjectsRemoteDataSource
-import com.medically.model.Chapter
 
 
 @DslMarker
@@ -30,8 +29,8 @@ object DataIntegrator {
     }
 
     @DataIntegration
-    infix fun chaptersRemoteDataSource(remoteDataSource: ChaptersRemoteDataSource) {
-        RemoteDataSources.chaptersRemoteDataSource = remoteDataSource
+    infix fun chaptersRemoteDataSource(remoteDataSource: SubjectDetailsRemoteDataSource) {
+        RemoteDataSources.subjectDetailsRemoteDataSource = remoteDataSource
     }
 
 }

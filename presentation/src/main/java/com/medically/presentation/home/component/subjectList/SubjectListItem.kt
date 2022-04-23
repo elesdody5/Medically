@@ -26,12 +26,13 @@ fun SubjectListItem(subject: Subject, onSubjectSelected: (Subject) -> Unit) {
     Surface(
         color = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(5.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onSubjectSelected(subject) },
     ) {
         Row(
             Modifier
-                .padding(10.dp)
-                .clickable { onSubjectSelected(subject) },
+                .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -47,7 +48,7 @@ fun SubjectListItem(subject: Subject, onSubjectSelected: (Subject) -> Unit) {
                     .padding(end = 13.dp),
                 contentDescription = null
             )
-            Text(subject.name)
+            Text(subject.name, color = MaterialTheme.colors.onBackground)
         }
     }
 }
