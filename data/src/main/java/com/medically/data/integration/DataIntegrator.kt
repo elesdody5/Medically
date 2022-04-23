@@ -1,6 +1,9 @@
 package com.medically.data.integration
 
+import com.medically.data.remote.ChaptersRemoteDataSource
+import com.medically.data.remote.DoctorsRemoteDataSource
 import com.medically.data.remote.SubjectsRemoteDataSource
+import com.medically.model.Chapter
 
 
 @DslMarker
@@ -16,11 +19,19 @@ object DataIntegrator {
     val with = this
 
 
-
-
     @DataIntegration
     infix fun subjectsRemoteDataSource(remoteDataSource: SubjectsRemoteDataSource) {
         RemoteDataSources.subjectsDataSource = remoteDataSource
+    }
+
+    @DataIntegration
+    infix fun doctorsRemoteDataSource(remoteDataSource: DoctorsRemoteDataSource) {
+        RemoteDataSources.doctorsRemoteDataSource = remoteDataSource
+    }
+
+    @DataIntegration
+    infix fun chaptersRemoteDataSource(remoteDataSource: ChaptersRemoteDataSource) {
+        RemoteDataSources.chaptersRemoteDataSource = remoteDataSource
     }
 
 }

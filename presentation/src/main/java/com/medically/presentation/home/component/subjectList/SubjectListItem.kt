@@ -1,9 +1,10 @@
 package com.medically.presentation.home.component.subjectList
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -13,30 +14,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.ImageLoader
-import coil.compose.*
-import coil.decode.DataSource
-import coil.disk.DiskCache
-import coil.imageLoader
-import coil.memory.MemoryCache
-import coil.request.CachePolicy
+import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.medically.model.Subject
-import com.medically.presentation.R
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
-fun SubjectListItem(subject: Subject) {
+fun SubjectListItem(subject: Subject, onSubjectSelected: (Subject) -> Unit) {
     Surface(
         color = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Row(Modifier.padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            Modifier
+                .padding(10.dp)
+                .clickable { onSubjectSelected(subject) },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(subject.icon)
@@ -59,7 +56,9 @@ fun SubjectListItem(subject: Subject) {
 @Composable
 fun SubjectListItemPreview() {
     MedicallyTheme {
-        SubjectListItem(subject = UISubject(name = "Anatomy", yearName = "First Year"))
+        SubjectListItem(
+            subject = UISubject(name = "Anatomy", yearName = "First Year"),
+            onSubjectSelected = { })
     }
 }
 

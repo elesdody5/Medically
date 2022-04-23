@@ -4,7 +4,6 @@ import com.medically.core.entities.BusinessRule
 import com.medically.core.integration.Data
 import com.medically.model.Result
 import com.medically.model.Subject
-import com.medically.model.Year
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.CoroutineScope
@@ -27,13 +26,13 @@ class SubjectsPortBusinessRuleTest {
     private lateinit var mockSubjectsRepo: SubjectsRepositoryPort
     private lateinit var adapter: SubjectsPort
     private val subjects =
-        listOf<Subject>(
-            TestSubject(name = "subject1", yearName = "first"),
-            TestSubject(name = "subject2", yearName = "second")
+        listOf(
+            Subject(name = "subject1", yearName = "first"),
+            Subject(name = "subject2", yearName = "second")
         )
 
 
-    val state = MutableStateFlow(SubjectsPortState())
+    private val state = MutableStateFlow(SubjectsPortState())
 
     @Before
     fun setup() {
@@ -95,15 +94,3 @@ class SubjectsAdapter(
 ) : SubjectsPort {
     override val bindSubjects: BusinessRule = Unit
 }
-
-data class TestYear(
-    override val title: String,
-    override val subjects: List<Subject> = emptyList()
-) : Year()
-
-data class TestSubject(
-    override val id: String = "",
-    override val name: String,
-    override val yearName: String,
-    override val icon: String? = null
-) : Subject()

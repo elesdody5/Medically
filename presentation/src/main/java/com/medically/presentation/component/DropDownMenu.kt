@@ -1,5 +1,6 @@
 package com.medically.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,7 +22,7 @@ fun DropDownMenu(
     placeHolder: String,
     onItemSelected: (String) -> Unit
 ) {
-
+    Log.i("TAG", "DropDownMenu:$placeHolder ")
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(placeHolder) }
     Surface(
@@ -68,7 +69,7 @@ fun DropDownMenu(
                             expanded = false
                             if (selectionOption != placeHolder) {
                                 onItemSelected(selectionOption)
-                            } else onItemSelected("")
+                            }
                         }
                     ) {
                         Text(text = selectionOption, color = MaterialTheme.colors.secondaryVariant)

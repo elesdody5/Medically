@@ -5,5 +5,4 @@ import com.medically.core.integration.Data
 
 @BusinessRules
 suspend fun DoctorsPort.bindDoctors() {
-    doctors.value = Data.doctorsRepository.getDoctors()
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id "kotlinx-serialization"
 }
 apply from: '../dependencies.gradle'
 
@@ -40,4 +41,6 @@ dependencies {
     implementation firebaseCorutineKts
     testImplementation test
     androidTestImplementation androidTest
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
+
 }

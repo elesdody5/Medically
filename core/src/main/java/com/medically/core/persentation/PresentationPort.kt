@@ -9,4 +9,7 @@ interface PresentationPort<T : PresentationPortState> {
     val state: MutableStateFlow<T>
 }
 
-abstract class PresentationPortState(open val isLoading: Boolean, open val errorMessage: String?)
+abstract class PresentationPortState(
+    open val isLoading: Boolean = false,
+    open val errorMessage: String? = null
+)

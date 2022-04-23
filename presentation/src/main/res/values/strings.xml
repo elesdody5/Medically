@@ -4,4 +4,5 @@
     <string name="subject_icon">Subject icon</string>
     <string name="level">Level</string>
     <string name="course">Course</string>
+    <string name="doctor">Doctor</string>
 </resources>

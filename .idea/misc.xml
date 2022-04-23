@@ -13,12 +13,23 @@
         <entry key="../../../../layout/compose-model-1650112251994.xml" value="0.35515202702702703" />
         <entry key="../../../../layout/compose-model-1650113177006.xml" value="0.25" />
         <entry key="../../../../layout/compose-model-1650115339320.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1650499087880.xml" value="0.22846283783783783" />
+        <entry key="../../../../layout/compose-model-1650500278512.xml" value="0.8025974025974026" />
+        <entry key="../../../../layout/compose-model-1650570939224.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1650571526136.xml" value="0.3559966216216216" />
+        <entry key="../../../../layout/compose-model-1650641204648.xml" value="0.5722222222222222" />
+        <entry key="../../../../layout/compose-model-1650641665091.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1650662370900.xml" value="0.26944444444444443" />
+        <entry key="../../../../layout/compose-model-1650662792273.xml" value="0.6961722488038278" />
+        <entry key="../../../../layout/compose-model-1650662897865.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1650678638903.xml" value="0.37792207792207794" />
+        <entry key="../../../../layout/compose-model-1650711509342.xml" value="0.6961722488038278" />
         <entry key="..\:/Users/AlAsudiA/AndroidStudioProjects/projects/Medically/app/src/main/res/layout/activity_main.xml" value="0.2421875" />
         <entry key="..\:/Users/AlAsudiA/AndroidStudioProjects/projects/Medically/app/src/main/res/layout/fragment_audio_player.xml" value="0.2421875" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
