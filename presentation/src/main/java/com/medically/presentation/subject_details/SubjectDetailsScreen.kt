@@ -14,9 +14,12 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.medically.core.subject_details.bindChapters
 import com.medically.presentation.R
+import com.medically.presentation.chapters.ChaptersScreen
 import com.medically.presentation.component.TransparentAppBar
+import com.medically.presentation.pdf.PdfScreen
 import com.medically.presentation.subject_details.component.SubjectDetailsRow
 import com.medically.presentation.subject_details.component.tabData
+import com.medically.presentation.video.VideoScreen
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -51,8 +54,9 @@ fun SubjectDetailsScreen(goBack: () -> Unit) {
                 count = tabData.size
             ) { index ->
                 when (index) {
-//                    0 -> ChaptersScreen(state.isLoading, state.chapters)
-//                    1 -> PdfScreen(state.isLoading, state.pdfs)
+                    0 -> ChaptersScreen(state.isLoading, state.chapters)
+                    1 -> PdfScreen(state.isLoading, state.pdfs)
+                    2 -> VideoScreen(state.isLoading, state.videos)
                 }
             }
         }

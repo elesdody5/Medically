@@ -3,10 +3,10 @@ package com.medically.core.chapters
 import com.medically.core.doctors.DoctorsRepositoryPort
 import com.medically.core.entities.BusinessRule
 import com.medically.core.integration.Data
+import com.medically.core.subject_details.SubjectDetailsRepositoryPort
 import com.medically.model.Chapter
 import com.medically.model.Doctor
 import com.medically.model.Result
-import com.medically.model.Subject
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -28,7 +28,7 @@ class ChaptersBusinessRulesTest {
     private val coroutineScope: CoroutineScope = TestScope(dispatcher)
 
     @MockK
-    private lateinit var mockChaptersRepo: ChaptersRepositoryPort
+    private lateinit var mockChaptersRepo: SubjectDetailsRepositoryPort
 
     @MockK
     private lateinit var mockDoctorsRepo: DoctorsRepositoryPort
@@ -51,7 +51,7 @@ class ChaptersBusinessRulesTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        Data.chaptersRepository = mockChaptersRepo
+        Data.subjectDetailsRepository = mockChaptersRepo
         Data.doctorsRepository = mockDoctorsRepo
 
         adapter = ChaptersAdapter(scope = coroutineScope, state = state)
@@ -79,7 +79,7 @@ class ChaptersBusinessRulesTest {
         coEvery {
             mockDoctorsRepo.getDoctors()
         } returns Result.Success(doctors)
-        adapter.bindDoctors("first", Subject(id = "1"))
+        adapter.bindDoctors()
         val expected = adapter.state.value.doctors
         assertThat(expected.size, `is`(doctors.size))
     }
@@ -98,6 +98,8 @@ class ChaptersAdapter(
     override val scope: CoroutineScope
 ) : ChaptersPort {
     override val bindDoctors: BusinessRule = Unit
+    override val bindChaptersSubject: BusinessRule
+        get() = TODO("Not yet implemented")
 }
 
 

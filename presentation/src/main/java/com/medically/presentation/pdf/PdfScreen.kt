@@ -8,11 +8,11 @@ import com.medically.presentation.component.LoadingProgress
 import com.medically.presentation.pdf.component.PdfList
 
 @Composable
-fun PdfScreen(isLoading:Boolean,pdfs:List<Pdf>) {
+fun PdfScreen(isLoading: Boolean, pdfs: List<Pdf>) {
     if (isLoading)
         LoadingProgress()
     if (pdfs.isEmpty() && !isLoading)
-        EmptyTextMessage(iconId = R.drawable.ic_pdf, message = R.string.no_audio)
+        EmptyTextMessage(iconId = R.drawable.ic_pdf, message = R.string.no_pdf)
     if (!isLoading)
         PdfList(pdfs = pdfs)
 }

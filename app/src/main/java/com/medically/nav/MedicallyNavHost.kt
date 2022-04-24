@@ -9,16 +9,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.medically.MedicallyScreens
-import com.medically.MedicallyScreens.ChaptersScreen
-import com.medically.MedicallyScreens.HomeScreen
-import com.medically.presentation.chapters.ChaptersScreen
+import com.medically.MedicallyScreens.*
 import com.medically.presentation.home.HomeScreen
+import com.medically.presentation.subject_details.SubjectDetailsScreen
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
 fun MedicallyNavHost() {
     MedicallyTheme {
-        val allScreens = MedicallyScreens.values().toList()
+        val allScreens = values().toList()
         val navController = rememberNavController()
         val backstackEntry = navController.currentBackStackEntryAsState()
         val currentScreen = MedicallyScreens.fromRoute(backstackEntry.value?.destination?.route)
@@ -31,13 +30,13 @@ fun MedicallyNavHost() {
             ) {
                 composable(HomeScreen.name) {
                     HomeScreen {
-                        navController.navigate(ChaptersScreen.name)
+                        navController.navigate(SubjectDetailsScreen.name)
                     }
                 }
                 composable(
-                    route = ChaptersScreen.name,
+                    route = SubjectDetailsScreen.name,
                 ) {
-                    ChaptersScreen {
+                    SubjectDetailsScreen {
                         navController.popBackStack()
                     }
                 }
