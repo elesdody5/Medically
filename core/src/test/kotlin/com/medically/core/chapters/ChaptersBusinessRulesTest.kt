@@ -1,15 +1,12 @@
 package com.medically.core.chapters
 
 import com.medically.core.doctors.DoctorsRepositoryPort
-import com.medically.core.entities.BusinessRule
 import com.medically.core.integration.Data
 import com.medically.core.subject_details.SubjectDetailsRepositoryPort
 import com.medically.model.Chapter
 import com.medically.model.Doctor
-import com.medically.model.Result
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
-import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -62,27 +59,7 @@ class ChaptersBusinessRulesTest {
         clearAllMocks()
     }
 
-    @Test
-    fun bindChapters_getChaptersFromRepo() {
-        coEvery {
-            mockChaptersRepo.getChapters(
-                chapters.first().doctorName ?: ""
-            )
-        } returns Result.Success(listOf(chapters.first()))
-        adapter.bindChapters(chapters.first().doctorName ?: "")
-        val expected = adapter.state.value.chapters
-        assertThat(expected.size, `is`(1))
-    }
 
-    @Test
-    fun bindDoctors() {
-        coEvery {
-            mockDoctorsRepo.getDoctors()
-        } returns Result.Success(doctors)
-        adapter.bindDoctors()
-        val expected = adapter.state.value.doctors
-        assertThat(expected.size, `is`(doctors.size))
-    }
 
     @Test
     fun searchChapter() {
@@ -96,11 +73,7 @@ class ChaptersBusinessRulesTest {
 class ChaptersAdapter(
     override val state: MutableStateFlow<ChaptersPortState>,
     override val scope: CoroutineScope
-) : ChaptersPort {
-    override val bindDoctors: BusinessRule = Unit
-    override val bindChaptersSubject: BusinessRule
-        get() = TODO("Not yet implemented")
-}
+) : ChaptersPort
 
 
 
