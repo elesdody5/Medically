@@ -58,6 +58,8 @@ dependencies {
     implementation project(":core")
     implementation coreKtx
     implementation coil
+    implementation pager
+    implementation webView
     implementation compose
     implementation kotlin
     testImplementation test

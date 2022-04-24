@@ -13,14 +13,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.medically.core.subjects.filterBySubject
 import com.medically.core.subjects.filterByYears
+import com.medically.core.subjects.saveCurrentSubject
 import com.medically.core.subjects.searchSubject
+import com.medically.model.Subject
 import com.medically.presentation.home.component.CurrentPlayingCard
 import com.medically.presentation.home.component.Filters
 import com.medically.presentation.home.component.subjectList.ShimmerSubjectList
 import com.medically.presentation.home.component.subjectList.SubjectsList
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navigateToChapters: () -> Unit) {
     val viewModel = viewModel<HomeViewModel>()
     val state by viewModel.state.collectAsState()
     val allSubjects = state.subjects
@@ -45,7 +47,13 @@ fun HomeScreen() {
                 ShimmerSubjectList()
 
             if (!state.isLoading)
-                SubjectsList(subjects = state.filteredSubjects)
+                SubjectsList(
+                    subjects = state.filteredSubjects,
+                    onSubjectSelected = {
+                        viewModel.saveCurrentSubject(it)
+                        navigateToChapters()
+                    }
+                )
         }
     }
 }

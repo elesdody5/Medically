@@ -7,10 +7,10 @@ ext.versions = [
         coil              : '2.0.0-rc02',
         coreKtx           : '1.2.0',
         supportAnnotations: '1.1.0',
-
+        webView           : '0.24.1-alpha',
         dataStorePref     : '1.0.0',
         compose           : '1.1.1',
-        pager             : "0.24.5-alpha",
+        pager             : "0.23.0",
         navigation        : '2.4.1',
         viewModel         : '2.4.1',
         mockk             : '1.12.0',
@@ -58,8 +58,11 @@ ext.compose = [
         "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.viewModel",
         'com.google.android.material:material:1.5.0'
 ]
+ext.pager = [
+        "com.google.accompanist:accompanist-pager:$versions.pager",
+]
 ext.coil = [
-       "io.coil-kt:coil-compose:$versions.coil",
+        "io.coil-kt:coil-compose:$versions.coil",
 ]
 
 ext.coreKtx = [
@@ -76,4 +79,7 @@ ext.androidTest = [
 ]
 ext.mockk = [
         "io.mockk:mockk:$versions.mockk"
+]
+ext.webView = [
+        "com.google.accompanist:accompanist-webview:$versions.webView"
 ]

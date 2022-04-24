@@ -20,7 +20,7 @@ private val LightColorPalette = lightColors(
     secondary = Gray_0xffF2F4F7,
     secondaryVariant = Gray_0xff636363,
     surface = Blue_0xFFE5ECFF,
-    onBackground = Color.Black,
+    onBackground = Blue_0xff41486A,
     /* Other default colors to override
     surface = Color.White,
     onPrimary = Color.White,
@@ -30,14 +30,14 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun MedicallyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+//    val colors = if (darkTheme) {
+//        DarkColorPalette
+//    } else {
+//        LightColorPalette
+//    }
 
     MaterialTheme(
-        colors = colors,
+        colors = LightColorPalette,
         typography = Typography,
         shapes = Shapes,
         content = content

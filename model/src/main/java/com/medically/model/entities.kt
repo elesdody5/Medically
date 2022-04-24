@@ -1,49 +1,46 @@
 package com.medically.model
 
-abstract class Subject {
-    abstract val id: String
-    abstract val name: String
-    abstract val yearName: String
-    abstract val icon: String?
-}
+import java.io.Serializable
+open class Subject(
+    open val id: String = "",
+    open val name: String = "",
+    open val yearName: String = "",
+    open val icon: String? = null
+)
 
-abstract class Chapter {
-    abstract val id: Long?
-    abstract val doctorName: String?
-    abstract val name: String
-    abstract val imageUrl: String
-}
+open class Chapter(
+    open val id: String? = null,
+    open val doctorName: String? = null,
+    open val name: String = "",
+    open val imageUrl: String? = null,
+)
 
-abstract class Year {
-    abstract val title: String
-    abstract val subjects: List<Subject>
-}
+open class Doctor(
+    open val subjectId: String? = null,
+    open val name: String? = null,
+)
 
-abstract class Doctor {
-    abstract val name: String?
-}
+open class Pdf(
+    open val name: String? = null,
+    open val url: String? = null,
+)
 
-abstract class Pdf {
-    abstract val name: String?
-    abstract val url: String?
-}
+open class Video(
+    open val name: String? = null,
+    open val url: String? = null,
+)
 
-abstract class Video {
-    abstract val name: String?
-    abstract val url: String?
-}
+open class Lecture(
+    open val number: Int?,
+    open val name: String? = null,
+    open val url: String? = null,
+    open val size: Long?,
+)
 
-abstract class Lecture {
-    abstract val number: Int?
-    abstract val name: String?
-    abstract val url: String?
-    abstract val size: Long?
-}
-
-abstract class AudioPlayList {
-    abstract val lecture: List<Lecture>
-    abstract val lecturePosition: Int
-    abstract val chapter: Chapter
-    abstract val doctor: Doctor
-    abstract val subject: Subject
-} 
+open class AudioPlayList(
+    open val lecture: List<Lecture>,
+    open val lecturePosition: Int,
+    open val chapter: Chapter,
+    open val doctor: Doctor,
+    open val subject: Subject
+) 

@@ -4,4 +4,11 @@
     <string name="subject_icon">Subject icon</string>
     <string name="level">Level</string>
     <string name="course">Course</string>
+    <string name="doctor">Doctor</string>
+    <string name="audio">Audio</string>
+    <string name="pdf">PDF</string>
+    <string name="video">Video</string>
+    <string name="no_audio">No Audio found for this doctor</string>
+    <string name="no_pdf">No PDF found for this doctor</string>
+    <string name="no_video">No Video found for this doctor</string>
 </resources>

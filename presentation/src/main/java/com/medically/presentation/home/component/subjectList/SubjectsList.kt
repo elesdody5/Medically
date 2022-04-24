@@ -14,7 +14,7 @@ import com.medically.model.Subject
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SubjectsList(subjects: Map<String, List<Subject>>) {
+fun SubjectsList(subjects: Map<String, List<Subject>>, onSubjectSelected: (Subject) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(10.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -25,7 +25,7 @@ fun SubjectsList(subjects: Map<String, List<Subject>>) {
             }
 
             items(yearSubjects) { subject ->
-                SubjectListItem(subject)
+                SubjectListItem(subject,onSubjectSelected)
             }
         }
     }
