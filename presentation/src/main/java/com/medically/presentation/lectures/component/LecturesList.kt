@@ -1,4 +1,4 @@
-package com.medically.presentation.pdf.component
+package com.medically.presentation.lectures.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,33 +9,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.medically.model.Pdf
+import com.medically.model.Lecture
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
-fun PdfList(pdfs: List<Pdf>) {
+fun LecturesList(lectures: List<Lecture>, onLectureSelected: (Lecture) -> Unit) {
     LazyColumn(
-        modifier = Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp),
+        modifier = Modifier.padding(top = 10.dp, start = 20.dp, end = 10.dp),
         contentPadding = PaddingValues(10.dp),
         verticalArrangement = Arrangement.spacedBy(48.dp)
     ) {
-        items(pdfs) {
-            PdfListItem(pdf = it)
+        items(lectures) {
+            LectureListItem(it, onLectureSelected)
         }
     }
 }
 
-@Composable
 @Preview(showBackground = true)
-fun PreviewPdf() {
+@Composable
+fun PreviewLecturesList() {
     MedicallyTheme {
-        PdfList(
-            pdfs =
-            listOf(
-                Pdf("pdf"),
-                Pdf("pdf"),
-                Pdf("pdf"),
-            )
-        )
+        LecturesList(lectures = listOf(
+            Lecture("01", "Lecture"),
+            Lecture("01", "Lecture"),
+            Lecture("01", "Lecture"),
+        ), onLectureSelected = {})
     }
 }

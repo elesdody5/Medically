@@ -1,4 +1,4 @@
-package com.medically
+package com.medically.nav
 
 /**
  * Screen metadata for Medically.
@@ -6,6 +6,7 @@ package com.medically
 enum class MedicallyScreens {
     HomeScreen,
     SubjectDetailsScreen,
+    LecturesScreen,
     ChaptersScreen;
 
 
@@ -15,6 +16,7 @@ enum class MedicallyScreens {
                 HomeScreen.name -> HomeScreen
                 SubjectDetailsScreen.name -> SubjectDetailsScreen
                 ChaptersScreen.name -> ChaptersScreen
+                LecturesScreen.name -> LecturesScreen
                 null -> HomeScreen
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }

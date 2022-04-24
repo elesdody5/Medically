@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.medically.core.subject_details.bindChapters
+import com.medically.core.subject_details.bindDoctorMaterials
 import com.medically.presentation.R
 import com.medically.presentation.chapters.ChaptersScreen
 import com.medically.presentation.component.TransparentAppBar
@@ -23,7 +23,7 @@ import com.medically.presentation.video.VideoScreen
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun SubjectDetailsScreen(goBack: () -> Unit) {
+fun SubjectDetailsScreen(goBack: () -> Boolean, navigateToLectures: () -> Unit) {
     val viewModel = viewModel<SubjectDetailsViewModel>()
     val state by viewModel.state.collectAsState()
     val doctors = state.doctors.map { it?.name ?: "" }.toList()
@@ -37,7 +37,7 @@ fun SubjectDetailsScreen(goBack: () -> Unit) {
                 goBack,
                 doctors,
                 stringResource(id = R.string.doctor),
-                viewModel::bindChapters,
+                viewModel::bindDoctorMaterials,
                 state.subject?.yearName ?: "",
                 state.subject?.name ?: ""
             )
@@ -54,7 +54,7 @@ fun SubjectDetailsScreen(goBack: () -> Unit) {
                 count = tabData.size
             ) { index ->
                 when (index) {
-                    0 -> ChaptersScreen(state.isLoading, state.chapters)
+                    0 -> ChaptersScreen(state.isLoading, state.chapters, navigateToLectures)
                     1 -> PdfScreen(state.isLoading, state.pdfs)
                     2 -> VideoScreen(state.isLoading, state.videos)
                 }

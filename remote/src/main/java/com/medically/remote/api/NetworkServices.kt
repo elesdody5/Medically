@@ -10,4 +10,5 @@ interface NetworkServices {
     suspend fun getChapters(doctorName: String): ApiResponse<List<Chapter>>
     suspend fun getVideos(doctorName: String): ApiResponse<List<Video>>
     suspend fun getPdfs(doctorName: String): ApiResponse<List<Pdf>>
+    suspend fun getLectures(chapter: String): ApiResponse<List<Lecture>>
 }
