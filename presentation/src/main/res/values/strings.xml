@@ -11,4 +11,6 @@
     <string name="no_audio">No Audio found for this doctor</string>
     <string name="no_pdf">No PDF found for this doctor</string>
     <string name="no_video">No Video found for this doctor</string>
+    <string name="previous_time">-10sec</string>
+    <string name="forward_time">+10sec</string>
 </resources>

@@ -10,7 +10,7 @@ ext.versions = [
         webView           : '0.24.1-alpha',
         dataStorePref     : '1.0.0',
         compose           : '1.1.1',
-        pager             : "0.23.0",
+        pager             : "0.24.2-alpha",
         navigation        : '2.4.1',
         viewModel         : '2.4.1',
         mockk             : '1.12.0',

@@ -10,13 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
-import coil.request.ImageRequest
 import com.medically.model.Chapter
+import com.medically.presentation.component.LoadImageWithShimmer
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
@@ -30,23 +27,13 @@ fun ChapterListItem(chapter: Chapter, onChapterSelected: (Chapter) -> Unit) {
             .clickable { onChapterSelected(chapter) }
     ) {
         Column(modifier = Modifier) {
-            SubcomposeAsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(chapter.imageUrl)
-                    .crossfade(true)
-                    .crossfade(300)
-                    .allowHardware(true)
-                    .build(),
-                contentScale = ContentScale.Crop,
+            LoadImageWithShimmer(
+                imageUrl = chapter.imageUrl,
                 modifier = Modifier
                     .padding(10.dp)
                     .fillMaxWidth()
                     .height(160.dp)
                     .clip(RoundedCornerShape(10.dp)),
-                contentDescription = "chapterImage",
-                loading = {
-                    ShimmerChapterImage()
-                }
             )
             Text(
                 chapter.name,

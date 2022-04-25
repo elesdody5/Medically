@@ -40,8 +40,7 @@ fun LectureListItem(lecture: Lecture, onLectureSelected: (Lecture) -> Unit) {
             Text(
                 "${lecture.number ?: ""}.",
                 color = MaterialTheme.colors.onBackground,
-
-                )
+            )
             Text(
                 lecture.name ?: "",
                 color = MaterialTheme.colors.onBackground,
@@ -55,7 +54,7 @@ fun LectureListItem(lecture: Lecture, onLectureSelected: (Lecture) -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             CircleWithIcon(
-                iconId = R.drawable.ic_baseline_arrow_downward_24,
+                iconId = R.drawable.ic_download,
                 circleSize = 35.dp,
                 circleColor = MaterialTheme.colors.secondary,
                 contentDescription = null
