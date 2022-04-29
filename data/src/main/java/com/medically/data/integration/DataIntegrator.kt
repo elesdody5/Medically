@@ -1,5 +1,6 @@
 package com.medically.data.integration
 
+import com.medically.data.preferences.PreferencesManager
 import com.medically.data.remote.DoctorsRemoteDataSource
 import com.medically.data.remote.LecturesRemoteDataSource
 import com.medically.data.remote.SubjectDetailsRemoteDataSource
@@ -37,6 +38,11 @@ object DataIntegrator {
     @DataIntegration
     infix fun lecturesRemoteDataSource(remoteDataSource: LecturesRemoteDataSource) {
         RemoteDataSources.lecturesRemoteDataSource = remoteDataSource
+    }
+
+    @DataIntegration
+    infix fun preferencesManager(preferencesManager: PreferencesManager) {
+        PreferencesDataSources.preferencesManager = preferencesManager
     }
 
 }

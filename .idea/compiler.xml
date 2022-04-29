@@ -3,6 +3,8 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="Medically.app" target="11" />
+      <module name="Medically.framework.media" target="11" />
+      <module name="Medically.preferences" target="11" />
       <module name="Medically.presentation" target="11" />
       <module name="Medically.remote" target="11" />
     </bytecodeTargetLevel>
