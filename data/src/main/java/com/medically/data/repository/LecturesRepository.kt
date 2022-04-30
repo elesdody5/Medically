@@ -9,7 +9,7 @@ import com.medically.data.remote.LecturesRemoteDataSource
 import com.medically.model.AudioPlayList
 import com.medically.model.Lecture
 import com.medically.model.Result
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.Flow
 
 class LecturesRepository(
     private val lecturesRemoteDataSource: LecturesRemoteDataSource = RemoteDataSources.lecturesRemoteDataSource,
@@ -25,8 +25,8 @@ class LecturesRepository(
         return Result.Error(IllegalArgumentException("Chapter not found"))
     }
 
-    override suspend fun getCurrentPlayList(): AudioPlayList {
-        return preferencesManager.currentAudioPlayList.first()
+    override suspend fun getCurrentPlayList(): Flow<AudioPlayList> {
+        return preferencesManager.currentAudioPlayList
     }
 
     override suspend fun setCurrentPlayList(audioPlayList: AudioPlayList) {

@@ -9,8 +9,7 @@ import com.medically.model.Subject
 fun List<Lecture>.toPreference(): List<PreferenceLecture> {
     return map {
         PreferenceLecture.newBuilder().setName(it.name)
-            .setNumber(it.number)
-            .setUrl(it.url).build()
+            .setUrl(it.url ?: "").build()
     }
 }
 

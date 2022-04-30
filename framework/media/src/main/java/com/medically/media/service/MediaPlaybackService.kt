@@ -1,4 +1,4 @@
-package com.medically.media.mediaservice
+package com.medically.media.service
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -125,7 +125,8 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
         notificationManager = MedicallyNotificationManager(
             this,
             mediaSession.sessionToken,
-            PlayerNotificationListener()
+            PlayerNotificationListener(),
+            coroutineScope
         )
 
         repository = Data.lecturesRepository
@@ -165,13 +166,14 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
         rootHints: Bundle?
     ): BrowserRoot {
         coroutineScope.launch {
-            val playList: AudioPlayList = repository.getCurrentPlayList()
-            prepareList(playList)
-            initializePlayer(
-                itemToPlay = currentPlaylistItems[playList.currentPlayingPosition ?: 0],
-                playbackStartPositionMs = exoPlayer.currentPosition
-            )
-            notificationManager.showNotificationForPlayer(exoPlayer)
+            repository.getCurrentPlayList().collect { playList ->
+                prepareList(playList)
+                initializePlayer(
+                    itemToPlay = currentPlaylistItems[playList.currentPlayingPosition ?: 0],
+                    playbackStartPositionMs = 0L
+                )
+                notificationManager.showNotificationForPlayer(exoPlayer)
+            }
         }
         /**
          * By default return the browsable root. Treat the EXTRA_RECENT flag as a special case
@@ -215,8 +217,8 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
                     .doctor(doctor?.name)
                     .chapter(chapter)
 
-            currentPlaylistItems = lectures?.map { lecture ->
-                mediaMetadataCompat.lecture(lecture, audioPlayList.lectures?.size).build()
+            currentPlaylistItems = lectures?.mapIndexed { index, lecture ->
+                mediaMetadataCompat.lecture(lecture, index, audioPlayList.lectures?.size).build()
             } ?: emptyList()
         }
     }

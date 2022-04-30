@@ -315,12 +315,13 @@ fun MediaMetadataCompat.Builder.doctor(doctorName: String?): MediaMetadataCompat
 
 fun MediaMetadataCompat.Builder.lecture(
     lecture: Lecture,
+    index: Int,
     totalTrackCount: Int?
 ): MediaMetadataCompat.Builder {
     id = lecture.name ?: ""
     title = lecture.name
     mediaUri = lecture.url ?: ""
-    trackNumber = lecture.number?.toLong() ?: 0
+    trackNumber = index.toLong()
     trackCount = totalTrackCount?.toLong() ?: 0
     flag = MediaItem.FLAG_PLAYABLE
 

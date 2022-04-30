@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -13,14 +12,16 @@ import com.medically.model.Lecture
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
-fun LecturesList(lectures: List<Lecture>, onLectureSelected: (Lecture) -> Unit) {
+fun LecturesList(lectures: List<Lecture>, onLectureSelected: (Int) -> Unit) {
     LazyColumn(
         modifier = Modifier.padding(top = 10.dp, start = 20.dp, end = 10.dp),
         contentPadding = PaddingValues(10.dp),
         verticalArrangement = Arrangement.spacedBy(48.dp)
     ) {
-        items(lectures) {
-            LectureListItem(it, onLectureSelected)
+        items(lectures.size) { index ->
+            LectureListItem(lectures[index], index) {
+                onLectureSelected(index)
+            }
         }
     }
 }

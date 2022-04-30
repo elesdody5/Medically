@@ -1,5 +1,6 @@
 package com.medically.presentation.lectures.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,9 +21,11 @@ import com.medically.presentation.component.CircleWithIcon
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
-fun LectureListItem(lecture: Lecture, onLectureSelected: (Lecture) -> Unit) {
+fun LectureListItem(lecture: Lecture, index: Int, onLectureSelected: () -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onLectureSelected() },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -38,7 +41,7 @@ fun LectureListItem(lecture: Lecture, onLectureSelected: (Lecture) -> Unit) {
                 modifier = Modifier.padding(end = 8.dp)
             )
             Text(
-                "${lecture.number ?: ""}.",
+                "${index + 1}.",
                 color = MaterialTheme.colors.onBackground,
             )
             Text(
@@ -73,6 +76,6 @@ fun LectureListItem(lecture: Lecture, onLectureSelected: (Lecture) -> Unit) {
 @Composable
 fun PreviewLectureItem() {
     MedicallyTheme {
-        LectureListItem(lecture = Lecture("01", "Lecture"), onLectureSelected = {})
+        LectureListItem(lecture = Lecture("01", "Lecture"), 1, onLectureSelected = {})
     }
 }

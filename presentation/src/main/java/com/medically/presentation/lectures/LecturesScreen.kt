@@ -5,12 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.medically.core.lectures.setCurrentAudioPlayList
 import com.medically.presentation.component.LoadingProgress
 import com.medically.presentation.component.TransparentAppBar
 import com.medically.presentation.lectures.component.LecturesList
 
 @Composable
-fun LecturesScreen(goBack: () -> Boolean) {
+fun LecturesScreen(goBack: () -> Boolean, goToAudioPlayer: () -> Unit) {
     val viewModel = viewModel<LecturesViewModel>()
     val state by viewModel.state.collectAsState()
     Scaffold(
@@ -26,6 +27,9 @@ fun LecturesScreen(goBack: () -> Boolean) {
         if (state.isLoading)
             LoadingProgress()
         if (!state.isLoading && state.lectures?.isNotEmpty() == true)
-            LecturesList(state.lectures ?: emptyList()) {}
+            LecturesList(state.lectures ?: emptyList()) {
+                viewModel.setCurrentAudioPlayList(it)
+                goToAudioPlayer()
+            }
     }
 }

@@ -30,7 +30,10 @@ import coil.request.SuccessResult
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.medically.media.R
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 const val NOW_PLAYING_CHANNEL_ID = "com.medically.NOW_PLAYING"
 const val NOW_PLAYING_NOTIFICATION_ID = 100 // Arbitrary number used to identify our notification
@@ -42,12 +45,11 @@ const val NOW_PLAYING_NOTIFICATION_ID = 100 // Arbitrary number used to identify
 class MedicallyNotificationManager(
     private val context: Context,
     sessionToken: MediaSessionCompat.Token,
-    notificationListener: PlayerNotificationManager.NotificationListener
+    notificationListener: PlayerNotificationManager.NotificationListener,
+    private val serviceScope: CoroutineScope
 ) {
 
     private val notificationManager: PlayerNotificationManager
-    private val serviceJob = SupervisorJob()
-    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
 
     init {
         val mediaController = MediaControllerCompat(context, sessionToken)

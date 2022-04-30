@@ -12,13 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.medically.model.Lecture
 import com.medically.presentation.R
 import com.medically.presentation.component.LoadImageWithShimmer
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
-fun LectureInfo(imageUrl: String, lecture: Lecture, doctorName: String) {
+fun LectureInfo(
+    imageUrl: String,
+    lectureTitle: String,
+    doctorName: String
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -31,7 +34,7 @@ fun LectureInfo(imageUrl: String, lecture: Lecture, doctorName: String) {
                 .clip(RoundedCornerShape(10.dp)),
         )
         Text(
-            "${lecture.number ?: ""}. ${lecture.name}",
+            lectureTitle,
             style = MaterialTheme.typography.h2.copy(MaterialTheme.colors.onBackground)
         )
         Text(
@@ -46,6 +49,10 @@ fun LectureInfo(imageUrl: String, lecture: Lecture, doctorName: String) {
 @Composable
 fun PreviewLectureInfo() {
     MedicallyTheme {
-        LectureInfo(imageUrl = "", lecture = Lecture("01", "Lecture 1"), doctorName = "Dr. Ahmed")
+        LectureInfo(
+            imageUrl = "",
+            lectureTitle = "Lecture 1",
+            doctorName = "Dr. Ahmed"
+        )
     }
 }

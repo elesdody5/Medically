@@ -32,7 +32,6 @@ data class RemotePdf(
 ) : Pdf()
 
 data class RemoteLecture(
-    override val number: String?,
     override val name: String?,
     override val url: String?,
 ) : Lecture()

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.medically.extensions
+package com.medically.media.extensions
 
 import android.os.SystemClock
 import android.support.v4.media.session.PlaybackStateCompat

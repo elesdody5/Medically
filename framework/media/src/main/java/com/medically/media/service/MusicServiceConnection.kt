@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.medically.audioplayer
+package com.medically.media.service
 
 import android.content.ComponentName
 import android.content.Context
@@ -26,11 +26,13 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import androidx.lifecycle.MutableLiveData
 import androidx.media.MediaBrowserServiceCompat
-import com.medically.audioplayer.MusicServiceConnection.MediaBrowserConnectionCallback
-import com.medically.extensions.id
-import com.medically.mediaservice.NETWORK_FAILURE
+import com.medically.core.player.MusicServiceConnectionPort
+import com.medically.extensions.*
+import com.medically.media.entities.MediaPlaybackState
+import com.medically.media.service.MusicServiceConnection.MediaBrowserConnectionCallback
+import com.medically.model.NowPlayingMetadata
+import com.medically.model.PlaybackState
 import kotlinx.coroutines.flow.*
 
 
@@ -53,19 +55,19 @@ import kotlinx.coroutines.flow.*
  *  parameters, rather than private properties. They're only required to build the
  *  [MediaBrowserConnectionCallback] and [MediaBrowserCompat] objects.
  */
-class MusicServiceConnection(context: Context, serviceComponent: ComponentName) {
-    val isConnected = MutableLiveData<Boolean>()
-        .apply { postValue(false) }
-    val networkFailure = MutableLiveData<Boolean>()
-        .apply { postValue(false) }
+class MusicServiceConnection(context: Context, serviceComponent: ComponentName) :
+    MusicServiceConnectionPort {
+    override val isConnected = MutableStateFlow(false)
+    override val networkFailure = MutableStateFlow(false)
 
-    val rootMediaId: String get() = mediaBrowser.root
+    override val rootMediaId: String get() = mediaBrowser.root
 
-    val playbackState = MutableStateFlow(EMPTY_PLAYBACK_STATE)
+    override val playbackState: MutableStateFlow<PlaybackState?> =
+        MutableStateFlow(null)
 
-    val nowPlaying = MutableStateFlow(NOTHING_PLAYING)
+    override val nowPlaying = MutableStateFlow<NowPlayingMetadata?>(null)
 
-    val transportControls: MediaControllerCompat.TransportControls
+    private val transportControls: MediaControllerCompat.TransportControls
         get() = mediaController.transportControls
 
     private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(context)
@@ -74,7 +76,25 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
         serviceComponent,
         mediaBrowserConnectionCallback, null
     ).apply { connect() }
+
     private lateinit var mediaController: MediaControllerCompat
+
+    override fun play() {
+        transportControls.play()
+    }
+
+    override fun pause() {
+        transportControls.pause()
+    }
+
+    override fun seekTo(position: Long) {
+        transportControls.seekTo(position)
+    }
+
+    //TODO speed not changed need to check
+    override fun setSpeed(speed: Float) {
+        transportControls.setPlaybackSpeed(speed)
+    }
 
     fun subscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
         mediaBrowser.subscribe(parentId, callback)
@@ -87,7 +107,7 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
     fun sendCommand(command: String, parameters: Bundle?) =
         sendCommand(command, parameters) { _, _ -> }
 
-    fun sendCommand(
+    private fun sendCommand(
         command: String,
         parameters: Bundle?,
         resultCallback: ((Int, Bundle?) -> Unit)
@@ -114,28 +134,28 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
                 registerCallback(MediaControllerCallback())
             }
 
-            isConnected.postValue(true)
+            isConnected.value = true
         }
 
         /**
          * Invoked when the client is disconnected from the media browser.
          */
         override fun onConnectionSuspended() {
-            isConnected.postValue(false)
+            isConnected.value = false
         }
 
         /**
          * Invoked when the connection to the media browser failed.
          */
         override fun onConnectionFailed() {
-            isConnected.postValue(false)
+            isConnected.value = false
         }
     }
 
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-            playbackState.value = state ?: EMPTY_PLAYBACK_STATE
+            playbackState.value = MediaPlaybackState(state)
         }
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
@@ -143,10 +163,17 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
             // metadata object which has been instantiated with default values. The default value
             // for media ID is null so we assume that if this value is null we are not playing
             // anything.
-            nowPlaying.value = if (metadata?.id == null) {
-                NOTHING_PLAYING
-            } else {
-                metadata
+            metadata?.let {
+                if (it.id != null) {
+                    nowPlaying.value = NowPlayingMetadata(
+                        it.id!!,
+                        it.trackNumber,
+                        it.albumArtUri.toString(),
+                        it.title?.trim(),
+                        it.displaySubtitle?.trim(),
+                        it.duration
+                    )
+                }
             }
         }
 
@@ -156,7 +183,7 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
         override fun onSessionEvent(event: String?, extras: Bundle?) {
             super.onSessionEvent(event, extras)
             when (event) {
-                NETWORK_FAILURE -> networkFailure.postValue(true)
+                NETWORK_FAILURE -> networkFailure.value = true
             }
         }
 
@@ -171,16 +198,17 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
         }
     }
 
+    companion object {
+        // For Singleton instantiation.
+        @Volatile
+        private var instance: MusicServiceConnection? = null
+
+        fun getInstance(context: Context, serviceComponent: ComponentName) =
+            instance ?: synchronized(this) {
+                instance ?: MusicServiceConnection(context, serviceComponent)
+                    .also { instance = it }
+            }
+    }
 
 }
 
-@Suppress("PropertyName")
-val EMPTY_PLAYBACK_STATE: PlaybackStateCompat = PlaybackStateCompat.Builder()
-    .setState(PlaybackStateCompat.STATE_NONE, 0, 0f)
-    .build()
-
-@Suppress("PropertyName")
-val NOTHING_PLAYING: MediaMetadataCompat = MediaMetadataCompat.Builder()
-    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, "")
-    .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, 0)
-    .build()

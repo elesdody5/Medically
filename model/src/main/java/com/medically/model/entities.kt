@@ -30,7 +30,6 @@ open class Video(
 )
 
 open class Lecture(
-    open val number: String? = null,
     open val name: String? = null,
     open val url: String? = null,
 )
