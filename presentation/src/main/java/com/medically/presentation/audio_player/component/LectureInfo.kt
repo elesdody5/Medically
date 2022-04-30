@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.medically.presentation.R
@@ -35,7 +36,9 @@ fun LectureInfo(
         )
         Text(
             lectureTitle,
-            style = MaterialTheme.typography.h2.copy(MaterialTheme.colors.onBackground)
+            style = MaterialTheme.typography.h2.copy(MaterialTheme.colors.onBackground),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
         Text(
             doctorName,

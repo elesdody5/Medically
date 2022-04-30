@@ -26,10 +26,11 @@ class LecturesRepository(
     }
 
     override suspend fun getCurrentPlayList(): Flow<AudioPlayList> {
-        return preferencesManager.currentAudioPlayList
+        return InMemoryCache.currentPlayList
     }
 
     override suspend fun setCurrentPlayList(audioPlayList: AudioPlayList) {
-        preferencesManager.setCurrentAudioPlayList(audioPlayList)
+        InMemoryCache.currentPlayList.value = audioPlayList
+        //preferencesManager.setCurrentAudioPlayList(audioPlayList)
     }
 }

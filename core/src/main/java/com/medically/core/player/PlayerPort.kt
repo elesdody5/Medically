@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface PlayerPort : PresentationPort<PlayerPortState> {
-    val musicServiceConnection: MusicServiceConnectionPort
     val mediaPosition: MutableStateFlow<Long>
     var updatePosition: Boolean
     val playbackStateCollector: FlowCollector<PlaybackState?>

@@ -167,12 +167,14 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
     ): BrowserRoot {
         coroutineScope.launch {
             repository.getCurrentPlayList().collect { playList ->
-                prepareList(playList)
-                initializePlayer(
-                    itemToPlay = currentPlaylistItems[playList.currentPlayingPosition ?: 0],
-                    playbackStartPositionMs = 0L
-                )
-                notificationManager.showNotificationForPlayer(exoPlayer)
+                if (playList.lectures?.isNotEmpty() == true) {
+                    prepareList(playList)
+                    initializePlayer(
+                        itemToPlay = currentPlaylistItems[playList.currentPlayingPosition ?: 0],
+                        playbackStartPositionMs = 0L
+                    )
+                    notificationManager.showNotificationForPlayer(exoPlayer)
+                }
             }
         }
         /**

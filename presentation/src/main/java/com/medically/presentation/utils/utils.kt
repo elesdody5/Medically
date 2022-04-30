@@ -1,7 +1,7 @@
 package com.medically.presentation.utils
 
 import android.content.Context
-import com.medically.media.R
+import com.medically.presentation.R
 import kotlin.math.floor
 
 const val AUDIO_PLAYLIST = "audio_playlist"

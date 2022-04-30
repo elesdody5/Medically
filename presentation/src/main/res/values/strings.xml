@@ -13,4 +13,6 @@
     <string name="no_video">No Video found for this doctor</string>
     <string name="previous_time">-10sec</string>
     <string name="forward_time">+10sec</string>
+    <string name="duration_unknown">--:--</string>
+    <string name="duration_format">%d:%02d</string>
 </resources>

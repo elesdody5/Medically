@@ -57,7 +57,6 @@ android {
 dependencies {
     implementation project(":core")
     implementation coreKtx
-    implementation project(":framework:media")
     implementation coil
     implementation pager
     implementation webView
