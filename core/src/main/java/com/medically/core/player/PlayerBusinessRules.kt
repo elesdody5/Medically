@@ -27,13 +27,13 @@ fun PlayerPort.onMetaDataChanged(nowPlayingMetadata: NowPlayingMetadata?) {
 
 fun PlayerPort.bindCollector() {
     scope.launch {
-        launch {
-            MediaConnection.musicServiceConnectionPort.playbackState.collect(playbackStateCollector)
-        }
-        launch { MediaConnection.musicServiceConnectionPort.nowPlaying.collect(mediaStateCollector) }
-        checkPlaybackPosition()
+        MediaConnection.musicServiceConnectionPort.playbackState.collect(playbackStateCollector)
     }
+
+    scope.launch { MediaConnection.musicServiceConnectionPort.nowPlaying.collect(mediaStateCollector) }
+    scope.launch { checkPlaybackPosition() }
 }
+
 
 /**
  * Internal function that recursively calls itself every [POSITION_UPDATE_INTERVAL_MILLIS] ms

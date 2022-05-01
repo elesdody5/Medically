@@ -4,12 +4,16 @@ import com.medically.core.entities.BusinessRule
 import com.medically.core.integration.Data
 import com.medically.model.Result
 import com.medically.model.Subject
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.clearAllMocks
+import io.mockk.coEvery
+import io.mockk.coVerifyOrder
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
@@ -93,4 +97,5 @@ class SubjectsAdapter(
     override val state: MutableStateFlow<SubjectsPortState>,
 ) : SubjectsPort {
     override val bindSubjects: BusinessRule = Unit
+    override val bindCurrentPlay: BusinessRule = Unit
 }

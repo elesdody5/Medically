@@ -23,6 +23,7 @@ import com.medically.core.lectures.LecturesRepositoryPort
 import com.medically.media.extensions.*
 import com.medically.media.notification.MedicallyNotificationManager
 import com.medically.media.notification.PlayerNotificationListener
+import com.medically.media.notification.state.NotificationState
 import com.medically.media.notification.state.NotificationState.*
 import com.medically.media.service.state.PlayerState
 import com.medically.model.AudioPlayList
@@ -132,8 +133,8 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
         )
 
         repository = Data.lecturesRepository
-        coroutineScope.launch { observeNotificationState() }
-        coroutineScope.launch { observePlayerEvent() }
+        coroutineScope.launch { playerNotificationListener.notificationState.collect(::observeNotificationState) }
+        coroutineScope.launch { playerListener.playerState.collect(::observePlayerEvent) }
     }
 
     /**
@@ -245,31 +246,29 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
         mediaSessionConnector.setPlayer(exoPlayer)
     }
 
-    private suspend fun observeNotificationState() {
-        playerNotificationListener.notificationState.collect {
-            when (it) {
-                is NotificationPosted -> onNotificationPosted(
-                    it.ongoing,
-                    it.notificationId,
-                    it.notification
-                )
-                is NotificationCancelled -> onNotificationCancelled()
-                else -> {}
-            }
+    private fun observeNotificationState(notificationState: NotificationState?) {
+        when (notificationState) {
+            is NotificationPosted -> onNotificationPosted(
+                notificationState.ongoing,
+                notificationState.notificationId,
+                notificationState.notification
+            )
+            is NotificationCancelled -> onNotificationCancelled()
+            else -> {}
         }
     }
 
-    private suspend fun observePlayerEvent() {
-        playerListener.playerState.collect {
-            when (it) {
-                is PlayerState.IsReady -> onPlayerReady(it.playWhenReady)
-                is PlayerState.NotReady -> notificationManager.hideNotification()
-                is PlayerState.Error -> Toast.makeText(
-                    applicationContext,
-                    it.message,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+    private fun observePlayerEvent(playerState: PlayerState?) {
+        when (playerState) {
+            is PlayerState.IsReady -> onPlayerReady(playerState.playWhenReady)
+            is PlayerState.NotReady -> notificationManager.hideNotification()
+            is PlayerState.Error -> Toast.makeText(
+                applicationContext,
+                playerState.message,
+                Toast.LENGTH_LONG
+            ).show()
+
+            else -> {}
         }
     }
 
