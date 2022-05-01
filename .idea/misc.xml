@@ -34,10 +34,45 @@
         <entry key="../../../../layout/compose-model-1650835264824.xml" value="0.37792207792207794" />
         <entry key="../../../../layout/compose-model-1650836061143.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1650837544679.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1650846541298.xml" value="0.5722222222222222" />
+        <entry key="../../../../layout/compose-model-1650884929880.xml" value="0.5722222222222222" />
+        <entry key="../../../../layout/compose-model-1650886509004.xml" value="0.3559966216216216" />
+        <entry key="../../../../layout/compose-model-1650889223304.xml" value="0.3559966216216216" />
+        <entry key="../../../../layout/compose-model-1650890101311.xml" value="0.3559966216216216" />
+        <entry key="../../../../layout/compose-model-1650891151078.xml" value="0.375" />
+        <entry key="../../../../layout/compose-model-1650892316710.xml" value="0.335" />
+        <entry key="../../../../layout/compose-model-1651258547938.xml" value="0.3559966216216216" />
+        <entry key="../../../../layout/compose-model-1651259300716.xml" value="0.3559966216216216" />
+        <entry key="../../../../layout/compose-model-1651260207037.xml" value="0.44166666666666665" />
+        <entry key="../../../../layout/compose-model-1651260241903.xml" value="0.44166666666666665" />
+        <entry key="../../../../layout/compose-model-1651260811848.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1651277082882.xml" value="0.6194805194805195" />
+        <entry key="../../../../layout/compose-model-1651277405281.xml" value="0.44166666666666665" />
+        <entry key="../../../../layout/compose-model-1651277976014.xml" value="0.44166666666666665" />
+        <entry key="../../../../layout/compose-model-1651278199123.xml" value="0.673728813559322" />
+        <entry key="../../../../layout/compose-model-1651314717532.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1651314718969.xml" value="0.19814814814814816" />
+        <entry key="../../../../layout/compose-model-1651319543071.xml" value="0.2779220779220779" />
+        <entry key="../../../../layout/compose-model-1651323943271.xml" value="0.3022598870056497" />
+        <entry key="../../../../layout/compose-model-1651324963976.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1651325401512.xml" value="0.19814814814814816" />
+        <entry key="../../../../layout/compose-model-1651328967892.xml" value="0.234375" />
+        <entry key="../../../../layout/compose-model-1651329043451.xml" value="0.625" />
+        <entry key="../../../../layout/compose-model-1651330826690.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1651331370586.xml" value="0.25092592592592594" />
+        <entry key="../../../../layout/compose-model-1651331683153.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1651331873245.xml" value="0.1" />
         <entry key="..\:/Users/AlAsudiA/AndroidStudioProjects/projects/Medically/app/src/main/res/layout/activity_main.xml" value="0.2421875" />
         <entry key="..\:/Users/AlAsudiA/AndroidStudioProjects/projects/Medically/app/src/main/res/layout/fragment_audio_player.xml" value="0.2421875" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1355" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1355" />
+        <entry key="presentation/src/main/res/drawable/audio_placeholder.xml" value="0.264" />
         <entry key="presentation/src/main/res/drawable/ic_audo.xml" value="0.309" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_bookmark_border_24.xml" value="0.107" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.252" />
+        <entry key="presentation/src/main/res/drawable/ic_pause.xml" value="0.252" />
         <entry key="presentation/src/main/res/drawable/ic_pdf.xml" value="0.309" />
+        <entry key="presentation/src/main/res/drawable/ic_seck_forward.xml" value="0.252" />
       </map>
     </option>
   </component>

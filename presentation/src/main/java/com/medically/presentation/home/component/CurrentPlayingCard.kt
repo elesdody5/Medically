@@ -10,23 +10,30 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.medically.presentation.R
+import com.medically.presentation.home.component.player.CurrentPlaying
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
-fun CurrentPlayingCard(modifier: Modifier = Modifier, onValueChanged: (String) -> Unit) {
+fun CurrentPlayingCard(
+    modifier: Modifier = Modifier,
+    title: String?,
+    subTitle: String?,
+    onValueChanged: (String) -> Unit,
+) {
     var isExpanded by remember { mutableStateOf(false) }
-    Card(
-        modifier = modifier
-            .height(240.dp),
+    Surface(
+        modifier = modifier,
         shape = RoundedCornerShape(20.dp),
-        backgroundColor = MaterialTheme.colors.surface
+        color = MaterialTheme.colors.surface
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
             Row(
@@ -54,7 +61,14 @@ fun CurrentPlayingCard(modifier: Modifier = Modifier, onValueChanged: (String) -
             }
             Text(
                 stringResource(id = R.string.continue_listen),
-                color = MaterialTheme.colors.onBackground
+                style = TextStyle(fontSize = 16.sp, color = MaterialTheme.colors.onBackground)
+            )
+            CurrentPlaying(
+                title = title,
+                subTitle = subTitle,
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 9.dp, bottom = 20.dp)
             )
         }
     }
@@ -64,6 +78,6 @@ fun CurrentPlayingCard(modifier: Modifier = Modifier, onValueChanged: (String) -
 @Composable
 fun PreviewCurrentPlayCard() {
     MedicallyTheme {
-        CurrentPlayingCard(){}
+        CurrentPlayingCard(title = "", subTitle = "") {}
     }
 }

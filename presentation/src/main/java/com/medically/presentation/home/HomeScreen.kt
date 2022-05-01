@@ -15,7 +15,6 @@ import com.medically.core.subjects.filterBySubject
 import com.medically.core.subjects.filterByYears
 import com.medically.core.subjects.saveCurrentSubject
 import com.medically.core.subjects.searchSubject
-import com.medically.model.Subject
 import com.medically.presentation.home.component.CurrentPlayingCard
 import com.medically.presentation.home.component.Filters
 import com.medically.presentation.home.component.subjectList.ShimmerSubjectList
@@ -30,30 +29,37 @@ fun HomeScreen(navigateToChapters: () -> Unit) {
     val subjectsList = allSubjects.values.flatten().map { it.name }.distinct()
     Scaffold {
         Column(
-            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
             CurrentPlayingCard(
                 Modifier.fillMaxWidth(),
+                state.currentPlay?.title,
+                state.currentPlay?.subtitle,
                 onValueChanged = viewModel::searchSubject
             )
-            Filters(
-                years = years.toList(),
-                subjects = subjectsList,
-                onYearSelected = viewModel::filterByYears,
-                onSubjectSelected = viewModel::filterBySubject,
-            )
-            if (state.isLoading)
-                ShimmerSubjectList()
-
-            if (!state.isLoading)
-                SubjectsList(
-                    subjects = state.filteredSubjects,
-                    onSubjectSelected = {
-                        viewModel.saveCurrentSubject(it)
-                        navigateToChapters()
-                    }
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(18.dp)
+            ) {
+                Filters(
+                    years = years.toList(),
+                    subjects = subjectsList,
+                    onYearSelected = viewModel::filterByYears,
+                    onSubjectSelected = viewModel::filterBySubject,
                 )
+
+                if (state.isLoading)
+                    ShimmerSubjectList()
+
+                if (!state.isLoading)
+                    SubjectsList(
+                        subjects = state.filteredSubjects,
+                        onSubjectSelected = {
+                            viewModel.saveCurrentSubject(it)
+                            navigateToChapters()
+                        }
+                    )
+            }
         }
     }
 }

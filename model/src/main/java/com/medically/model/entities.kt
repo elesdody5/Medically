@@ -30,15 +30,14 @@ open class Video(
 )
 
 open class Lecture(
-    open val number: String? = null,
     open val name: String? = null,
     open val url: String? = null,
 )
 
 open class AudioPlayList(
-    open val lecture: List<Lecture>,
-    open val lecturePosition: Int,
-    open val chapter: Chapter,
-    open val doctor: Doctor,
-    open val subject: Subject
+    open val lectures: List<Lecture>? = null,
+    open val currentPlayingPosition: Int? = null,
+    open val chapter: Chapter? = null,
+    open val doctor: Doctor? = null,
+    open val subject: Subject? = null
 ) 

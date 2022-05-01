@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.medically.nav.MedicallyScreens.*
+import com.medically.presentation.audio_player.AudioPlayerScreen
 import com.medically.presentation.home.HomeScreen
 import com.medically.presentation.lectures.LecturesScreen
 import com.medically.presentation.subject_details.SubjectDetailsScreen
@@ -42,7 +43,12 @@ fun MedicallyNavHost() {
                     )
                 }
                 composable(LecturesScreen.name) {
-                    LecturesScreen(goBack = navController::popBackStack)
+                    LecturesScreen(goBack = navController::popBackStack) {
+                        navController.navigate(AudioPlayerScreen.name)
+                    }
+                }
+                composable(AudioPlayerScreen.name) {
+                    AudioPlayerScreen(goBack = navController::popBackStack)
                 }
             }
         }

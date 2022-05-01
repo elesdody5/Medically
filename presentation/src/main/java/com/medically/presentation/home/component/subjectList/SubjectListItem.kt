@@ -12,13 +12,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.medically.model.Subject
+import com.medically.presentation.component.LoadImageWithShimmer
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
@@ -35,18 +32,10 @@ fun SubjectListItem(subject: Subject, onSubjectSelected: (Subject) -> Unit) {
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(subject.icon)
-                    .crossfade(true)
-                    .crossfade(300)
-                    .allowHardware(true)
-                    .build(),
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
+            LoadImageWithShimmer(
+                imageUrl = subject.icon, modifier = Modifier
                     .size(35.dp, 35.dp)
-                    .padding(end = 13.dp),
-                contentDescription = null
+                    .padding(end = 13.dp)
             )
             Text(subject.name, color = MaterialTheme.colors.onBackground)
         }

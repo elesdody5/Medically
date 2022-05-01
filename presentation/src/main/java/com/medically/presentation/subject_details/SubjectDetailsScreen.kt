@@ -44,14 +44,13 @@ fun SubjectDetailsScreen(goBack: () -> Boolean, navigateToLectures: () -> Unit) 
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
-            SubjectDetailsRow(
-                pagerState = pagerState,
-            )
+            SubjectDetailsRow { index -> pagerState.animateScrollToPage(index) }
 
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.weight(1f),
-                count = tabData.size
+                count = tabData.size,
+                userScrollEnabled = false
             ) { index ->
                 when (index) {
                     0 -> ChaptersScreen(state.isLoading, state.chapters, navigateToLectures)

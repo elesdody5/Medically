@@ -95,10 +95,11 @@ object FirebaseImp : NetworkServices {
     override suspend fun getLectures(chapter: String): ApiResponse<List<Lecture>> {
         runCatching {
             val lecturesCollection = doctorCollection.document(chapter).collection("Lectures")
-            val lectures = lecturesCollection.get().await().documents.mapIndexed { index, doc ->
+            val lectures = lecturesCollection.get().await().documents.map { doc ->
+                val name = doc.getString("name")
+                val index = name?.indexOf("-") ?: 0
                 RemoteLecture(
-                    doc.getString("name")?.split("-")?.get(0),
-                    doc.getString("name")?.split("-")?.get(1),
+                    name?.substring(index + 1),
                     doc.getString("url"),
                 )
             }

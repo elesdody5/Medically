@@ -17,7 +17,7 @@ fun PdfList(pdfs: List<Pdf>) {
     LazyColumn(
         modifier = Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp),
         contentPadding = PaddingValues(10.dp),
-        verticalArrangement = Arrangement.spacedBy(48.dp)
+        verticalArrangement = Arrangement.spacedBy(48.dp),
     ) {
         items(pdfs) {
             PdfListItem(pdf = it)

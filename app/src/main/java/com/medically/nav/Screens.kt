@@ -7,7 +7,8 @@ enum class MedicallyScreens {
     HomeScreen,
     SubjectDetailsScreen,
     LecturesScreen,
-    ChaptersScreen;
+    ChaptersScreen,
+    AudioPlayerScreen;
 
 
     companion object {
@@ -17,6 +18,7 @@ enum class MedicallyScreens {
                 SubjectDetailsScreen.name -> SubjectDetailsScreen
                 ChaptersScreen.name -> ChaptersScreen
                 LecturesScreen.name -> LecturesScreen
+                AudioPlayerScreen.name -> AudioPlayerScreen
                 null -> HomeScreen
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }
