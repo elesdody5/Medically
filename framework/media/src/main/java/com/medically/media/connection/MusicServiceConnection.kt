@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.medically.media.service
+package com.medically.media.connection
 
 import android.content.ComponentName
 import android.content.Context
@@ -25,15 +25,19 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media.MediaBrowserServiceCompat
 import com.medically.core.player.MusicServiceConnectionPort
-import com.medically.extensions.*
+import com.medically.media.connection.states.MediaBrowserState
+import com.medically.media.connection.states.MediaControllerState.*
 import com.medically.media.entities.MediaPlaybackState
-import com.medically.media.service.MusicServiceConnection.MediaBrowserConnectionCallback
+import com.medically.media.extensions.*
+import com.medically.media.service.NETWORK_FAILURE
 import com.medically.model.NowPlayingMetadata
 import com.medically.model.PlaybackState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 
 /**
@@ -55,8 +59,10 @@ import kotlinx.coroutines.flow.*
  *  parameters, rather than private properties. They're only required to build the
  *  [MediaBrowserConnectionCallback] and [MediaBrowserCompat] objects.
  */
-class MusicServiceConnection(context: Context, serviceComponent: ComponentName) :
-    MusicServiceConnectionPort {
+class MusicServiceConnection(
+    private val context: Context,
+    serviceComponent: ComponentName
+) : MusicServiceConnectionPort {
     override val isConnected = MutableStateFlow(false)
     override val networkFailure = MutableStateFlow(false)
 
@@ -71,6 +77,7 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
         get() = mediaController.transportControls
 
     private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(context)
+
     private val mediaBrowser = MediaBrowserCompat(
         context,
         serviceComponent,
@@ -78,6 +85,13 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
     ).apply { connect() }
 
     private lateinit var mediaController: MediaControllerCompat
+    private val mediaControllerCallback = MediaControllerCallback()
+    private val connectionScope = CoroutineScope(Dispatchers.Main)
+
+    init {
+        connectionScope.launch { observeOnMediaBrowserConnection() }
+        connectionScope.launch { observeOnMediaController() }
+    }
 
     override fun play() {
         transportControls.play()
@@ -122,79 +136,53 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
         false
     }
 
-    private inner class MediaBrowserConnectionCallback(private val context: Context) :
-        MediaBrowserCompat.ConnectionCallback() {
-        /**
-         * Invoked after [MediaBrowserCompat.connect] when the request has successfully
-         * completed.
-         */
-        override fun onConnected() {
-            // Get a MediaController for the MediaSession.
-            mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
-                registerCallback(MediaControllerCallback())
+    private suspend fun observeOnMediaBrowserConnection() {
+        mediaBrowserConnectionCallback.mediaBrowserConnectionState.collect {
+            when (it) {
+                is MediaBrowserState.IsConnected -> onConnected()
+                is MediaBrowserState.OnConnectionFailed -> isConnected.value = false
+                is MediaBrowserState.OnConnectionSuspended -> isConnected.value = false
             }
-
-            isConnected.value = true
-        }
-
-        /**
-         * Invoked when the client is disconnected from the media browser.
-         */
-        override fun onConnectionSuspended() {
-            isConnected.value = false
-        }
-
-        /**
-         * Invoked when the connection to the media browser failed.
-         */
-        override fun onConnectionFailed() {
-            isConnected.value = false
         }
     }
 
-    private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
-
-        override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-            playbackState.value = MediaPlaybackState(state)
-        }
-
-        override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
-            // When ExoPlayer stops we will receive a callback with "empty" metadata. This is a
-            // metadata object which has been instantiated with default values. The default value
-            // for media ID is null so we assume that if this value is null we are not playing
-            // anything.
-            metadata?.let {
-                if (it.id != null) {
-                    nowPlaying.value = NowPlayingMetadata(
-                        it.id!!,
-                        it.trackNumber,
-                        it.albumArtUri.toString(),
-                        it.title?.trim(),
-                        it.displaySubtitle?.trim(),
-                        it.duration
-                    )
-                }
+    private suspend fun observeOnMediaController() {
+        mediaControllerCallback.mediaControllerState.collect {
+            when (it) {
+                is PlaybackStateChanged -> playbackState.value = MediaPlaybackState(it.state)
+                is MetadataChanged -> metaDataChanged(it.metadata)
+                is SessionEvent -> onSessionEvent(it.event)
+                is SessionDestroyed -> isConnected.value = false
             }
         }
+    }
 
-        override fun onQueueChanged(queue: MutableList<MediaSessionCompat.QueueItem>?) {
+    private fun onConnected() {
+        // Get a MediaController for the MediaSession.
+        mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
+            registerCallback(mediaControllerCallback)
         }
+        isConnected.value = true
+    }
 
-        override fun onSessionEvent(event: String?, extras: Bundle?) {
-            super.onSessionEvent(event, extras)
-            when (event) {
-                NETWORK_FAILURE -> networkFailure.value = true
+    private fun metaDataChanged(metadata: MediaMetadataCompat?) {
+        metadata?.let {
+            if (it.id != null) {
+                nowPlaying.value = NowPlayingMetadata(
+                    it.id!!,
+                    it.trackNumber,
+                    it.albumArtUri.toString(),
+                    it.title?.trim(),
+                    it.displaySubtitle?.trim(),
+                    it.duration
+                )
             }
         }
+    }
 
-        /**
-         * Normally if a [MediaBrowserServiceCompat] drops its connection the callback comes via
-         * [MediaControllerCompat.Callback] (here). But since other connection status events
-         * are sent to [MediaBrowserCompat.ConnectionCallback], we catch the disconnect here and
-         * send it on to the other callback.
-         */
-        override fun onSessionDestroyed() {
-            mediaBrowserConnectionCallback.onConnectionSuspended()
+    private fun onSessionEvent(event: String?) {
+        when (event) {
+            NETWORK_FAILURE -> networkFailure.value = true
         }
     }
 

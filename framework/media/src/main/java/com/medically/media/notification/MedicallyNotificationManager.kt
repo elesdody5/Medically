@@ -24,7 +24,6 @@ import android.net.Uri
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import coil.ImageLoader
-import coil.request.CachePolicy
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.google.android.exoplayer2.Player
@@ -119,7 +118,6 @@ class MedicallyNotificationManager(
                 val request = ImageRequest.Builder(context)
                     .data(uri)
                     .allowHardware(false) // Disable hardware bitmaps.
-                    .diskCachePolicy(CachePolicy.ENABLED)
                     .size(NOTIFICATION_LARGE_ICON_SIZE)
                     .build()
 

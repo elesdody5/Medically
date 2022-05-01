@@ -20,7 +20,7 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class ChaptersBusinessRulesTest {
+class SubjectDetailsPorttest {
     private val dispatcher = UnconfinedTestDispatcher()
     private val coroutineScope: CoroutineScope = TestScope(dispatcher)
 
@@ -32,12 +32,12 @@ class ChaptersBusinessRulesTest {
 
     private lateinit var adapter: ChaptersAdapter
     private val chapters =
-        listOf<Chapter>(
+        listOf(
             Chapter(name = "chapter1", doctorName = "ahmed"),
             Chapter(name = "chapter2", doctorName = "mohamed")
         )
     private val doctors =
-        listOf<Doctor>(
+        listOf(
             Doctor(name = "ahmed", subjectId = "1"),
             Doctor(name = "mohamed", subjectId = "1")
         )

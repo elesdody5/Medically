@@ -7,4 +7,4 @@ private const val Forth_YEAR = "Fourth Year"
 private const val Fifth_YEAR = "FifthYear"
 private const val Sixth_YEAR = "Sixth Year"
 
-val years = listOf<String>(FIRST_YEAR, Second_YEAR, Third_YEAR, Forth_YEAR, Fifth_YEAR, Sixth_YEAR)
+val years = listOf(FIRST_YEAR, Second_YEAR, Third_YEAR, Forth_YEAR, Fifth_YEAR, Sixth_YEAR)

@@ -2,9 +2,7 @@ package com.medically.data.repository
 
 import com.medically.core.lectures.LecturesRepositoryPort
 import com.medically.data.InMemoryCache
-import com.medically.data.integration.PreferencesDataSources
 import com.medically.data.integration.RemoteDataSources
-import com.medically.data.preferences.PreferencesManager
 import com.medically.data.remote.LecturesRemoteDataSource
 import com.medically.model.AudioPlayList
 import com.medically.model.Lecture
@@ -13,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 
 class LecturesRepository(
     private val lecturesRemoteDataSource: LecturesRemoteDataSource = RemoteDataSources.lecturesRemoteDataSource,
-    private val preferencesManager: PreferencesManager = PreferencesDataSources.preferencesManager
 ) : LecturesRepositoryPort {
     override suspend fun getChapterLectures(): Result<List<Lecture>?> {
         val chapter = InMemoryCache.currentChapter

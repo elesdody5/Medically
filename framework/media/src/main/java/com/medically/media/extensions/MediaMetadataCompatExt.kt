@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.medically.extensions
+package com.medically.media.extensions
 
 import android.graphics.Bitmap
 import android.net.Uri
@@ -24,7 +24,6 @@ import android.support.v4.media.MediaMetadataCompat
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
-import com.medically.media.extensions.toUri
 import com.medically.model.Chapter
 import com.medically.model.Lecture
 

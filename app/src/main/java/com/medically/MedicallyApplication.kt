@@ -8,16 +8,13 @@ import com.medically.data.repository.DoctorsRepository
 import com.medically.data.repository.LecturesRepository
 import com.medically.data.repository.SubjectDetailsRepository
 import com.medically.data.repository.SubjectsRepository
+import com.medically.media.connection.MusicServiceConnection
 import com.medically.media.service.MediaPlaybackService
-import com.medically.media.service.MusicServiceConnection
-import com.medically.preferences.PreferencesImp
 import com.medically.remote.data_source.DoctorsRemoteDataSourceImp
 import com.medically.remote.data_source.LecturesRemoteDataSourceImp
 import com.medically.remote.data_source.SubjectDetailsRemoteDataSourceImp
 import com.medically.remote.data_source.SubjectsRemoteDataSourceImp
-import dagger.hilt.android.HiltAndroidApp
 
-@HiltAndroidApp
 class MedicallyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
@@ -30,7 +27,6 @@ class MedicallyApplication : Application() {
             with doctorsRemoteDataSource DoctorsRemoteDataSourceImp()
             with chaptersRemoteDataSource SubjectDetailsRemoteDataSourceImp()
             with lecturesRemoteDataSource LecturesRemoteDataSourceImp()
-            with preferencesManager PreferencesImp(this@MedicallyApplication)
         }
 
         coreIntegration {

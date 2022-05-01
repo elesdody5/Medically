@@ -17,12 +17,14 @@ import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ext.mediasession.TimelineQueueNavigator
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.upstream.DefaultDataSource
 import com.medically.core.integration.Data
 import com.medically.core.lectures.LecturesRepositoryPort
-import com.medically.extensions.*
+import com.medically.media.extensions.*
 import com.medically.media.notification.MedicallyNotificationManager
+import com.medically.media.notification.PlayerNotificationListener
+import com.medically.media.notification.state.NotificationState.*
+import com.medically.media.service.state.PlayerState
 import com.medically.model.AudioPlayList
 import kotlinx.coroutines.*
 
@@ -52,8 +54,7 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
     private lateinit var repository: LecturesRepositoryPort
     lateinit var notificationManager: MedicallyNotificationManager
 
-
-    lateinit var mediaSession: MediaSessionCompat
+    private lateinit var mediaSession: MediaSessionCompat
 
     private lateinit var mediaSessionConnector: MediaSessionConnector
     private var currentPlaylistItems: List<MediaMetadataCompat> = emptyList()
@@ -66,7 +67,8 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
     private var isForegroundService = false
 
 
-    var playerListener: PlayerEventListener = PlayerEventListener()
+    private var playerListener: PlayerEventListener = PlayerEventListener()
+    private val playerNotificationListener = PlayerNotificationListener()
 
     private val uAmpAudioAttributes = AudioAttributes.Builder()
         .setContentType(C.CONTENT_TYPE_MUSIC)
@@ -125,12 +127,13 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
         notificationManager = MedicallyNotificationManager(
             this,
             mediaSession.sessionToken,
-            PlayerNotificationListener(),
+            playerNotificationListener,
             coroutineScope
         )
 
         repository = Data.lecturesRepository
-
+        coroutineScope.launch { observeNotificationState() }
+        coroutineScope.launch { observePlayerEvent() }
     }
 
     /**
@@ -170,8 +173,7 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
                 if (playList.lectures?.isNotEmpty() == true) {
                     prepareList(playList)
                     initializePlayer(
-                        itemToPlay = currentPlaylistItems[playList.currentPlayingPosition ?: 0],
-                        playbackStartPositionMs = 0L
+                        itemToPlay = currentPlaylistItems[playList.currentPlayingPosition ?: 0]
                     )
                     notificationManager.showNotificationForPlayer(exoPlayer)
                 }
@@ -200,7 +202,7 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
         /**
          * If the caller requests the recent root, return the most recently played song.
          */
-        Log.i(LOG_TAG, "onlOadchildren")
+        Log.i(LOG_TAG, "onLoadChildren")
         val children = currentPlaylistItems.map { item ->
             MediaItem(item.description, item.flag)
         }
@@ -228,7 +230,7 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
 
     private fun initializePlayer(
         itemToPlay: MediaMetadataCompat?,
-        playbackStartPositionMs: Long
+        playbackStartPositionMs: Long = 0
     ) {
         // Since the playlist was probably based on some ordering (such as tracks
         // on an album), find which window index to play first so that the song the
@@ -243,72 +245,65 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
         mediaSessionConnector.setPlayer(exoPlayer)
     }
 
-
-    /**
-     * Listen for notification events.
-     */
-    inner class PlayerNotificationListener :
-        PlayerNotificationManager.NotificationListener {
-        override fun onNotificationPosted(
-            notificationId: Int,
-            notification: Notification,
-            ongoing: Boolean
-        ) {
-            if (ongoing && !isForegroundService) {
-                ContextCompat.startForegroundService(
-                    applicationContext,
-                    Intent(applicationContext, this@MediaPlaybackService.javaClass)
+    private suspend fun observeNotificationState() {
+        playerNotificationListener.notificationState.collect {
+            when (it) {
+                is NotificationPosted -> onNotificationPosted(
+                    it.ongoing,
+                    it.notificationId,
+                    it.notification
                 )
-
-                startForeground(notificationId, notification)
-                isForegroundService = true
+                is NotificationCancelled -> onNotificationCancelled()
+                else -> {}
             }
-        }
-
-        override fun onNotificationCancelled(
-            notificationId: Int,
-            dismissedByUser: Boolean
-        ) {
-            stopForeground(true)
-            isForegroundService = false
-            stopSelf()
         }
     }
 
-    /**
-     * Listen for events from ExoPlayer.
-     */
-    inner class PlayerEventListener : Player.Listener {
-        @Deprecated("Deprecated in Java")
-        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-            when (playbackState) {
-                Player.STATE_BUFFERING,
-                Player.STATE_READY -> {
-                    notificationManager.showNotificationForPlayer(exoPlayer)
-                    if (playbackState == Player.STATE_READY) {
-                        if (!playWhenReady) {
-                            // If playback is paused we remove the foreground state which allows the
-                            // notification to be dismissed. An alternative would be to provide a
-                            // "close" button in the notification which stops playback and clears
-                            // the notification.
-                            stopForeground(false)
-                            isForegroundService = false
-                        }
-                    }
-                }
-                else -> {
-                    notificationManager.hideNotification()
-                }
+    private suspend fun observePlayerEvent() {
+        playerListener.playerState.collect {
+            when (it) {
+                is PlayerState.IsReady -> onPlayerReady(it.playWhenReady)
+                is PlayerState.NotReady -> notificationManager.hideNotification()
+                is PlayerState.Error -> Toast.makeText(
+                    applicationContext,
+                    it.message,
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
+    }
 
-        override fun onPlayerError(error: PlaybackException) {
-            val message = error.message
-            Toast.makeText(
+    private fun onNotificationPosted(
+        ongoing: Boolean,
+        notificationId: Int,
+        notification: Notification
+    ) {
+        if (ongoing && !isForegroundService) {
+            ContextCompat.startForegroundService(
                 applicationContext,
-                message,
-                Toast.LENGTH_LONG
-            ).show()
+                Intent(applicationContext, this@MediaPlaybackService.javaClass)
+            )
+
+            startForeground(notificationId, notification)
+            isForegroundService = true
+        }
+    }
+
+    private fun onNotificationCancelled() {
+        stopForeground(true)
+        isForegroundService = false
+        stopSelf()
+    }
+
+    private fun onPlayerReady(playWhenReady: Boolean) {
+        notificationManager.showNotificationForPlayer(exoPlayer)
+        if (!playWhenReady) {
+            // If playback is paused we remove the foreground state which allows the
+            // notification to be dismissed. An alternative would be to provide a
+            // "close" button in the notification which stops playback and clears
+            // the notification.
+            stopForeground(false)
+            isForegroundService = false
         }
     }
 
