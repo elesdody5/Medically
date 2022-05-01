@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TransparentAppBar(
-    goBack: () -> Unit,
-    menuOptions: List<String>,
-    menuPlaceHolder: String,
-    onMenuSelect: (String) -> Unit,
+    goBack: () -> Boolean,
+    menuOptions: List<String>? = null,
+    menuPlaceHolder: String? = null,
+    onMenuSelect: ((String) -> Unit)? = null,
     title: String,
     subTitle: String
 ) {
@@ -29,7 +29,8 @@ fun TransparentAppBar(
         elevation = 0.dp,
         modifier = Modifier.height(80.dp)
     ) {
-        IconButton(onClick = goBack) {
+        val titleWidth = if (menuOptions != null) Modifier.width(100.dp) else Modifier
+        IconButton(onClick = { goBack() }) {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back",
@@ -44,17 +45,18 @@ fun TransparentAppBar(
             )
             Text(
                 subTitle,
-                modifier = Modifier.width(100.dp),
+                modifier = titleWidth,
                 style = TextStyle(fontSize = 22.sp),
                 color = MaterialTheme.colors.onBackground,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
         }
-        DropDownMenu(
-            options = menuOptions,
-            placeHolder = menuPlaceHolder,
-            onItemSelected = onMenuSelect
-        )
+        if (menuOptions != null && menuPlaceHolder != null && onMenuSelect != null)
+            DropDownMenu(
+                options = menuOptions,
+                placeHolder = menuPlaceHolder,
+                onItemSelected = onMenuSelect
+            )
     }
 }

@@ -1,6 +1,7 @@
 package com.medically.core.integration
 
 import com.medically.core.doctors.DoctorsRepositoryPort
+import com.medically.core.lectures.LecturesRepositoryPort
 import com.medically.core.subject_details.SubjectDetailsRepositoryPort
 import com.medically.core.subjects.SubjectsRepositoryPort
 import com.medically.core.tracking.Logger
@@ -33,6 +34,11 @@ object CoreIntegrator {
     @CoreIntegration
     infix fun subjectDetailsRepository(repository: SubjectDetailsRepositoryPort) {
         Data.subjectDetailsRepository = repository
+    }
+
+    @CoreIntegration
+    infix fun lecturesRepository(repository: LecturesRepositoryPort) {
+        Data.lecturesRepository = repository
     }
 
     @CoreIntegration

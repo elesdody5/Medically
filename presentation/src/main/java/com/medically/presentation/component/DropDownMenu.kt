@@ -43,7 +43,7 @@ fun DropDownMenu(
                         expanded = expanded
                     )
                 },
-                textStyle = TextStyle(fontSize = 14.sp, textAlign = TextAlign.Center),
+                textStyle = TextStyle(fontSize = 14.sp, textAlign = TextAlign.Start),
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = MaterialTheme.colors.secondaryVariant,
                     disabledTextColor = MaterialTheme.colors.secondaryVariant,

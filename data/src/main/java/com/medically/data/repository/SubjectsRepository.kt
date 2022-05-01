@@ -7,7 +7,7 @@ import com.medically.data.remote.SubjectsRemoteDataSource
 import com.medically.model.Result
 import com.medically.model.Subject
 
-class SubjectsRepositoryImp(
+class SubjectsRepository(
     private val subjectsDataSource: SubjectsRemoteDataSource = RemoteDataSources.subjectsDataSource
 ) : SubjectsRepositoryPort {
     override suspend fun getAllSubjects(): Result<List<Subject>?> {

@@ -1,5 +1,6 @@
 package com.medically.presentation.chapters.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -11,23 +12,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.medically.model.Chapter
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
-fun ChapterListItem(chapter: Chapter) {
+fun ChapterListItem(chapter: Chapter, onChapterSelected: (Chapter) -> Unit) {
     Card(
         backgroundColor = Color.White,
+        elevation = 5.dp,
         modifier = Modifier
             .height(210.dp)
             .width(152.dp)
+            .clickable { onChapterSelected(chapter) }
     ) {
         Column(modifier = Modifier) {
             SubcomposeAsyncImage(
@@ -61,7 +61,7 @@ fun ChapterListItem(chapter: Chapter) {
 @Preview
 fun PreviewChapterListItem() {
     MedicallyTheme {
-        ChapterListItem(chapter = Chapter(name = "Abdomen"))
+        ChapterListItem(chapter = Chapter(name = "Abdomen")) {}
     }
 }
 

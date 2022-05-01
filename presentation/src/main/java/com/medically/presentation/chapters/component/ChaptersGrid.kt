@@ -14,7 +14,7 @@ import com.medically.presentation.ui.theme.MedicallyTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ChaptersGrid(chapters: List<Chapter>) {
+fun ChaptersGrid(chapters: List<Chapter>, onChapterSelected: (Chapter) -> Unit) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),
         contentPadding = PaddingValues(15.dp),
@@ -22,7 +22,7 @@ fun ChaptersGrid(chapters: List<Chapter>) {
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(chapters) {
-            ChapterListItem(chapter = it)
+            ChapterListItem(chapter = it, onChapterSelected)
         }
     }
 }
@@ -38,6 +38,6 @@ fun PreviewChaptersGrid() {
                 Chapter(name = "Abdomen"),
                 Chapter(name = "Abdomen"),
             )
-        )
+        ) {}
     }
 }

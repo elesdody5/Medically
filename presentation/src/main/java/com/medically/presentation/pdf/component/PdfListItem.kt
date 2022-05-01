@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.medically.model.Pdf
 import com.medically.presentation.R
@@ -23,16 +24,19 @@ fun PdfListItem(pdf: Pdf) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row {
+        Row(modifier = Modifier.weight(2f)) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_pdf),
                 tint = MaterialTheme.colors.primary,
                 contentDescription = "pdf",
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier
+                    .padding(end = 8.dp)
             )
             Text(
                 pdf.name ?: "",
-                color = MaterialTheme.colors.onBackground, maxLines = 1
+                color = MaterialTheme.colors.onBackground,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
 

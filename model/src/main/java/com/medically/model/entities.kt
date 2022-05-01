@@ -1,6 +1,5 @@
 package com.medically.model
 
-import java.io.Serializable
 open class Subject(
     open val id: String = "",
     open val name: String = "",
@@ -31,10 +30,9 @@ open class Video(
 )
 
 open class Lecture(
-    open val number: Int?,
+    open val number: String? = null,
     open val name: String? = null,
     open val url: String? = null,
-    open val size: Long?,
 )
 
 open class AudioPlayList(

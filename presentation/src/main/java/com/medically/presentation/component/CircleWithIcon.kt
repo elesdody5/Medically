@@ -21,11 +21,11 @@ fun CircleWithIcon(
     contentDescription: String?,
 ) {
     Box(modifier) {
-        Circle(size = circleSize, color = circleColor)
+        Circle(size = circleSize, color = circleColor, modifier = modifier)
         Icon(
             painter = painterResource(id = iconId),
             contentDescription = contentDescription,
-            Modifier.align(
+            modifier.align(
                 Alignment.Center
             ),
             tint = iconColor,

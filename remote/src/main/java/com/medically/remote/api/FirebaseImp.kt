@@ -92,4 +92,21 @@ object FirebaseImp : NetworkServices {
         return ApiResponse(Exception("Unknown"))
     }
 
+    override suspend fun getLectures(chapter: String): ApiResponse<List<Lecture>> {
+        runCatching {
+            val lecturesCollection = doctorCollection.document(chapter).collection("Lectures")
+            val lectures = lecturesCollection.get().await().documents.mapIndexed { index, doc ->
+                RemoteLecture(
+                    doc.getString("name")?.split("-")?.get(0),
+                    doc.getString("name")?.split("-")?.get(1),
+                    doc.getString("url"),
+                )
+            }
+            return ApiResponse(data = lectures)
+        }.onFailure {
+            return ApiResponse(it)
+        }
+        return ApiResponse(Exception("Unknown"))
+    }
+
 }

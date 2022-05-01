@@ -1,6 +1,7 @@
 package com.medically.data.integration
 
 import com.medically.data.remote.DoctorsRemoteDataSource
+import com.medically.data.remote.LecturesRemoteDataSource
 import com.medically.data.remote.SubjectDetailsRemoteDataSource
 import com.medically.data.remote.SubjectsRemoteDataSource
 
@@ -31,6 +32,11 @@ object DataIntegrator {
     @DataIntegration
     infix fun chaptersRemoteDataSource(remoteDataSource: SubjectDetailsRemoteDataSource) {
         RemoteDataSources.subjectDetailsRemoteDataSource = remoteDataSource
+    }
+
+    @DataIntegration
+    infix fun lecturesRemoteDataSource(remoteDataSource: LecturesRemoteDataSource) {
+        RemoteDataSources.lecturesRemoteDataSource = remoteDataSource
     }
 
 }

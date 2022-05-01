@@ -27,6 +27,9 @@ fun SubjectDetailsPort.bindCurrentSubject() {
 
 @BusinessRules
 fun SubjectDetailsPort.bindDoctorMaterials(doctorName: String) {
+    state.value.doctors.find { it?.name == doctorName }
+        ?.also { Data.doctorsRepository.saveCurrentDoctor(it) }
+
     bindChapters(doctorName)
     bindPdfs(doctorName)
     bindVideos(doctorName)

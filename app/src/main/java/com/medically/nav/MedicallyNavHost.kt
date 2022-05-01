@@ -8,9 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.medically.MedicallyScreens
-import com.medically.MedicallyScreens.*
+import com.medically.nav.MedicallyScreens.*
 import com.medically.presentation.home.HomeScreen
+import com.medically.presentation.lectures.LecturesScreen
 import com.medically.presentation.subject_details.SubjectDetailsScreen
 import com.medically.presentation.ui.theme.MedicallyTheme
 
@@ -36,9 +36,13 @@ fun MedicallyNavHost() {
                 composable(
                     route = SubjectDetailsScreen.name,
                 ) {
-                    SubjectDetailsScreen {
-                        navController.popBackStack()
-                    }
+                    SubjectDetailsScreen(
+                        goBack = navController::popBackStack,
+                        navigateToLectures = { navController.navigate(LecturesScreen.name) }
+                    )
+                }
+                composable(LecturesScreen.name) {
+                    LecturesScreen(goBack = navController::popBackStack)
                 }
             }
         }
