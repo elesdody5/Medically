@@ -1,0 +1,11 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+apply from: '../dependencies.gradle'
+
+java {
+    sourceCompatibility = java_version
+    targetCompatibility = java_version
+}
+

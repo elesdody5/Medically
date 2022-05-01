@@ -1,0 +1,112 @@
+ext.versions = [
+
+        kotlin            : '1.6.10',
+        coroutines        : '1.6.1',
+        firebase          : '29.0.0',
+        appcompatx        : '1.4.1',
+        coil              : '2.0.0-rc02',
+        coreKtx           : '1.2.0',
+        supportAnnotations: '1.1.0',
+        webView           : '0.24.1-alpha',
+        datastore         : '1.0.0',
+        proto             : "3.18.0",
+        exoPlayer         : "2.16.0",
+        mediaSession      : "1.2.1",
+        compose           : '1.1.1',
+        pager             : "0.24.2-alpha",
+        navigation        : '2.4.1',
+        viewModel         : '2.4.1',
+        mockk             : '1.12.3',
+        gradle            : '7.1.2',
+        hilt              : '2.41',
+        archTesting       : '2.0.0',
+        testRunner        : '1.4.0',
+        junit             : '4.13.2'
+
+]
+ext.kotlin = [
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin",
+        "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
+]
+ext.coroutines = [
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines",
+]
+
+ext.corotinesTest = [
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines"
+]
+// Import the BoM for the Firebase platform
+ext.firebase = "com.google.firebase:firebase-bom:$versions.firebase"
+
+
+ext.firebaseFireStore = [
+        // Declare the dependency for the Cloud Firestore library
+        // When using the BoM, you don't specify versions in Firebase library dependencies
+        'com.google.firebase:firebase-firestore-ktx',
+        'com.google.firebase:firebase-storage'
+]
+
+ext.firebaseCorutineKts = [
+        /* coroutines support for firebase operations */
+        'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
+]
+
+ext.compose = [
+        "androidx.compose.ui:ui:$versions.compose",
+        "androidx.compose.material:material:$versions.compose",
+        "androidx.compose.ui:ui-tooling-preview:$versions.compose",
+        "androidx.compose.ui:ui-tooling:$versions.compose",
+        "androidx.compose.material:material-icons-extended:$versions.compose",
+        "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.viewModel",
+        'com.google.android.material:material:1.5.0',
+]
+
+ext.composeActivity = [
+        'androidx.activity:activity-compose:1.4.0',
+        'androidx.navigation:navigation-compose:2.5.0-beta01'
+]
+
+ext.pager = [
+        "com.google.accompanist:accompanist-pager:$versions.pager",
+]
+ext.coil = [
+        "io.coil-kt:coil-compose:$versions.coil",
+]
+
+ext.coreKtx = [
+        "androidx.core:core-ktx:$versions.coreKtx"
+]
+
+ext.test = [
+        "junit:junit:$versions.junit"
+]
+
+ext.androidTest = [
+        'androidx.test.espresso:espresso-core:3.4.0',
+        'androidx.test.ext:junit:1.1.3'
+]
+ext.mockk = [
+        "io.mockk:mockk:$versions.mockk"
+]
+ext.webView = [
+        "com.google.accompanist:accompanist-webview:$versions.webView"
+]
+ext.mediaSession = [
+        "androidx.media2:media2-session:$versions.mediaSession",
+        'androidx.legacy:legacy-support-v4:1.0.0'
+]
+
+ext.exoplayer = [
+        "com.google.android.exoplayer:exoplayer-core:$versions.exoPlayer",
+        "com.google.android.exoplayer:exoplayer-ui:$versions.exoPlayer",
+        "com.google.android.exoplayer:extension-mediasession:$versions.exoPlayer"
+]
+
+ext.datastore = [
+        "androidx.datastore:datastore:$versions.datastore",
+        "androidx.datastore:datastore-core:$versions.datastore"
+]
+ext.proto = [
+        "com.google.protobuf:protobuf-javalite:$versions.proto"
+]
