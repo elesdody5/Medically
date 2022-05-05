@@ -34,4 +34,5 @@ data class RemotePdf(
 data class RemoteLecture(
     override val name: String?,
     override val url: String?,
+    override val chapterName: String?
 ) : Lecture()
