@@ -20,6 +20,8 @@ fun SubjectsPort.bindSubjects() {
                     filteredSubjects = subjects,
                     isLoading = false
                 )
+        } else {
+            (result as Result.Error).exception.message?.let { state hasError it }
         }
     }
 }

@@ -34,13 +34,13 @@ val Typography = Typography(
     ),
     h2 = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.W600,
         fontSize = 24.sp
     ),
 
     h3 = TextStyle(
         fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.W400,
         fontSize = 20.sp,
     )
     /* Other default text styles to override

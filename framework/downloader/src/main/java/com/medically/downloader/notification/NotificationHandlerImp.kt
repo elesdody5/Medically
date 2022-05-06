@@ -38,7 +38,7 @@ class NotificationHandlerImp(private val notificationManager: NotificationManage
             .setContentInfo(subTitle)
             .setOngoing(true)
             .setProgress(0, 0, true)
-            .setSmallIcon(R.drawable.app_icon)
+            .setSmallIcon(R.drawable.download)
             .setContentIntent(contentPendingIntent)
             .setCategory(NotificationCompat.CATEGORY_PROGRESS)
 
@@ -48,6 +48,7 @@ class NotificationHandlerImp(private val notificationManager: NotificationManage
     override fun downLoadComplete() {
         builder.setContentText("Download Completed")
             .setOngoing(false)
+            .setSmallIcon(R.drawable.app_icon)
             .setProgress(0, 0, false)
         notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
