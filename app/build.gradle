@@ -64,16 +64,21 @@ dependencies {
     implementation project(":model")
     implementation project(":data")
     implementation project(":remote")
+    implementation project(":local")
 //    implementation project(":preferences")
     implementation datastore
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation project(path: ':framework:media')
+    implementation project(path: ':framework:downloader')
 
 
     // Import the BoM for the Firebase platform
     implementation platform("$firebase")
     implementation compose
     implementation composeActivity
+    implementation workManger
+    implementation room
+    kapt roomAnnotation
     testImplementation test
     androidTestImplementation androidTest
 }

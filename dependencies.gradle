@@ -12,7 +12,9 @@ ext.versions = [
         proto             : "3.18.0",
         exoPlayer         : "2.16.0",
         mediaSession      : "1.2.1",
+        worker            : "2.7.1",
         compose           : '1.1.1',
+        room              : '2.2.3',
         pager             : "0.24.2-alpha",
         navigation        : '2.4.1',
         viewModel         : '2.4.1',
@@ -31,6 +33,12 @@ ext.kotlin = [
 ext.coroutines = [
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines",
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines",
+]
+
+ext.androidCore = [
+        "androidx.appcompat:appcompat:$versions.appcompatx",
+        "androidx.core:core-ktx:$versions.coreKtx",
+        "androidx.annotation:annotation:$versions.supportAnnotations",
 ]
 
 ext.corotinesTest = [
@@ -84,11 +92,17 @@ ext.test = [
 
 ext.androidTest = [
         'androidx.test.espresso:espresso-core:3.4.0',
-        'androidx.test.ext:junit:1.1.3'
+        'androidx.test.ext:junit:1.1.3',
+        "androidx.test:rules:1.4.0",
+        "androidx.test:runner:1.4.0"
 ]
 ext.mockk = [
         "io.mockk:mockk:$versions.mockk"
 ]
+ext.mockkAndorid = [
+        "io.mockk:mockk-android:$versions.mockk"
+]
+
 ext.webView = [
         "com.google.accompanist:accompanist-webview:$versions.webView"
 ]
@@ -109,4 +123,19 @@ ext.datastore = [
 ]
 ext.proto = [
         "com.google.protobuf:protobuf-javalite:$versions.proto"
+]
+
+ext.workManger = [
+        "androidx.work:work-runtime-ktx:$versions.worker"
+]
+ext.workManagerTest = [
+        "androidx.work:work-testing:$versions.worker"
+]
+
+ext.room = [
+        "androidx.room:room-runtime:$versions.room",
+        "androidx.room:room-ktx:$versions.room",
+]
+ext.roomAnnotation = [
+        "androidx.room:room-compiler:$versions.room",
 ]

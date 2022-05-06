@@ -101,6 +101,7 @@ object FirebaseImp : NetworkServices {
                 RemoteLecture(
                     name?.substring(index + 1),
                     doc.getString("url"),
+                    chapter
                 )
             }
             return ApiResponse(data = lectures)

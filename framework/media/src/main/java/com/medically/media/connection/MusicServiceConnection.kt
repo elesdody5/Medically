@@ -16,6 +16,7 @@
 
 package com.medically.media.connection
 
+import android.app.Application
 import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
@@ -44,8 +45,8 @@ import kotlinx.coroutines.launch
  * Class that manages a connection to a [MediaBrowserServiceCompat] instance, typically a
  * [MusicService] or one of its subclasses.
  *
- * Typically it's best to construct/inject dependencies either using DI or, as UAMP does,
- * using [InjectorUtils] in the app module. There are a few difficulties for that here:
+ * Typically it's best to construct/inject dependencies either using DI or,
+ * using [CoreIntegration] in the core module. There are a few difficulties for that here:
  * - [MediaBrowserCompat] is a final class, so mocking it directly is difficult.
  * - A [MediaBrowserConnectionCallback] is a parameter into the construction of
  *   a [MediaBrowserCompat], and provides callbacks to this class.
@@ -191,9 +192,9 @@ class MusicServiceConnection(
         @Volatile
         private var instance: MusicServiceConnection? = null
 
-        fun getInstance(context: Context, serviceComponent: ComponentName) =
+        fun getInstance(application: Application, serviceComponent: ComponentName) =
             instance ?: synchronized(this) {
-                instance ?: MusicServiceConnection(context, serviceComponent)
+                instance ?: MusicServiceConnection(application, serviceComponent)
                     .also { instance = it }
             }
     }

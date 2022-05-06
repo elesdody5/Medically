@@ -1,7 +1,7 @@
 package com.medically.core.player
 
 import com.medically.core.integration.Data
-import com.medically.core.integration.MediaConnection
+import com.medically.core.integration.Framework
 import com.medically.core.toTimeStamp
 import com.medically.model.NowPlayingMetadata
 import com.medically.model.PlaybackState
@@ -27,10 +27,10 @@ fun PlayerPort.onMetaDataChanged(nowPlayingMetadata: NowPlayingMetadata?) {
 
 fun PlayerPort.bindCollector() {
     scope.launch {
-        MediaConnection.musicServiceConnectionPort.playbackState.collect(playbackStateCollector)
+        Framework.musicServiceConnectionPort.playbackState.collect(playbackStateCollector)
     }
 
-    scope.launch { MediaConnection.musicServiceConnectionPort.nowPlaying.collect(mediaStateCollector) }
+    scope.launch { Framework.musicServiceConnectionPort.nowPlaying.collect(mediaStateCollector) }
     scope.launch { checkPlaybackPosition() }
 }
 
@@ -66,30 +66,30 @@ fun PlayerPort.bindChapter() {
 
 fun PlayerPort.toggleState() {
     if (state.value.playbackState?.isPlaying == true) {
-        MediaConnection.musicServiceConnectionPort.pause()
+        Framework.musicServiceConnectionPort.pause()
     } else {
-        MediaConnection.musicServiceConnectionPort.play()
+        Framework.musicServiceConnectionPort.play()
     }
 }
 
 fun PlayerPort.speed(speed: Float) {
-    MediaConnection.musicServiceConnectionPort.setSpeed(speed)
+    Framework.musicServiceConnectionPort.setSpeed(speed)
 }
 
 fun PlayerPort.skipForward() {
     val currentPosition = state.value.playbackState?.position ?: 0
     val seconds = 10.toTimeStamp()
-    MediaConnection.musicServiceConnectionPort.seekTo(currentPosition + seconds)
+    Framework.musicServiceConnectionPort.seekTo(currentPosition + seconds)
 }
 
 fun PlayerPort.skipBackward() {
     val currentPosition = state.value.playbackState?.position ?: 0
     val seconds = 10.toTimeStamp()
-    MediaConnection.musicServiceConnectionPort.seekTo(currentPosition - seconds)
+    Framework.musicServiceConnectionPort.seekTo(currentPosition - seconds)
 }
 
 fun PlayerPort.seekTo(position: Long) {
-    MediaConnection.musicServiceConnectionPort.seekTo(position)
+    Framework.musicServiceConnectionPort.seekTo(position)
 }
 
 

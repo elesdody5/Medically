@@ -1,5 +1,6 @@
 package com.medically.data.integration
 
+import com.medically.data.local.LecturesLocalDataSource
 import com.medically.data.preferences.PreferencesManager
 import com.medically.data.remote.DoctorsRemoteDataSource
 import com.medically.data.remote.LecturesRemoteDataSource
@@ -13,7 +14,9 @@ object RemoteDataSources {
     lateinit var lecturesRemoteDataSource: LecturesRemoteDataSource
 }
 
-object LocalDataSources
+object LocalDataSources {
+    lateinit var lecturesLocalDataSource: LecturesLocalDataSource
+}
 
 object PreferencesDataSources {
     lateinit var preferencesManager: PreferencesManager
