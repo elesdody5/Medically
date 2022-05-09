@@ -218,8 +218,8 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
         audioPlayList.apply {
             val mediaMetadataCompat =
                 MediaMetadataCompat.Builder()
-                    .subject(subject?.name)
-                    .doctor(doctor?.name)
+                    .subject(subjectTitle)
+                    .doctor(doctorName)
                     .chapter(chapter)
 
             currentPlaylistItems = lectures?.mapIndexed { index, lecture ->

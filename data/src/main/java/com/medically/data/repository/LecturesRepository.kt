@@ -39,7 +39,7 @@ class LecturesRepository(
         lecturesLocalDataSource.insertLecture(chapter, *lecture)
     }
 
-    override suspend fun getOfflineLectures(chapter: String): Flow<List<Lecture>> {
+    override fun getOfflineLectures(chapter: String): Flow<List<Lecture>> {
         return lecturesLocalDataSource.getLectures(chapter)
     }
 }

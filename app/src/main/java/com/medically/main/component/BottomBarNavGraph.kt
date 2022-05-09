@@ -15,7 +15,7 @@ fun NavGraphBuilder.bottomBarNavGraph(
         HomeScreen { medicallyNavController.navigate(MedicallyScreens.SubjectDetailsScreen.name) }
     }
     composable(BottomBarScreens.Downloads.name) {
-        DownLoadScreen()
+        DownLoadScreen { medicallyNavController.navigate(MedicallyScreens.DownLoadedLecturesScreen.name) }
     }
     composable(BottomBarScreens.Bookmark.name) {
     }

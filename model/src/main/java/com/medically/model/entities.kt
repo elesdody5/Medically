@@ -35,10 +35,10 @@ open class Lecture(
     open val chapterName: String
 )
 
-open class AudioPlayList(
+open class AudioPlayList constructor(
     open val lectures: List<Lecture>? = null,
     open val currentPlayingPosition: Int? = null,
     open val chapter: Chapter? = null,
-    open val doctor: Doctor? = null,
-    open val subject: Subject? = null
+    open val doctorName: String? = null,
+    open val subjectTitle: String? = null
 ) 

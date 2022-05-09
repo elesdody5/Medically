@@ -54,10 +54,6 @@ suspend fun PlayerPort.checkPlaybackPosition() {
     }
 }
 
-fun PlayerPort.bindDoctor() {
-    val doctor = Data.doctorsRepository.currentDoctor
-    state.value = state.value.copy(currentDoctor = doctor)
-}
 
 fun PlayerPort.bindChapter() {
     val chapter = Data.chaptersRepository.currentChapter

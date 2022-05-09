@@ -7,7 +7,7 @@ enum class MedicallyScreens {
     MainScreen,
     SubjectDetailsScreen,
     LecturesScreen,
-    ChaptersScreen,
+    DownLoadedLecturesScreen,
     AudioPlayerScreen;
 
 
@@ -16,7 +16,7 @@ enum class MedicallyScreens {
             when (route?.substringBefore("/")) {
                 MainScreen.name -> MainScreen
                 SubjectDetailsScreen.name -> SubjectDetailsScreen
-                ChaptersScreen.name -> ChaptersScreen
+                DownLoadedLecturesScreen.name -> DownLoadedLecturesScreen
                 LecturesScreen.name -> LecturesScreen
                 AudioPlayerScreen.name -> AudioPlayerScreen
                 null -> MainScreen

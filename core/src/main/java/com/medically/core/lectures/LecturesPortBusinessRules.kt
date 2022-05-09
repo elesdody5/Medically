@@ -15,15 +15,21 @@ fun LecturesPort.bindLectures() {
     }
 }
 
+fun LecturesPort.bindOfflineLectures() {
+    scope.launch {
+        val chapter = state.value.chapter
+        Data.lecturesRepository.getOfflineLectures(chapter?.name ?: "").collect {
+            state.value = state.value.copy(isLoading = false, lectures = it)
+        }
+
+    }
+}
+
 fun LecturesPort.bindCurrentChapter() {
     val chapter = Data.chaptersRepository.currentChapter
     state.value = state.value.copy(chapter = chapter)
 }
 
-fun LecturesPort.bindCurrentDoctor() {
-    val doctor = Data.doctorsRepository.currentDoctor
-    state.value = state.value.copy(doctor = doctor)
-}
 
 fun LecturesPort.setCurrentAudioPlayList(lecturePosition: Int) {
     val currentState = state.value
@@ -32,8 +38,8 @@ fun LecturesPort.setCurrentAudioPlayList(lecturePosition: Int) {
         currentState.lectures,
         lecturePosition,
         currentState.chapter,
-        currentState.doctor,
-        subject
+        currentState.chapter?.doctorName,
+        subject?.name
     )
 
     scope.launch {

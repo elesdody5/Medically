@@ -20,7 +20,7 @@ class LecturesLocalDataSourceImp(private val dao: OfflineDao) :
         dao.insertLecture(*lecture.toLocalLecture())
     }
 
-    override suspend fun getLectures(chapter: String): Flow<List<Lecture>> {
+    override fun getLectures(chapter: String): Flow<List<Lecture>> {
         return dao.getLectures(chapter).map { it.toLecture() }
     }
 }

@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface LecturesLocalDataSource {
     suspend fun insertLecture(chapter: Chapter, vararg lecture: Lecture)
-    suspend fun getLectures(chapter: String): Flow<List<Lecture>>
+    fun getLectures(chapter: String): Flow<List<Lecture>>
 }

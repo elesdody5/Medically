@@ -47,7 +47,7 @@ fun AudioPlayerScreen(goBack: () -> Boolean) {
             LectureInfo(
                 imageUrl = state.currentChapter?.imageUrl ?: "",
                 lectureTitle = state.mediaMetadata?.title ?: "",
-                doctorName = state.currentDoctor?.name ?: ""
+                doctorName = state.currentChapter?.doctorName ?: ""
             )
 
             PlayerControllers(

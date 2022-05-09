@@ -7,8 +7,8 @@ fun PreferenceAudioPlayList.toAudioPlayList(): AudioPlayList {
         lectures = lecturesList.toLecture(),
         currentPlayingPosition,
         chapter.toChapter(),
-        doctor.toDoctor(),
-        subject.toSubject()
+        doctorName,
+        subjectTitle
     )
 }
 

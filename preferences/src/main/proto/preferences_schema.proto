@@ -14,21 +14,12 @@ message PreferenceChapter{
   string name = 3 ;
   string imageUrl = 4;
 }
-message PreferenceSubject {
-  string id = 1;
-  string name = 2;
-  string yearName = 3 ;
-  string icon = 4;
-}
-message PreferenceDoctor{
-  string subjectId = 1;
-  string name = 2;
-}
+
 
 message PreferenceAudioPlayList {
   repeated PreferenceLecture lectures = 1;
   int32 currentPlayingPosition = 2;
   PreferenceChapter chapter = 3;
-  PreferenceDoctor doctor = 4;
-  PreferenceSubject subject = 5;
+  string doctorName = 4;
+  string subjectTitle = 5;
 }
