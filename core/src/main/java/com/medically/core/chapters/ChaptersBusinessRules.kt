@@ -22,5 +22,5 @@ fun ChaptersPort.bindCurrentSubject() {
 
 @BusinessRules
 fun ChaptersPort.saveCurrentChapter(chapter: Chapter) {
-    Data.subjectDetailsRepository.setCurrentChapter(chapter)
+    Data.chaptersRepository.setCurrentChapter(chapter)
 }

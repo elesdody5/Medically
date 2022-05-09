@@ -1,4 +1,4 @@
-package com.medically.presentation.home.component.subjectList
+package com.medically.presentation.component.list_with_header
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -8,13 +8,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
 import com.medically.presentation.component.ShimmerAnimation
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ShimmerSubjectList() {
+fun ShimmerListWithHeader() {
     ShimmerAnimation { brush ->
         LazyColumn {
             repeat(2) {

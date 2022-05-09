@@ -14,7 +14,7 @@ ext.versions = [
         mediaSession      : "1.2.1",
         worker            : "2.7.1",
         compose           : '1.1.1',
-        room              : '2.2.3',
+        room              : '2.4.2',
         pager             : "0.24.2-alpha",
         navigation        : '2.4.1',
         viewModel         : '2.4.1',

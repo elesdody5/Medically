@@ -1,10 +1,8 @@
 package com.medically.data.repository
 
 import com.medically.core.subject_details.SubjectDetailsRepositoryPort
-import com.medically.data.InMemoryCache
 import com.medically.data.integration.RemoteDataSources
 import com.medically.data.remote.SubjectDetailsRemoteDataSource
-import com.medically.model.Chapter
 import com.medically.model.Pdf
 import com.medically.model.Result
 import com.medically.model.Video
@@ -13,17 +11,6 @@ class SubjectDetailsRepository(
     private val subjectsDetailsRemoteDataSource: SubjectDetailsRemoteDataSource = RemoteDataSources.subjectDetailsRemoteDataSource
 ) : SubjectDetailsRepositoryPort {
 
-    override val currentChapter: Chapter?
-        get() = InMemoryCache.currentChapter
-
-
-    override fun setCurrentChapter(chapter: Chapter) {
-        InMemoryCache.currentChapter = chapter
-    }
-
-    override suspend fun getChapters(doctorName: String): Result<List<Chapter>> {
-        return subjectsDetailsRemoteDataSource.getChapters(doctorName)
-    }
 
     override suspend fun getVideos(doctorName: String): Result<List<Video>> {
         return subjectsDetailsRemoteDataSource.getVideos(doctorName)

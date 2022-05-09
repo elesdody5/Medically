@@ -16,10 +16,10 @@ import com.medically.core.subjects.filterBySubject
 import com.medically.core.subjects.filterByYears
 import com.medically.core.subjects.saveCurrentSubject
 import com.medically.core.subjects.searchSubject
+import com.medically.presentation.component.list_with_header.ShimmerListWithHeader
 import com.medically.presentation.home.component.CurrentPlayingCard
 import com.medically.presentation.home.component.Filters
 import com.medically.presentation.home.component.NoInternet
-import com.medically.presentation.home.component.subjectList.ShimmerSubjectList
 import com.medically.presentation.home.component.subjectList.SubjectsList
 import com.medically.presentation.utils.isNetworkConnected
 
@@ -56,7 +56,7 @@ fun HomeScreen(navigateToChapters: () -> Unit) {
                     )
 
                     if (state.isLoading)
-                        ShimmerSubjectList()
+                        ShimmerListWithHeader()
 
                     if (!state.isLoading && state.errorMessage == null)
                         SubjectsList(

@@ -1,4 +1,4 @@
-package com.medically.presentation.home.component.subjectList
+package com.medically.presentation.component.list_with_header
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -19,25 +19,32 @@ import com.medically.presentation.component.LoadImageWithShimmer
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
-fun SubjectListItem(subject: Subject, onSubjectSelected: (Subject) -> Unit) {
+fun <T> ListItem(
+    item: T,
+    name: String,
+    iconUrl: String? = null,
+    onItemSelected: (T) -> Unit
+) {
     Surface(
         color = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onSubjectSelected(subject) },
+            .clickable { onItemSelected(item) },
     ) {
         Row(
             Modifier
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            LoadImageWithShimmer(
-                imageUrl = subject.icon, modifier = Modifier
-                    .size(35.dp, 35.dp)
-                    .padding(end = 13.dp)
-            )
-            Text(subject.name, color = MaterialTheme.colors.onBackground)
+            iconUrl?.let {
+                LoadImageWithShimmer(
+                    imageUrl = iconUrl, modifier = Modifier
+                        .size(35.dp, 35.dp)
+                        .padding(end = 13.dp)
+                )
+            }
+            Text(name, color = MaterialTheme.colors.onBackground)
         }
     }
 }
@@ -46,15 +53,10 @@ fun SubjectListItem(subject: Subject, onSubjectSelected: (Subject) -> Unit) {
 @Composable
 fun SubjectListItemPreview() {
     MedicallyTheme {
-        SubjectListItem(
-            subject = UISubject(name = "Anatomy", yearName = "First Year"),
-            onSubjectSelected = { })
+        ListItem(
+            item = Subject(name = "Anatomy", yearName = "First Year"),
+            name = "Anatomy",
+            iconUrl = null,
+            onItemSelected = { })
     }
 }
-
-data class UISubject(
-    override val id: String = "",
-    override val name: String,
-    override val yearName: String,
-    override val icon: String? = "https://firebasestorage.googleapis.com/v0/b/medrecord-783c6.appspot.com/o/yearsIcons%2Fanatomy.png?alt=media&token=f7b23726-b66e-4ff0-b5be-09aafeb6344d"
-) : Subject()

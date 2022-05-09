@@ -1,4 +1,4 @@
-package com.medically.presentation.home.component.subjectList
+package com.medically.presentation.downloaded_chapters.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -7,25 +7,26 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.medically.model.Subject
+import com.medically.model.Chapter
 import com.medically.presentation.component.list_with_header.Header
 import com.medically.presentation.component.list_with_header.ListItem
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SubjectsList(subjects: Map<String, List<Subject>>, onSubjectSelected: (Subject) -> Unit) {
+fun DownloadedChaptersList(
+    chapters: Map<String, List<Chapter>>,
+    onChapterSelected: (Chapter) -> Unit
+) {
     LazyColumn(
         contentPadding = PaddingValues(10.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        subjects.forEach { (year, yearSubjects) ->
+        chapters.forEach { (doctor, doctorChapters) ->
             stickyHeader {
-                Header(year)
+                Header(doctor)
             }
-
-            items(yearSubjects) { subject ->
-                ListItem(subject, subject.name, subject.icon, onSubjectSelected)
+            items(doctorChapters) {
+                ListItem(item = it, name = it.name, onItemSelected = onChapterSelected)
             }
         }
     }

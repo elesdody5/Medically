@@ -39,7 +39,7 @@ fun SubjectDetailsPort.bindDoctorMaterials(doctorName: String) {
 fun SubjectDetailsPort.bindChapters(doctorName: String) {
     state.value = state.value.copy(isLoading = true)
     scope.launch {
-        val result = Data.subjectDetailsRepository.getChapters(doctorName)
+        val result = Data.chaptersRepository.getChapters(doctorName)
         if (result is Result.Success) {
             state.value = state.value.copy(
                 isLoading = false,
