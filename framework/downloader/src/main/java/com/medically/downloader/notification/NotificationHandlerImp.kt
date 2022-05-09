@@ -38,7 +38,7 @@ class NotificationHandlerImp(private val notificationManager: NotificationManage
             .setContentInfo(subTitle)
             .setOngoing(true)
             .setProgress(0, 0, true)
-            .setSmallIcon(R.drawable.download)
+            .setSmallIcon(R.drawable.ic_download)
             .setContentIntent(contentPendingIntent)
             .setCategory(NotificationCompat.CATEGORY_PROGRESS)
 

@@ -18,4 +18,8 @@
     <string name="no_connection_message_title">No Internet Connection</string>
     <string name="no_connection_message_subtitle">Check your connection, then refresh</string>
     <string name="refresh">Refresh</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="download_alert_title">Downloading Lecture</string>
+    <string name="download_alert_body">The audio size is %s</string>
 </resources>

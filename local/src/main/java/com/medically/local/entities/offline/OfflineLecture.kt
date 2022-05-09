@@ -28,5 +28,5 @@ fun Array<out Lecture>.toLocalLecture() =
     map { it.toLocalLecture() }.toTypedArray()
 
 fun List<OfflineLecture>.toLecture(): List<Lecture> {
-    return map { Lecture(it.name, it.url, it.chapter) }
+    return map { Lecture(it.name ?: "", it.url ?: "", it.chapter ?: "") }
 }

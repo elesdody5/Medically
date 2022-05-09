@@ -45,7 +45,7 @@ fun LectureListItem(lecture: Lecture, index: Int, onLectureSelected: () -> Unit)
                 color = MaterialTheme.colors.onBackground,
             )
             Text(
-                lecture.name ?: "",
+                lecture.name,
                 color = MaterialTheme.colors.onBackground,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -76,6 +76,6 @@ fun LectureListItem(lecture: Lecture, index: Int, onLectureSelected: () -> Unit)
 @Composable
 fun PreviewLectureItem() {
     MedicallyTheme {
-        LectureListItem(lecture = Lecture("01", "Lecture"), 1, onLectureSelected = {})
+        LectureListItem(lecture = Lecture("01", "Lecture", ""), 1, onLectureSelected = {})
     }
 }

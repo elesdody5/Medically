@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.*
 import com.medically.core.downloader.DownLoaderPort
 import com.medically.downloader.entities.ChapterParams
+import com.medically.downloader.entities.LectureParams.KEY_LECTURE_CHAPTER
 import com.medically.downloader.entities.LectureParams.KEY_LECTURE_NAME
 import com.medically.downloader.entities.LectureParams.KEY_LECTURE_URL
 import com.medically.downloader.worker.FileDownLoadWorker
@@ -19,6 +20,7 @@ class DownloaderManager(private val applicationContext: Context) : DownLoaderPor
         data.apply {
             putString(KEY_LECTURE_NAME, lecture.name)
             putString(KEY_LECTURE_URL, lecture.url)
+            putString(KEY_LECTURE_CHAPTER, lecture.chapterName)
             putString(ChapterParams.KEY_Chapter_id, chapter.id)
             putString(ChapterParams.KEY_Chapter_NAME, chapter.name)
             putString(ChapterParams.KEY_Doctor, chapter.doctorName)
@@ -28,7 +30,6 @@ class DownloaderManager(private val applicationContext: Context) : DownLoaderPor
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .setRequiresStorageNotLow(true)
-            .setRequiresBatteryNotLow(true)
             .build()
 
         val fileDownloadWorker = OneTimeWorkRequestBuilder<FileDownLoadWorker>()

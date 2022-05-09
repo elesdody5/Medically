@@ -9,6 +9,7 @@ data class NowPlayingMetadata(
     val id: String,
     val number: Long = 0,
     val albumArtUri: String? = null,
+    val url: String? = null,
     val title: String? = null,
     val subtitle: String? = null,
     val duration: Long = 0

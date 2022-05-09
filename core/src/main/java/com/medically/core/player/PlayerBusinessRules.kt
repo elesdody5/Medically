@@ -3,6 +3,7 @@ package com.medically.core.player
 import com.medically.core.integration.Data
 import com.medically.core.integration.Framework
 import com.medically.core.toTimeStamp
+import com.medically.model.Lecture
 import com.medically.model.NowPlayingMetadata
 import com.medically.model.PlaybackState
 import kotlinx.coroutines.Dispatchers
@@ -90,6 +91,14 @@ fun PlayerPort.skipBackward() {
 
 fun PlayerPort.seekTo(position: Long) {
     Framework.musicServiceConnectionPort.seekTo(position)
+}
+
+fun PlayerPort.downLoadAudio() {
+    val nowPlaying = state.value.mediaMetadata
+    val chapter = state.value.currentChapter
+    val downloader = Framework.downLoaderManager
+    val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
+    chapter?.let { downloader.downLoad(lecture, it) }
 }
 
 

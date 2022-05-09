@@ -3,6 +3,7 @@ package com.medically.downloader.entities
 object LectureParams {
     const val KEY_LECTURE_URL = "key_url"
     const val KEY_LECTURE_NAME = "key_lecture_name"
+    const val KEY_LECTURE_CHAPTER = "key_lecture_chapter"
 }
 
 object DoctorParams {

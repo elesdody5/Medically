@@ -1,6 +1,7 @@
 package com.medically.presentation.utils
 
 import android.content.Context
+import android.text.format.Formatter.formatShortFileSize
 import com.medically.presentation.R
 import kotlin.math.floor
 
@@ -17,3 +18,6 @@ fun Long.timestampToMSS(context: Context): String {
     else context.getString(R.string.duration_format).format(minutes, remainingSeconds)
 }
 
+fun Long.toMB(context: Context): String {
+    return formatShortFileSize(context, this)
+}
