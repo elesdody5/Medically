@@ -99,8 +99,8 @@ object FirebaseImp : NetworkServices {
                 val name = doc.getString("name")
                 val index = name?.indexOf("-") ?: 0
                 RemoteLecture(
-                    name?.substring(index + 1),
-                    doc.getString("url"),
+                    name?.substring(index + 1) ?: "",
+                    doc.getString("url") ?: "",
                     chapter
                 )
             }

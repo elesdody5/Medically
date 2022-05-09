@@ -18,7 +18,6 @@ package com.medically.media.connection
 
 import android.app.Application
 import android.content.ComponentName
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.ResultReceiver
@@ -61,7 +60,7 @@ import kotlinx.coroutines.launch
  *  [MediaBrowserConnectionCallback] and [MediaBrowserCompat] objects.
  */
 class MusicServiceConnection(
-    private val context: Context,
+    private val application: Application,
     serviceComponent: ComponentName
 ) : MusicServiceConnectionPort {
     override val isConnected = MutableStateFlow(false)
@@ -77,10 +76,10 @@ class MusicServiceConnection(
     private val transportControls: MediaControllerCompat.TransportControls
         get() = mediaController.transportControls
 
-    private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(context)
+    private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(application)
 
     private val mediaBrowser = MediaBrowserCompat(
-        context,
+        application,
         serviceComponent,
         mediaBrowserConnectionCallback, null
     ).apply { connect() }
@@ -160,7 +159,7 @@ class MusicServiceConnection(
 
     private fun onConnected() {
         // Get a MediaController for the MediaSession.
-        mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
+        mediaController = MediaControllerCompat(application, mediaBrowser.sessionToken).apply {
             registerCallback(mediaControllerCallback)
         }
         isConnected.value = true
@@ -173,6 +172,7 @@ class MusicServiceConnection(
                     it.id!!,
                     it.trackNumber,
                     it.albumArtUri.toString(),
+                    it.mediaUri.toString(),
                     it.title?.trim(),
                     it.displaySubtitle?.trim(),
                     it.duration

@@ -30,19 +30,19 @@ class FileDownLoadWorker constructor(
         return try {
             val lecture = inputData.getLecture()
             val chapter = inputData.getChapter()
-            if (lecture.name?.isEmpty() == true || lecture.url?.isEmpty() == true) {
+            if (lecture.name.isEmpty() || lecture.url.isEmpty()) {
                 Result.failure()
             }
             notificationHandler.createNotification(
                 applicationContext,
-                lecture.name ?: "",
+                lecture.name,
                 chapter.name
             )
             val uri = dataHandler.downLoadFile(
                 applicationContext,
                 chapter.name,
-                lecture.name ?: "",
-                lecture.url ?: ""
+                lecture.name,
+                lecture.url
             )
 
             return if (uri != null) {
@@ -50,14 +50,14 @@ class FileDownLoadWorker constructor(
                 Log.i("worker", "DownLoad success")
                 lecturesRepositoryPort.insertLecture(
                     chapter = chapter,
-                    Lecture(lecture.name, uri.toString())
+                    Lecture(lecture.name, uri.toString(), chapterName = chapter.name)
                 )
                 Result.success()
             } else {
                 Result.failure()
             }
         } catch (e: Exception) {
-            Result.retry()
+            Result.failure()
         }
     }
 

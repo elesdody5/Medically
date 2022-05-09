@@ -14,9 +14,10 @@ fun String.toUri(): Uri {
 }
 
 fun Data.getLecture(): Lecture {
-    val name = getString(LectureParams.KEY_LECTURE_NAME)
-    val url = getString(LectureParams.KEY_LECTURE_URL)
-    return Lecture(name, url)
+    val name = getString(LectureParams.KEY_LECTURE_NAME) ?: ""
+    val url = getString(LectureParams.KEY_LECTURE_URL) ?: ""
+    val chapter = getString(LectureParams.KEY_LECTURE_CHAPTER) ?: ""
+    return Lecture(name, url, chapter)
 }
 
 fun Data.getChapter(): Chapter {

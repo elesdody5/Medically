@@ -21,9 +21,11 @@ import android.net.Uri
 import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
+import com.google.android.exoplayer2.MediaMetadata
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.util.MimeTypes
 import com.medically.model.Chapter
 import com.medically.model.Lecture
 
@@ -114,8 +116,8 @@ inline val MediaMetadataCompat.displayIconUri: Uri
 inline val MediaMetadataCompat.mediaUri: Uri
     get() = this.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI).toUri()
 
-inline val MediaMetadataCompat.toMediaItem: com.google.android.exoplayer2.MediaItem
-    get() = com.google.android.exoplayer2.MediaItem.fromUri(mediaUri)
+//inline val MediaMetadataCompat.toMediaItem: com.google.android.exoplayer2.MediaItem
+//    get() = com.google.android.exoplayer2.MediaItem.fromUri(mediaUri)
 
 inline val MediaMetadataCompat.downloadStatus
     get() = getLong(MediaMetadataCompat.METADATA_KEY_DOWNLOAD_STATUS)
@@ -263,7 +265,7 @@ inline var MediaMetadataCompat.Builder.flag: Int
  * For convenience, place the [MediaDescriptionCompat] into the tag so it can be retrieved later.
  */
 fun MediaMetadataCompat.toMediaSource(dataSourceFactory: DataSource.Factory) =
-    ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(toMediaItem)
+    ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(toMediaItem())
 
 /**
  * Extension method for building a [ConcatenatingMediaSource] given a [List]
@@ -317,9 +319,9 @@ fun MediaMetadataCompat.Builder.lecture(
     index: Int,
     totalTrackCount: Int?
 ): MediaMetadataCompat.Builder {
-    id = lecture.name ?: ""
+    id = lecture.name
     title = lecture.name
-    mediaUri = lecture.url ?: ""
+    mediaUri = lecture.url
     trackNumber = index.toLong()
     trackCount = totalTrackCount?.toLong() ?: 0
     flag = MediaItem.FLAG_PLAYABLE
@@ -334,4 +336,28 @@ fun MediaMetadataCompat.Builder.lecture(
 
     // Allow it to be used in the typical builder style.
     return this
+}
+
+fun MediaMetadataCompat.toMediaItem(): com.google.android.exoplayer2.MediaItem {
+    return with(com.google.android.exoplayer2.MediaItem.Builder()) {
+        setMediaId(mediaUri.toString())
+        setUri(mediaUri)
+        setMimeType(MimeTypes.AUDIO_MPEG)
+        setMediaMetadata(toMediaItemMetadata())
+    }.build()
+}
+
+fun MediaMetadataCompat.toMediaItemMetadata(): com.google.android.exoplayer2.MediaMetadata {
+    return with(MediaMetadata.Builder()) {
+        setTitle(title)
+        setDisplayTitle(displayTitle)
+        setAlbumArtist(artist)
+        setAlbumTitle(album)
+        setComposer(composer)
+        setTrackNumber(trackNumber.toInt())
+        setTotalTrackCount(trackCount.toInt())
+        setDiscNumber(discNumber.toInt())
+        setWriter(writer)
+        setArtworkUri(albumArtUri)
+    }.build()
 }

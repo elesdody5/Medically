@@ -30,9 +30,9 @@ open class Video(
 )
 
 open class Lecture(
-    open val name: String? = null,
-    open val url: String? = null,
-    open val chapterName: String? = null
+    open val name: String,
+    open val url: String,
+    open val chapterName: String
 )
 
 open class AudioPlayList(

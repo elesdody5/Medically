@@ -8,9 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.medically.main.MainScreen
 import com.medically.nav.MedicallyScreens.*
 import com.medically.presentation.audio_player.AudioPlayerScreen
-import com.medically.presentation.home.HomeScreen
 import com.medically.presentation.lectures.LecturesScreen
 import com.medically.presentation.subject_details.SubjectDetailsScreen
 import com.medically.presentation.ui.theme.MedicallyTheme
@@ -27,12 +27,10 @@ fun MedicallyNavHost() {
             NavHost(
                 navController,
                 modifier = Modifier.padding(innerPadding),
-                startDestination = HomeScreen.name
+                startDestination = MainScreen.name
             ) {
-                composable(HomeScreen.name) {
-                    HomeScreen {
-                        navController.navigate(SubjectDetailsScreen.name)
-                    }
+                composable(MainScreen.name) {
+                    MainScreen(navController)
                 }
                 composable(
                     route = SubjectDetailsScreen.name,

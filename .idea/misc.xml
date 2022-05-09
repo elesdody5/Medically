@@ -62,6 +62,13 @@
         <entry key="../../../../layout/compose-model-1651331370586.xml" value="0.25092592592592594" />
         <entry key="../../../../layout/compose-model-1651331683153.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1651331873245.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1651764419780.xml" value="0.2491554054054054" />
+        <entry key="../../../../layout/compose-model-1651766103865.xml" value="0.3559966216216216" />
+        <entry key="../../../../layout/compose-model-1651768296736.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1652052097655.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1652052100376.xml" value="0.44166666666666665" />
+        <entry key="../../../../layout/compose-model-1652052845676.xml" value="0.44166666666666665" />
+        <entry key="../../../../layout/compose-model-1652053399413.xml" value="1.0" />
         <entry key="..\:/Users/AlAsudiA/AndroidStudioProjects/projects/Medically/app/src/main/res/layout/activity_main.xml" value="0.2421875" />
         <entry key="..\:/Users/AlAsudiA/AndroidStudioProjects/projects/Medically/app/src/main/res/layout/fragment_audio_player.xml" value="0.2421875" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1355" />
@@ -70,6 +77,7 @@
         <entry key="presentation/src/main/res/drawable/ic_audo.xml" value="0.309" />
         <entry key="presentation/src/main/res/drawable/ic_baseline_bookmark_border_24.xml" value="0.107" />
         <entry key="presentation/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.252" />
+        <entry key="presentation/src/main/res/drawable/ic_bookmark.xml" value="0.2385" />
         <entry key="presentation/src/main/res/drawable/ic_download.xml" value="0.2385" />
         <entry key="presentation/src/main/res/drawable/ic_pause.xml" value="0.252" />
         <entry key="presentation/src/main/res/drawable/ic_pdf.xml" value="0.309" />
