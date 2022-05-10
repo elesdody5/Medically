@@ -27,7 +27,6 @@ object FirebaseImp : NetworkServices {
         } catch (e: Exception) {
             ApiResponse(e)
         }
-
     }
 
     override suspend fun getDoctors(year: String, subjectId: String): ApiResponse<List<Doctor>> {

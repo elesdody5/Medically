@@ -25,11 +25,32 @@ fun LecturesPort.bindOfflineLectures() {
     }
 }
 
+fun LecturesPort.bindBookmarkLectures() {
+    scope.launch {
+        val chapter = state.value.chapter
+        Data.lecturesRepository.getBookmarkedLectures(chapter?.name ?: "").collect {
+            state.value = state.value.copy(isLoading = false, lectures = it)
+        }
+
+    }
+}
+
 fun LecturesPort.bindCurrentChapter() {
     val chapter = Data.chaptersRepository.currentChapter
     state.value = state.value.copy(chapter = chapter)
 }
 
+fun LecturesPort.bookmarkChapter() {
+    val chapter = Data.chaptersRepository.currentChapter
+    val lectures = state.value.lectures
+    if (chapter != null && lectures != null)
+        scope.launch {
+            Data.lecturesRepository.insertBookmarkLectures(
+                chapter,
+                *lectures.toTypedArray()
+            )
+        }
+}
 
 fun LecturesPort.setCurrentAudioPlayList(lecturePosition: Int) {
     val currentState = state.value

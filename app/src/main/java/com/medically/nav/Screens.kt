@@ -8,6 +8,7 @@ enum class MedicallyScreens {
     SubjectDetailsScreen,
     LecturesScreen,
     DownLoadedLecturesScreen,
+    BookMarkedLecturesScreen,
     AudioPlayerScreen;
 
 
@@ -17,6 +18,7 @@ enum class MedicallyScreens {
                 MainScreen.name -> MainScreen
                 SubjectDetailsScreen.name -> SubjectDetailsScreen
                 DownLoadedLecturesScreen.name -> DownLoadedLecturesScreen
+                BookMarkedLecturesScreen.name -> BookMarkedLecturesScreen
                 LecturesScreen.name -> LecturesScreen
                 AudioPlayerScreen.name -> AudioPlayerScreen
                 null -> MainScreen

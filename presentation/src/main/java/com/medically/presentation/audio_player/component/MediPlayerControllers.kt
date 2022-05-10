@@ -24,7 +24,8 @@ fun PlayerControllers(
     skipForward: () -> Unit,
     skipBackward: () -> Unit,
     changeSpeed: (Float) -> Unit,
-    downLoadAudio: () -> Unit
+    downLoadAudio: () -> Unit,
+    bookmarkAudio: () -> Unit,
 ) {
     val context = LocalContext.current
     val range = if (duration > 0f) 0f..duration.toFloat() else 0f..1f
@@ -56,7 +57,12 @@ fun PlayerControllers(
             Text(text = duration.timestampToMSS(context), style = TextStyle(fontSize = 10.sp))
         }
 
-        PlayerActions(Modifier.padding(top = 15.dp), changeSpeed = changeSpeed, downLoadAudio)
+        PlayerActions(
+            Modifier.padding(top = 15.dp),
+            changeSpeed = changeSpeed,
+            downLoadAudio,
+            bookmarkAudio
+        )
     }
 }
 
@@ -73,7 +79,8 @@ fun PreviewPlayerController() {
             skipBackward = {},
             seekTo = {},
             changeSpeed = {},
-            downLoadAudio = {})
+            downLoadAudio = {},
+            bookmarkAudio = {})
     }
 }
 

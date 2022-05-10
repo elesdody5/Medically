@@ -97,5 +97,13 @@ fun PlayerPort.downLoadAudio() {
     chapter?.let { downloader.downLoad(lecture, it) }
 }
 
+fun PlayerPort.bookmarkCurrentAudio() {
+    val nowPlaying = state.value.mediaMetadata
+    val chapter = Data.chaptersRepository.currentChapter
+    val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
+    if (chapter != null)
+        scope.launch { Data.lecturesRepository.insertBookmarkLectures(chapter, lecture) }
+}
+
 
 

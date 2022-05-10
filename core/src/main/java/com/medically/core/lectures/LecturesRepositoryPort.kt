@@ -10,6 +10,8 @@ interface LecturesRepositoryPort {
     suspend fun getChapterLectures(): Result<List<Lecture>?>
     suspend fun getCurrentPlayList(): Flow<AudioPlayList>
     suspend fun setCurrentPlayList(audioPlayList: AudioPlayList)
-    suspend fun insertLecture(chapter: Chapter, vararg lecture: Lecture)
+    suspend fun insertOfflineLectures(chapter: Chapter, vararg lecture: Lecture)
     fun getOfflineLectures(chapter: String): Flow<List<Lecture>>
+    suspend fun insertBookmarkLectures(chapter: Chapter, vararg lecture: Lecture)
+    fun getBookmarkedLectures(chapter: String): Flow<List<Lecture>>
 }

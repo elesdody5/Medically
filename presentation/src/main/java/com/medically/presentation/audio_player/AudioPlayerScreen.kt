@@ -59,7 +59,8 @@ fun AudioPlayerScreen(goBack: () -> Boolean) {
                 viewModel::skipForward,
                 viewModel::skipBackward,
                 viewModel::speed,
-                viewModel::getLectureSize
+                viewModel::getLectureSize,
+                viewModel::bookmarkCurrentAudio
             )
         }
     }

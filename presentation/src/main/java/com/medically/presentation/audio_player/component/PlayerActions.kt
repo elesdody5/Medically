@@ -17,7 +17,8 @@ import com.medically.presentation.ui.theme.MedicallyTheme
 fun PlayerActions(
     modifier: Modifier = Modifier,
     changeSpeed: (Float) -> Unit,
-    downloadAudio: () -> Unit
+    downloadAudio: () -> Unit,
+    bookmarkAudio: () -> Unit,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -32,11 +33,12 @@ fun PlayerActions(
                 contentDescription = "",
                 modifier = Modifier.clickable { downloadAudio() }
             )
-//            CircleWithIcon(
-//                circleSize = 34.dp,
-//                iconId = R.drawable.ic_baseline_bookmark_border_24,
-//                contentDescription = ""
-//            )
+            CircleWithIcon(
+                circleSize = 34.dp,
+                iconId = R.drawable.ic_baseline_bookmark_border_24,
+                contentDescription = "",
+                modifier = Modifier.clickable { bookmarkAudio() }
+            )
         }
     }
 }
@@ -45,6 +47,6 @@ fun PlayerActions(
 @Composable
 fun PreviewPlayerActions() {
     MedicallyTheme {
-        PlayerActions(changeSpeed = {}) {}
+        PlayerActions(changeSpeed = {}, downloadAudio = {}) {}
     }
 }
