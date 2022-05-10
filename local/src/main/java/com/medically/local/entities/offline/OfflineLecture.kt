@@ -33,5 +33,5 @@ fun List<OfflineLecture>.toLecture(): List<Lecture> {
 }
 
 fun List<OfflineChapter>.toChapters(): List<Chapter> {
-    return map { Chapter(it.name, it.doctorName, it.name, it.imageUrl) }
+    return map { Chapter(it.name, it.doctorName, it.name, it.imageUrl ?: "") }
 }

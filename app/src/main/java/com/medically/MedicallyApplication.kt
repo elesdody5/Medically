@@ -46,12 +46,14 @@ class MedicallyApplication : Application(), Configuration.Provider {
             with chaptersRemoteDataSource ChaptersRemoteDataSourceImp()
             with chaptersLocalDataSource ChaptersLocalDataSourceImp(
                 db.offlineDao(),
-                db.bookmarksDao()
+                db.bookmarksDao(),
+                db.progressDao()
             )
             with lecturesRemoteDataSource LecturesRemoteDataSourceImp()
             with lecturesLocalDataSource LecturesLocalDataSourceImp(
                 db.offlineDao(),
-                db.bookmarksDao()
+                db.bookmarksDao(),
+                db.progressDao()
             )
         }
 

@@ -1,4 +1,4 @@
-package com.medically.local.db
+package com.medically.local.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

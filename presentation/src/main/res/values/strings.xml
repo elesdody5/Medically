@@ -27,4 +27,6 @@
     <string name="bookmark">Bookmark</string>
     <string name="no_downloads">No Downloads found start download some audio to see it.</string>
     <string name="no_bookmarks">No Bookmarks found start add some chapters to see it.</string>
+    <string name="no_progress">No Progress found start listen to some audio to see it.</string>
+    <string name="progress">Progress</string>
 </resources>

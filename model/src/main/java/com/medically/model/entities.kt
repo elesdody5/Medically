@@ -8,10 +8,10 @@ open class Subject(
 )
 
 open class Chapter(
-    open val id: String? = null,
-    open val doctorName: String? = null,
+    open val id: String,
+    open val doctorName: String = "",
     open val name: String = "",
-    open val imageUrl: String? = null,
+    open val imageUrl: String = "",
 )
 
 open class Doctor(

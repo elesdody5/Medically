@@ -2,6 +2,7 @@ package com.medically.core.lectures
 
 import com.medically.core.integration.Data
 import com.medically.model.AudioPlayList
+import com.medically.model.ChapterProgress
 import com.medically.model.Result
 import kotlinx.coroutines.launch
 
@@ -11,6 +12,7 @@ fun LecturesPort.bindLectures() {
         val result = Data.lecturesRepository.getChapterLectures()
         if (result is Result.Success) {
             state.value = state.value.copy(isLoading = false, lectures = result.data)
+            insertChapterProgress(result.data?.size ?: 0)
         }
     }
 }
@@ -48,6 +50,21 @@ fun LecturesPort.bookmarkChapter() {
             Data.lecturesRepository.insertBookmarkLectures(
                 chapter,
                 *lectures.toTypedArray()
+            )
+        }
+}
+
+fun LecturesPort.insertChapterProgress(lecturesCount: Int) {
+    val chapter = Data.chaptersRepository.currentChapter
+    if (chapter != null)
+        scope.launch {
+            Data.chaptersRepository.insertChapterProgress(
+                ChapterProgress(
+                    chapter.name,
+                    chapter.doctorName,
+                    chapter.imageUrl,
+                    lecturesCount = lecturesCount
+                )
             )
         }
 }

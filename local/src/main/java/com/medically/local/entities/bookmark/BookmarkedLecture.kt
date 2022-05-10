@@ -9,22 +9,22 @@ import com.medically.model.Lecture
 data class BookmarkedLecture(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "lecture_id")
-    var id: Int = 0,
+    val id: Int = 0,
     @ColumnInfo(name = "lecture_name")
-    var name: String? = null,
+    val name: String? = null,
     @ColumnInfo(name = "lecture_url")
-    var url: String? = null,
+    val url: String? = null,
     @ColumnInfo(name = "chapter")
-    var chapter: String? = null,
+    val chapter: String? = null,
 )
 
-fun Lecture.toLocalLecture(): BookmarkedLecture {
+fun Lecture.toBookmarkLecture(): BookmarkedLecture {
     return BookmarkedLecture(name = name, url = url, chapter = chapterName)
 }
 
 
-fun Array<out Lecture>.toBookmarkedLecture() =
-    map { it.toLocalLecture() }.toTypedArray()
+fun Array<out Lecture>.toBookmarkedLecture(): Array<BookmarkedLecture> =
+    map { it.toBookmarkLecture() }.toTypedArray()
 
 fun List<BookmarkedLecture>.toLecture(): List<Lecture> {
     return map { Lecture(it.name ?: "", it.url ?: "", it.chapter ?: "") }

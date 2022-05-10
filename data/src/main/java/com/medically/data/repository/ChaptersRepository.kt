@@ -7,6 +7,7 @@ import com.medically.data.integration.RemoteDataSources
 import com.medically.data.local.ChaptersLocalDataSource
 import com.medically.data.remote.ChaptersRemoteDataSource
 import com.medically.model.Chapter
+import com.medically.model.ChapterProgress
 import com.medically.model.Result
 import kotlinx.coroutines.flow.Flow
 
@@ -34,4 +35,15 @@ class ChaptersRepository(
     override fun getBookmarksChapters(): Flow<List<Chapter>> {
         return chaptersLocalDatasource.getBookmarksChapters()
     }
+
+    override fun getChaptersProgress(): Flow<List<ChapterProgress>> {
+        return chaptersLocalDatasource.getChaptersProgress()
+    }
+
+    override suspend fun insertChapterProgress(
+        chapterProgress: ChapterProgress,
+    ) {
+        chaptersLocalDatasource.insertChapterProgress(chapterProgress)
+    }
+
 }
