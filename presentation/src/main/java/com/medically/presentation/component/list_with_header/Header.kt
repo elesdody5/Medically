@@ -1,4 +1,4 @@
-package com.medically.presentation.home.component.subjectList
+package com.medically.presentation.component.list_with_header
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -18,10 +18,12 @@ import com.medically.presentation.ui.theme.MedicallyTheme
 import java.util.*
 
 @Composable
-fun SubjectHeader(year: String) {
+fun Header(year: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().background(color = Color.White)
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color.White)
     ) {
         Text(
             year.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale("en")) else it.toString() },
@@ -41,6 +43,6 @@ fun SubjectHeader(year: String) {
 @Composable
 fun SubjectHeaderPreview() {
     MedicallyTheme {
-        SubjectHeader(year = "firstYear")
+        Header(year = "firstYear")
     }
 }

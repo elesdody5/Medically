@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TransparentAppBar(
-    goBack: () -> Boolean,
+    goBack: (() -> Boolean)?,
     menuOptions: List<String>? = null,
     menuPlaceHolder: String? = null,
     onMenuSelect: ((String) -> Unit)? = null,
@@ -30,14 +30,16 @@ fun TransparentAppBar(
         modifier = Modifier.height(80.dp)
     ) {
         val titleWidth = if (menuOptions != null) Modifier.width(100.dp) else Modifier
-        IconButton(onClick = { goBack() }) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                tint = MaterialTheme.colors.onBackground
-            )
+        goBack?.let {
+            IconButton(onClick = { goBack() }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colors.onBackground
+                )
+            }
         }
-        Column(modifier = Modifier.padding(end = 26.dp)) {
+        Column(modifier = Modifier.padding(start = 10.dp, end = 26.dp)) {
             Text(
                 title,
                 style = TextStyle(fontSize = 14.sp),

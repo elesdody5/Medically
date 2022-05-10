@@ -60,7 +60,7 @@ fun PlayerPort.bindDoctor() {
 }
 
 fun PlayerPort.bindChapter() {
-    val chapter = Data.subjectDetailsRepository.currentChapter
+    val chapter = Data.chaptersRepository.currentChapter
     state.value = state.value.copy(currentChapter = chapter)
 
 }

@@ -1,5 +1,6 @@
 package com.medically.core.integration
 
+import com.medically.core.chapters.ChaptersRepositoryPort
 import com.medically.core.doctors.DoctorsRepositoryPort
 import com.medically.core.downloader.DownLoaderPort
 import com.medically.core.lectures.LecturesRepositoryPort
@@ -35,6 +36,11 @@ object CoreIntegrator {
     @CoreIntegration
     infix fun subjectDetailsRepository(repository: SubjectDetailsRepositoryPort) {
         Data.subjectDetailsRepository = repository
+    }
+
+    @CoreIntegration
+    infix fun chapterRepository(repository: ChaptersRepositoryPort) {
+        Data.chaptersRepository = repository
     }
 
     @CoreIntegration

@@ -16,7 +16,7 @@ private const val DATABASE_NAME = "offline_data"
     exportSchema = false
 )
 abstract class MedicallyDatabase : RoomDatabase() {
-    abstract fun lecturesDao(): LecturesDao
+    abstract fun offlineDao(): OfflineDao
 
     /**
      * Define a companion object, this allows us to add functions on the MedicallyDatabase class.

@@ -1,11 +1,9 @@
 package com.medically.data.integration
 
+import com.medically.data.local.ChaptersLocalDataSource
 import com.medically.data.local.LecturesLocalDataSource
 import com.medically.data.preferences.PreferencesManager
-import com.medically.data.remote.DoctorsRemoteDataSource
-import com.medically.data.remote.LecturesRemoteDataSource
-import com.medically.data.remote.SubjectDetailsRemoteDataSource
-import com.medically.data.remote.SubjectsRemoteDataSource
+import com.medically.data.remote.*
 
 
 @DslMarker
@@ -32,8 +30,18 @@ object DataIntegrator {
     }
 
     @DataIntegration
-    infix fun chaptersRemoteDataSource(remoteDataSource: SubjectDetailsRemoteDataSource) {
+    infix fun subjectDetailsRemoteDataSource(remoteDataSource: SubjectDetailsRemoteDataSource) {
         RemoteDataSources.subjectDetailsRemoteDataSource = remoteDataSource
+    }
+
+    @DataIntegration
+    infix fun chaptersRemoteDataSource(remoteDataSource: ChaptersRemoteDataSource) {
+        RemoteDataSources.chaptersRemoteDataSource = remoteDataSource
+    }
+
+    @DataIntegration
+    infix fun chaptersLocalDataSource(chaptersLocalDataSource: ChaptersLocalDataSource) {
+        LocalDataSources.chaptersLocalDatasource = chaptersLocalDataSource
     }
 
     @DataIntegration
