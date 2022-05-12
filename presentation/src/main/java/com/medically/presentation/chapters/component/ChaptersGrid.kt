@@ -36,10 +36,10 @@ fun PreviewChaptersGrid() {
     MedicallyTheme {
         ChaptersGrid(
             chapters = listOf(
-                Chapter(name = "Abdomen", id = ""),
-                Chapter(name = "Abdomen", id = ""),
-                Chapter(name = "Abdomen", id = ""),
-                Chapter(name = "Abdomen", id = ""),
+                Chapter(name = "Abdomen"),
+                Chapter(name = "Abdomen"),
+                Chapter(name = "Abdomen"),
+                Chapter(name = "Abdomen"),
             )
         ) {}
     }

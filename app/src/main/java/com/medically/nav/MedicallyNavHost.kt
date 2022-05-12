@@ -13,6 +13,7 @@ import com.medically.main.MainScreen
 import com.medically.nav.MedicallyScreens.*
 import com.medically.presentation.audio_player.AudioPlayerScreen
 import com.medically.presentation.bookmark_lectures.BookmarkedLecturesViewModel
+import com.medically.presentation.completed_lectures.CompletedLecturesScreen
 import com.medically.presentation.downloaded_lectures.DownLoadedLecturesViewModel
 import com.medically.presentation.lectures.LecturesScreen
 import com.medically.presentation.subject_details.SubjectDetailsScreen
@@ -66,6 +67,9 @@ fun MedicallyNavHost() {
                         goToAudioPlayer = {
                             navController.navigate(AudioPlayerScreen.name)
                         })
+                }
+                composable(CompletedLecturesScreen.name) {
+                    CompletedLecturesScreen { navController.popBackStack() }
                 }
             }
         }

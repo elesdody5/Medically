@@ -9,12 +9,12 @@ import com.medically.model.Subject
 fun List<Lecture>.toPreference(): List<PreferenceLecture> {
     return map {
         PreferenceLecture.newBuilder().setName(it.name)
-            .setUrl(it.url ?: "").build()
+            .setUrl(it.url).build()
     }
 }
 
 fun Chapter.toPreference(chapter: PreferenceChapter): PreferenceChapter {
-    return chapter.toBuilder().setId(id).setDoctorName(doctorName).setImageUrl(imageUrl).build()
+    return chapter.toBuilder().setDoctorName(doctorName).setImageUrl(imageUrl).build()
 }
 
 fun Doctor.toPreference(doctor: PreferenceDoctor): PreferenceDoctor {

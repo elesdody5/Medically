@@ -6,13 +6,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.medically.core.progress.saveCurrentChapter
 import com.medically.presentation.R
 import com.medically.presentation.component.EmptyTextMessage
 import com.medically.presentation.component.TransparentAppBar
 import com.medically.presentation.progress.component.ChaptersProgressList
 
 @Composable
-fun ProgressScreen() {
+fun ProgressScreen(goToCompletedLectures: () -> Unit) {
     val viewModel = viewModel<ProgressViewModel>()
     val state by viewModel.state.collectAsState()
     Scaffold(
@@ -29,6 +30,9 @@ fun ProgressScreen() {
             EmptyTextMessage(iconId = R.drawable.progress, message = R.string.no_progress)
 
         if (state.chaptersProgress.isNotEmpty())
-            ChaptersProgressList(state.chaptersProgress)
+            ChaptersProgressList(state.chaptersProgress) {
+                viewModel.saveCurrentChapter(it)
+                goToCompletedLectures()
+            }
     }
 }

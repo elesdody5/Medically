@@ -18,5 +18,5 @@ fun Chapter.toBookmark(): BookmarkedChapter {
 }
 
 fun List<BookmarkedChapter>.toChapters(): List<Chapter> {
-    return map { Chapter(it.name, it.doctorName, it.name, it.imageUrl ?: "") }
+    return map { Chapter(doctorName = it.doctorName, name = it.name, imageUrl = it.imageUrl ?: "") }
 }

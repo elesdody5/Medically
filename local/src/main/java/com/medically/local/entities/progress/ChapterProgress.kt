@@ -2,7 +2,7 @@ package com.medically.local.entities.progress
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import com.medically.model.ChapterProgress
+import com.medically.model.Chapter
 
 @Entity(tableName = "chapter_progress", primaryKeys = ["name", "doctor"])
 data class ChapterProgressEntity(
@@ -25,7 +25,7 @@ data class ChapterProgressQuery(
     val doctorName: String
 )
 
-fun ChapterProgress.toChapterProgressEntity(): ChapterProgressEntity {
+fun Chapter.toChapterProgressEntity(): ChapterProgressEntity {
     return ChapterProgressEntity(
         name = name,
         doctorName = doctorName,
@@ -35,9 +35,9 @@ fun ChapterProgress.toChapterProgressEntity(): ChapterProgressEntity {
     )
 }
 
-fun List<ChapterProgressEntity>.toChapterProgress(): List<ChapterProgress> {
+fun List<ChapterProgressEntity>.toChapterProgress(): List<Chapter> {
     return map {
-        ChapterProgress(
+        Chapter(
             doctorName = it.doctorName,
             name = it.name,
             imageUrl = it.imageUrl,

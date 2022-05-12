@@ -11,9 +11,9 @@ import com.medically.local.entities.offline.toLocalLecture
 import com.medically.local.entities.offline.toOfflineChapter
 import com.medically.local.entities.progress.ChapterProgressQuery
 import com.medically.local.entities.progress.toCompleted
+import com.medically.local.entities.progress.toLectureProgress
 import com.medically.model.Chapter
 import com.medically.model.Lecture
-import com.medically.model.LectureProgress
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -44,8 +44,9 @@ class LecturesLocalDataSourceImp(
         return dao.getLectures(chapter).map { it.toLecture() }
     }
 
-    override suspend fun completeLecture(chapter: Chapter, lecture: LectureProgress) {
-        progressDao.insertLecture(lecture.copy(isCompleted = true).toCompleted())
+    override suspend fun completeLecture(chapter: Chapter, lecture: Lecture) {
+        lecture.isCompleted = true
+        progressDao.insertLecture(lecture.toCompleted())
         val lecturesCount = progressDao.getLecturesCount(chapter.name)
         val completedLecture = progressDao.getCompletedLecturesCount(true, lecture.chapterName)
         val progress = (completedLecture.toDouble() / lecturesCount) * 100
@@ -56,5 +57,9 @@ class LecturesLocalDataSourceImp(
                 doctorName = chapter.doctorName
             )
         )
+    }
+
+    override suspend fun getCompletedLectures(chapter: Chapter): Flow<List<Lecture>> {
+        return progressDao.getLectures(chapter.name).map { it.toLectureProgress() }
     }
 }

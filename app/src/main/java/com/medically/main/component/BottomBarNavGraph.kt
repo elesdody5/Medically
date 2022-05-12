@@ -24,6 +24,6 @@ fun NavGraphBuilder.bottomBarNavGraph(
     }
 
     composable(BottomBarScreens.Progress.name) {
-        ProgressScreen()
+        ProgressScreen { medicallyNavController.navigate(MedicallyScreens.CompletedLecturesScreen.name) }
     }
 }

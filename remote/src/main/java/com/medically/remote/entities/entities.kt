@@ -15,11 +15,10 @@ data class RemoteDoctor(
 ) : Doctor()
 
 data class RemoteChapter(
-    override val id: String,
     override val name: String,
     override val doctorName: String,
     override val imageUrl: String
-) : Chapter(id, doctorName, name, imageUrl)
+) : Chapter(doctorName, name, imageUrl)
 
 data class RemoteVideo(
     override val name: String?,

@@ -8,10 +8,10 @@ package com.medically.model
 data class NowPlayingMetadata(
     val id: String,
     val number: Long = 0,
-    val albumArtUri: String? = null,
-    val url: String? = null,
-    val title: String? = null,
-    val subtitle: String? = null,
+    val albumArtUri: String,
+    val url: String,
+    val title: String?,
+    val subtitle: String?,
     val duration: Long = 0
 )
 

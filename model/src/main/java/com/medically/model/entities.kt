@@ -8,10 +8,11 @@ open class Subject(
 )
 
 open class Chapter(
-    open val id: String,
     open val doctorName: String = "",
     open val name: String = "",
     open val imageUrl: String = "",
+    open var progress: Int = 0,
+    open var lecturesCount: Int = 0
 )
 
 open class Doctor(
@@ -32,7 +33,8 @@ open class Video(
 open class Lecture(
     open val name: String,
     open val url: String,
-    open val chapterName: String
+    open val chapterName: String,
+    open var isCompleted: Boolean = false
 )
 
 open class AudioPlayList constructor(

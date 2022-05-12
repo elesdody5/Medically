@@ -2,7 +2,7 @@ package com.medically.core.lectures
 
 import com.medically.core.integration.Data
 import com.medically.model.AudioPlayList
-import com.medically.model.ChapterProgress
+import com.medically.model.Chapter
 import com.medically.model.Result
 import kotlinx.coroutines.launch
 
@@ -59,10 +59,10 @@ fun LecturesPort.insertChapterProgress(lecturesCount: Int) {
     if (chapter != null)
         scope.launch {
             Data.chaptersRepository.insertChapterProgress(
-                ChapterProgress(
-                    chapter.name,
-                    chapter.doctorName,
-                    chapter.imageUrl,
+                Chapter(
+                    name = chapter.name,
+                    doctorName = chapter.doctorName,
+                    imageUrl = chapter.imageUrl,
                     lecturesCount = lecturesCount
                 )
             )

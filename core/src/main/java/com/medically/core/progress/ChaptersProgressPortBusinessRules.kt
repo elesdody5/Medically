@@ -1,6 +1,7 @@
 package com.medically.core.progress
 
 import com.medically.core.integration.Data
+import com.medically.model.Chapter
 import kotlinx.coroutines.launch
 
 fun ChaptersProgressPort.bindChaptersProgress() {
@@ -10,4 +11,8 @@ fun ChaptersProgressPort.bindChaptersProgress() {
             state.value = state.value.copy(chaptersProgress = chapters)
         }
     }
+}
+
+fun ChaptersProgressPort.saveCurrentChapter(chapter: Chapter) {
+    Data.chaptersRepository.setCurrentChapter(chapter)
 }

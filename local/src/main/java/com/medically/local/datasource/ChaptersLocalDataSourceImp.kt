@@ -9,7 +9,6 @@ import com.medically.local.entities.offline.toChapters
 import com.medically.local.entities.progress.toChapterProgress
 import com.medically.local.entities.progress.toChapterProgressEntity
 import com.medically.model.Chapter
-import com.medically.model.ChapterProgress
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -27,12 +26,12 @@ class ChaptersLocalDataSourceImp(
         return bookmarksDao.getChapters().map { it.toChapters() }
     }
 
-    override fun getChaptersProgress(): Flow<List<ChapterProgress>> {
+    override fun getChaptersProgress(): Flow<List<Chapter>> {
         return progressDao.getChapters().map { it.toChapterProgress() }
     }
 
     override suspend fun insertChapterProgress(
-        chapterProgress: ChapterProgress,
+        chapterProgress: Chapter,
     ) {
         progressDao.insertChapter(chapterProgress.toChapterProgressEntity())
     }

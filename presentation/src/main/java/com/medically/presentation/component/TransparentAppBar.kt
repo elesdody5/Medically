@@ -31,11 +31,12 @@ fun TransparentAppBar(
         navigationIcon = navigationIcon,
         title = {
             Column {
-                Text(
-                    title,
-                    style = TextStyle(fontSize = 14.sp),
-                    color = MaterialTheme.colors.onBackground
-                )
+                if (title.isNotEmpty())
+                    Text(
+                        title,
+                        style = TextStyle(fontSize = 14.sp),
+                        color = MaterialTheme.colors.onBackground
+                    )
                 Text(
                     subTitle,
                     style = TextStyle(fontSize = 22.sp),

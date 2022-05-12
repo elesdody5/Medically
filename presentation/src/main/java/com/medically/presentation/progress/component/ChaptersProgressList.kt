@@ -8,13 +8,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.medically.model.ChapterProgress
+import com.medically.model.Chapter
 import com.medically.presentation.component.list_with_header.Header
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ChaptersProgressList(chapters: Map<String, List<ChapterProgress>>) {
+fun ChaptersProgressList(
+    chapters: Map<String, List<Chapter>>,
+    onChapterSelected: (Chapter) -> Unit
+) {
     LazyColumn(
         contentPadding = PaddingValues(10.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -24,7 +27,7 @@ fun ChaptersProgressList(chapters: Map<String, List<ChapterProgress>>) {
                 Header(doctor)
             }
             items(doctorChapters) {
-                ChapterProgressLitItem(chapterProgress = it)
+                ChapterProgressLitItem(chapter = it, onChapterSelected)
             }
         }
     }
@@ -37,7 +40,7 @@ fun ChaptersProgressPreview() {
         ChaptersProgressList(
             chapters = mapOf(
                 "doctor" to listOf(
-                    ChapterProgress(
+                    Chapter(
                         name = "chapter",
                         progress = 50,
                         imageUrl = "",
@@ -46,6 +49,6 @@ fun ChaptersProgressPreview() {
                     )
                 )
             )
-        )
+        ) {}
     }
 }

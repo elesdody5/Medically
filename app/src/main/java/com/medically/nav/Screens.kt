@@ -9,6 +9,7 @@ enum class MedicallyScreens {
     LecturesScreen,
     DownLoadedLecturesScreen,
     BookMarkedLecturesScreen,
+    CompletedLecturesScreen,
     AudioPlayerScreen;
 
 
@@ -20,6 +21,7 @@ enum class MedicallyScreens {
                 DownLoadedLecturesScreen.name -> DownLoadedLecturesScreen
                 BookMarkedLecturesScreen.name -> BookMarkedLecturesScreen
                 LecturesScreen.name -> LecturesScreen
+                CompletedLecturesScreen.name -> CompletedLecturesScreen
                 AudioPlayerScreen.name -> AudioPlayerScreen
                 null -> MainScreen
                 else -> throw IllegalArgumentException("Route $route is not recognized.")

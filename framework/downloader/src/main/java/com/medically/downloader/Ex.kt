@@ -25,7 +25,7 @@ fun Data.getChapter(): Chapter {
     val doctor = getString(ChapterParams.KEY_Doctor)
     val name = getString(ChapterParams.KEY_Chapter_NAME) ?: ""
     val image = getString(ChapterParams.KEY_Chapter_IMAGE)
-    return Chapter(id = id ?: "", name = name, imageUrl = image ?: "", doctorName = doctor ?: "")
+    return Chapter(name = name, imageUrl = image ?: "", doctorName = doctor ?: "")
 }
 
 fun Data.getDoctor(): Doctor {

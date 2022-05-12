@@ -3,7 +3,7 @@ package com.medically.core.progress
 import com.medically.core.entities.BusinessRule
 import com.medically.core.persentation.PresentationPort
 import com.medically.core.persentation.PresentationPortState
-import com.medically.model.ChapterProgress
+import com.medically.model.Chapter
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface ChaptersProgressPort : PresentationPort<ChaptersProgressPortState> {
@@ -13,7 +13,7 @@ interface ChaptersProgressPort : PresentationPort<ChaptersProgressPortState> {
 data class ChaptersProgressPortState(
     override val isLoading: Boolean = false,
     override val errorMessage: String? = null,
-    val chaptersProgress: Map<String, List<ChapterProgress>> = emptyMap()
+    val chaptersProgress: Map<String, List<Chapter>> = emptyMap()
 ) : PresentationPortState()
 
 infix fun MutableStateFlow<ChaptersProgressPortState>.isLoading(isLoading: Boolean) {

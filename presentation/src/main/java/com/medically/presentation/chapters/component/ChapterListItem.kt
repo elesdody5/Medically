@@ -49,7 +49,7 @@ fun ChapterListItem(chapter: Chapter, onChapterSelected: (Chapter) -> Unit) {
 @Preview
 fun PreviewChapterListItem() {
     MedicallyTheme {
-        ChapterListItem(chapter = Chapter(name = "Abdomen", id = "")) {}
+        ChapterListItem(chapter = Chapter(name = "Abdomen")) {}
     }
 }
 

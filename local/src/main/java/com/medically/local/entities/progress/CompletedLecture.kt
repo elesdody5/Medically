@@ -3,7 +3,7 @@ package com.medically.local.entities.progress
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.medically.model.LectureProgress
+import com.medically.model.Lecture
 
 @Entity(tableName = "lecture_progress")
 data class LectureProgressEntity(
@@ -18,7 +18,7 @@ data class LectureProgressEntity(
     val isCompleted: Boolean = false,
 )
 
-fun LectureProgress.toCompleted(): LectureProgressEntity {
+fun Lecture.toCompleted(): LectureProgressEntity {
     return LectureProgressEntity(
         name = name,
         url = url,
@@ -28,12 +28,12 @@ fun LectureProgress.toCompleted(): LectureProgressEntity {
 }
 
 
-fun Array<out LectureProgress>.toLectureProgress(): Array<LectureProgressEntity> =
+fun Array<out Lecture>.toLectureProgress(): Array<LectureProgressEntity> =
     map { it.toCompleted() }.toTypedArray()
 
-fun List<LectureProgressEntity>.toLectureProgress(): List<LectureProgress> {
+fun List<LectureProgressEntity>.toLectureProgress(): List<Lecture> {
     return map {
-        LectureProgress(
+        Lecture(
             name = it.name,
             url = it.url,
             chapterName = it.chapter,
@@ -42,7 +42,7 @@ fun List<LectureProgressEntity>.toLectureProgress(): List<LectureProgress> {
     }
 }
 
-fun List<LectureProgress>.toLectureProgressEntity(): List<LectureProgressEntity> {
+fun List<Lecture>.toLectureProgressEntity(): List<LectureProgressEntity> {
     return map {
         LectureProgressEntity(
             name = it.name,

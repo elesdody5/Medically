@@ -21,7 +21,6 @@ class DownloaderManager(private val applicationContext: Context) : DownLoaderPor
             putString(KEY_LECTURE_NAME, lecture.name)
             putString(KEY_LECTURE_URL, lecture.url)
             putString(KEY_LECTURE_CHAPTER, lecture.chapterName)
-            putString(ChapterParams.KEY_Chapter_id, chapter.id)
             putString(ChapterParams.KEY_Chapter_NAME, chapter.name)
             putString(ChapterParams.KEY_Doctor, chapter.doctorName)
             putString(ChapterParams.KEY_Chapter_IMAGE, chapter.imageUrl)

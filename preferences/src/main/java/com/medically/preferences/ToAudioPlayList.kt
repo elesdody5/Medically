@@ -17,7 +17,7 @@ fun List<PreferenceLecture>.toLecture(): List<Lecture> {
 }
 
 fun PreferenceChapter.toChapter(): Chapter {
-    return Chapter(id, name, doctorName, imageUrl)
+    return Chapter(doctorName, name, imageUrl)
 }
 
 fun PreferenceDoctor.toDoctor(): Doctor {

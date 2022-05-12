@@ -6,7 +6,10 @@ import com.medically.data.integration.LocalDataSources
 import com.medically.data.integration.RemoteDataSources
 import com.medically.data.local.LecturesLocalDataSource
 import com.medically.data.remote.LecturesRemoteDataSource
-import com.medically.model.*
+import com.medically.model.AudioPlayList
+import com.medically.model.Chapter
+import com.medically.model.Lecture
+import com.medically.model.Result
 import kotlinx.coroutines.flow.Flow
 
 class LecturesRepository(
@@ -48,7 +51,11 @@ class LecturesRepository(
         return lecturesLocalDataSource.getBookmarkedLectures(chapter)
     }
 
-    override suspend fun completeLecture(chapter: Chapter, lectureProgress: LectureProgress) {
+    override suspend fun completeLecture(chapter: Chapter, lectureProgress: Lecture) {
         lecturesLocalDataSource.completeLecture(chapter, lectureProgress)
+    }
+
+    override suspend fun getCompletedLectures(chapter: Chapter): Flow<List<Lecture>> {
+        return lecturesLocalDataSource.getCompletedLectures(chapter)
     }
 }

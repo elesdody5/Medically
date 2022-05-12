@@ -4,7 +4,6 @@ import com.medically.core.integration.Data
 import com.medically.core.integration.Framework
 import com.medically.core.toTimeStamp
 import com.medically.model.Lecture
-import com.medically.model.LectureProgress
 import com.medically.model.NowPlayingMetadata
 import com.medically.model.PlaybackState
 import kotlinx.coroutines.Dispatchers
@@ -23,24 +22,31 @@ fun PlayerPort.onPlaybackStateChanged(playbackState: PlaybackState?) {
 
 fun PlayerPort.onMetaDataChanged(nowPlayingMetadata: NowPlayingMetadata?) {
     nowPlayingMetadata?.let {
-        if (isNewAudioPlaying(nowPlayingMetadata)) completeLecture()
+        if (isNewAudioPlaying(nowPlayingMetadata)) completeLecture(nowPlayingMetadata)
         state.value = state.value.copy(mediaMetadata = nowPlayingMetadata)
     }
 }
 
 private fun PlayerPort.isNewAudioPlaying(newMetadata: NowPlayingMetadata?): Boolean {
     val nowPlayingMetadata = state.value.mediaMetadata
-    return nowPlayingMetadata?.title != newMetadata?.title
+    return newMetadata?.duration != 0L && nowPlayingMetadata?.title != newMetadata?.title
 }
 
-fun PlayerPort.completeLecture() {
+fun PlayerPort.completeLecture(nowPlaying: NowPlayingMetadata?) {
     val chapter = Data.chaptersRepository.currentChapter
-    val nowPlaying = state.value.mediaMetadata
-    val lectureProgress =
-        LectureProgress(nowPlaying?.title ?: "", chapter?.name ?: "", nowPlaying?.url ?: "", true)
-    scope.launch {
-        if (chapter != null)
-            Data.lecturesRepository.completeLecture(chapter, lectureProgress)
+    if (nowPlaying != null) {
+        val lectureProgress =
+            Lecture(
+                name = nowPlaying.title ?: "",
+                chapterName = chapter?.name ?: "",
+                url = nowPlaying.url,
+                isCompleted = true
+            )
+
+        scope.launch {
+            if (chapter != null)
+                Data.lecturesRepository.completeLecture(chapter, lectureProgress)
+        }
     }
 }
 
