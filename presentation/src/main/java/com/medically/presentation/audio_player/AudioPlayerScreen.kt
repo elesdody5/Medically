@@ -54,6 +54,7 @@ fun AudioPlayerScreen(goBack: () -> Boolean) {
                 position,
                 state.mediaMetadata?.duration ?: 0,
                 state.playbackState?.isPlaying ?: false,
+                state.isBookmarked,
                 viewModel::toggleState,
                 viewModel::seekTo,
                 viewModel::skipForward,

@@ -19,7 +19,10 @@ fun PlayerActions(
     changeSpeed: (Float) -> Unit,
     downloadAudio: () -> Unit,
     bookmarkAudio: () -> Unit,
+    isBookmarked: Boolean
 ) {
+    val bookmarkIcon =
+        if (isBookmarked) R.drawable.ic_baseline_bookmark_24 else R.drawable.ic_baseline_bookmark_border_24
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -35,7 +38,7 @@ fun PlayerActions(
             )
             CircleWithIcon(
                 circleSize = 34.dp,
-                iconId = R.drawable.ic_baseline_bookmark_border_24,
+                iconId = bookmarkIcon,
                 contentDescription = "",
                 modifier = Modifier.clickable { bookmarkAudio() }
             )
@@ -47,6 +50,10 @@ fun PlayerActions(
 @Composable
 fun PreviewPlayerActions() {
     MedicallyTheme {
-        PlayerActions(changeSpeed = {}, downloadAudio = {}) {}
+        PlayerActions(
+            changeSpeed = {},
+            downloadAudio = {},
+            isBookmarked = false,
+            bookmarkAudio = {})
     }
 }

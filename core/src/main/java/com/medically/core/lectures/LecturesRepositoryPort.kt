@@ -13,7 +13,9 @@ interface LecturesRepositoryPort {
     suspend fun insertOfflineLectures(chapter: Chapter, vararg lecture: Lecture)
     fun getOfflineLectures(chapter: String): Flow<List<Lecture>>
     suspend fun insertBookmarkLectures(chapter: Chapter, vararg lecture: Lecture)
+    suspend fun removeBookmarkLectures(vararg lecture: Lecture)
     fun getBookmarkedLectures(chapter: String): Flow<List<Lecture>>
     suspend fun completeLecture(chapter: Chapter, lectureProgress: Lecture)
     suspend fun getCompletedLectures(chapter: Chapter): Flow<List<Lecture>>
+    suspend fun isLectureBookmarked(url: String): Boolean
 }

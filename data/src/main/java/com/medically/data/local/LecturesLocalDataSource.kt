@@ -11,4 +11,6 @@ interface LecturesLocalDataSource {
     fun getBookmarkedLectures(chapter: String): Flow<List<Lecture>>
     suspend fun completeLecture(chapter: Chapter, lecture: Lecture)
     suspend fun getCompletedLectures(chapter: Chapter): Flow<List<Lecture>>
+    suspend fun isLectureBookmarked(url: String): Boolean
+    suspend fun removeBookmark(vararg lecture: Lecture)
 }

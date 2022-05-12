@@ -47,6 +47,10 @@ class LecturesRepository(
         lecturesLocalDataSource.insertBookmarkLectures(chapter, *lecture)
     }
 
+    override suspend fun removeBookmarkLectures(vararg lecture: Lecture) {
+        lecturesLocalDataSource.removeBookmark(*lecture)
+    }
+
     override fun getBookmarkedLectures(chapter: String): Flow<List<Lecture>> {
         return lecturesLocalDataSource.getBookmarkedLectures(chapter)
     }
@@ -57,5 +61,9 @@ class LecturesRepository(
 
     override suspend fun getCompletedLectures(chapter: Chapter): Flow<List<Lecture>> {
         return lecturesLocalDataSource.getCompletedLectures(chapter)
+    }
+
+    override suspend fun isLectureBookmarked(url: String): Boolean {
+        return lecturesLocalDataSource.isLectureBookmarked(url)
     }
 }

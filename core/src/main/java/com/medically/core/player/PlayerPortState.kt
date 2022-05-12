@@ -15,7 +15,8 @@ data class PlayerPortState(
     val currentChapter: Chapter? = null,
     val currentDoctor: Doctor? = null,
     val downloadAlertVisibility: Boolean = false,
-    val lectureSize: Long = 0
+    val lectureSize: Long = 0,
+    val isBookmarked: Boolean = false
 ) : PresentationPortState()
 
 infix fun MutableStateFlow<PlayerPortState>.isLoading(isLoading: Boolean) {

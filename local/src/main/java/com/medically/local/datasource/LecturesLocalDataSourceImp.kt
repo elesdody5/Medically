@@ -62,4 +62,12 @@ class LecturesLocalDataSourceImp(
     override suspend fun getCompletedLectures(chapter: Chapter): Flow<List<Lecture>> {
         return progressDao.getLectures(chapter.name).map { it.toLectureProgress() }
     }
+
+    override suspend fun isLectureBookmarked(url: String): Boolean {
+        return bookmarksDao.isLectureExists(url)
+    }
+
+    override suspend fun removeBookmark(vararg lecture: Lecture) {
+        bookmarksDao.deleteLecture(*lecture.toBookmarkedLecture())
+    }
 }
