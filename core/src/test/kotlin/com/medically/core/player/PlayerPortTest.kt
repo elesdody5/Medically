@@ -28,7 +28,15 @@ class PlayerPortTest {
     private lateinit var state: MutableStateFlow<PlayerPortState>
     private lateinit var position: MutableStateFlow<Long>
 
-    private val nowPlayingMetadata = MutableStateFlow(NowPlayingMetadata("1"))
+    private val nowPlayingMetadata = MutableStateFlow(
+        NowPlayingMetadata(
+            "1",
+            title = "TestMetaData",
+            albumArtUri = "",
+            subtitle = "",
+            url = ""
+        )
+    )
 
     @MockK
     private lateinit var mockMusicConnection: MusicServiceConnectionPort
@@ -50,7 +58,13 @@ class PlayerPortTest {
 
         //When
         every { mockMusicConnection.nowPlaying } returns nowPlayingMetadata
-        nowPlayingMetadata.value = NowPlayingMetadata("2", title = "TestMetaData")
+        nowPlayingMetadata.value = NowPlayingMetadata(
+            "2",
+            title = "TestMetaData",
+            albumArtUri = "",
+            subtitle = "",
+            url = ""
+        )
 
         var expected: String? = null
         state.take(1).collect { expected = it.mediaMetadata?.id }
@@ -68,7 +82,6 @@ class PlayerAdapter(
 
     override val bindCollector: BusinessRule = bindCollector()
     override val bindChapter = BusinessRule
-    override val bindDoctor = BusinessRule
     override val mediaStateCollector = FlowCollector(::onMetaDataChanged)
     override val playbackStateCollector = FlowCollector(::onPlaybackStateChanged)
 

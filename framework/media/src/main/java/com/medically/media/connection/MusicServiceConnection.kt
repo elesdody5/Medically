@@ -76,12 +76,13 @@ class MusicServiceConnection(
     private val transportControls: MediaControllerCompat.TransportControls
         get() = mediaController.transportControls
 
-    private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(application)
+    private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback()
 
     private val mediaBrowser = MediaBrowserCompat(
         application,
         serviceComponent,
-        mediaBrowserConnectionCallback, null
+        mediaBrowserConnectionCallback,
+        null
     ).apply { connect() }
 
     private lateinit var mediaController: MediaControllerCompat

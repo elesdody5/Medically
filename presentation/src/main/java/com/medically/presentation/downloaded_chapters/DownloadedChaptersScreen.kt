@@ -14,12 +14,12 @@ import com.medically.presentation.component.list_with_header.ShimmerListWithHead
 import com.medically.presentation.downloaded_chapters.list.DownloadedChaptersList
 
 @Composable
-fun DownLoadScreen() {
+fun DownLoadScreen(goToDownLoadLectures: () -> Unit) {
     val viewModel = viewModel<DownloadedChaptersViewModel>()
     val state by viewModel.state.collectAsState()
     Scaffold(topBar = {
         TransparentAppBar(
-            goBack = null,
+            navigationIcon = null,
             title = "",
             subTitle = stringResource(id = R.string.downloads)
         )
@@ -33,7 +33,10 @@ fun DownLoadScreen() {
         if (!state.isLoading && state.errorMessage == null)
             DownloadedChaptersList(
                 chapters = state.chapters,
-                onChapterSelected = viewModel::saveCurrentChapter
+                onChapterSelected = {
+                    viewModel.saveCurrentChapter(it)
+                    goToDownLoadLectures()
+                }
             )
     }
 }

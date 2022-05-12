@@ -27,7 +27,22 @@ class ChaptersRepository(
         return chaptersRemoteDatasource.getChapters(doctorName)
     }
 
-    override suspend fun getOfflineChapters(): Flow<List<Chapter>> {
+    override fun getOfflineChapters(): Flow<List<Chapter>> {
         return chaptersLocalDatasource.getOfflineChapters()
     }
+
+    override fun getBookmarksChapters(): Flow<List<Chapter>> {
+        return chaptersLocalDatasource.getBookmarksChapters()
+    }
+
+    override fun getChaptersProgress(): Flow<List<Chapter>> {
+        return chaptersLocalDatasource.getChaptersProgress()
+    }
+
+    override suspend fun insertChapterProgress(
+        chapter: Chapter,
+    ) {
+        chaptersLocalDatasource.insertChapterProgress(chapter)
+    }
+
 }

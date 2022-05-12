@@ -30,8 +30,8 @@ class PreferencesImp(
         dataStore.updateData {
             it.toBuilder()
                 .setChapter(audioPlayList.chapter?.toPreference(it.chapter))
-                .setDoctor(audioPlayList.doctor?.toPreference(it.doctor))
-                .setSubject(audioPlayList.subject?.toPreference(it.subject))
+                .setDoctorName(audioPlayList.doctorName)
+                .setSubjectTitle(audioPlayList.subjectTitle)
                 .clearLectures()
                 .addAllLectures(audioPlayList.lectures?.toPreference())
                 .setCurrentPlayingPosition(audioPlayList.currentPlayingPosition ?: 0)

@@ -9,7 +9,6 @@
     <string name="pdf">PDF</string>
     <string name="video">Video</string>
     <string name="no_audio">No Audio found for this doctor</string>
-    <string name="no_downloads">No Downloads found start download some audio to see it.</string>
     <string name="no_pdf">No PDF found for this doctor</string>
     <string name="no_video">No Video found for this doctor</string>
     <string name="previous_time">-10sec</string>
@@ -24,4 +23,10 @@
     <string name="download_alert_title">Downloading Lecture</string>
     <string name="download_alert_body">The audio size is %s</string>
     <string name="downloads">Downloads</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="no_downloads">No Downloads found start download some audio to see it.</string>
+    <string name="no_bookmarks">No Bookmarks found start add some chapters to see it.</string>
+    <string name="no_progress">No Progress found start listen to some audio to see it.</string>
+    <string name="progress">Progress</string>
 </resources>

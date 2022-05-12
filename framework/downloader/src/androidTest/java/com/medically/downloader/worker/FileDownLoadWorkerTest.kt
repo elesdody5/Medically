@@ -80,8 +80,8 @@ class FileDownLoadWorkerTest {
             downloadHandler.downLoadFile(
                 applicationContext,
                 chapter.name,
-                lecture.name!!,
-                lecture.url!!
+                lecture.name,
+                lecture.url
             )
         } returns fileUri
 
@@ -98,7 +98,7 @@ class FileDownLoadWorkerTest {
         verify {
             notificationHandler.createNotification(
                 applicationContext,
-                lecture.name!!,
+                lecture.name,
                 chapter.name
             )
         }
@@ -106,12 +106,12 @@ class FileDownLoadWorkerTest {
             downloadHandler.downLoadFile(
                 applicationContext,
                 chapter.name,
-                lecture.name!!,
-                lecture.url!!
+                lecture.name,
+                lecture.url
             )
         }
         coVerify {
-            mockLecturesRepositoryPort.insertLecture(
+            mockLecturesRepositoryPort.insertOfflineLectures(
                 any(),
                 any()
             )

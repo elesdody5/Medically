@@ -7,7 +7,9 @@ enum class MedicallyScreens {
     MainScreen,
     SubjectDetailsScreen,
     LecturesScreen,
-    ChaptersScreen,
+    DownLoadedLecturesScreen,
+    BookMarkedLecturesScreen,
+    CompletedLecturesScreen,
     AudioPlayerScreen;
 
 
@@ -16,8 +18,10 @@ enum class MedicallyScreens {
             when (route?.substringBefore("/")) {
                 MainScreen.name -> MainScreen
                 SubjectDetailsScreen.name -> SubjectDetailsScreen
-                ChaptersScreen.name -> ChaptersScreen
+                DownLoadedLecturesScreen.name -> DownLoadedLecturesScreen
+                BookMarkedLecturesScreen.name -> BookMarkedLecturesScreen
                 LecturesScreen.name -> LecturesScreen
+                CompletedLecturesScreen.name -> CompletedLecturesScreen
                 AudioPlayerScreen.name -> AudioPlayerScreen
                 null -> MainScreen
                 else -> throw IllegalArgumentException("Route $route is not recognized.")

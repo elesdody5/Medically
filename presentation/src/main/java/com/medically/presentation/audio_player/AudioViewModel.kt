@@ -21,7 +21,6 @@ class AudioViewModel :
     override val mediaStateCollector = FlowCollector(::onMetaDataChanged)
     override val bindCollector = bindCollector()
     override val bindChapter = bindChapter()
-    override val bindDoctor = bindDoctor()
 
 
     override fun onCleared() {

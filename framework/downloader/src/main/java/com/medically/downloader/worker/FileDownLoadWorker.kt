@@ -48,7 +48,7 @@ class FileDownLoadWorker constructor(
             return if (uri != null) {
                 notificationHandler.downLoadComplete()
                 Log.i("worker", "DownLoad success")
-                lecturesRepositoryPort.insertLecture(
+                lecturesRepositoryPort.insertOfflineLectures(
                     chapter = chapter,
                     Lecture(lecture.name, uri.toString(), chapterName = chapter.name)
                 )

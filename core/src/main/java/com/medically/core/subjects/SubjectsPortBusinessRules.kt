@@ -11,17 +11,18 @@ fun SubjectsPort.bindSubjects() {
     val subjectsRepository = Data.subjectsRepositoryPort
     state.value = state.value.copy(isLoading = true)
     scope.launch {
-        val result = subjectsRepository.getAllSubjects()
-        if (result is Result.Success) {
-            val subjects = result.data?.groupBy { it.yearName } ?: emptyMap()
-            state.value =
-                SubjectsPortState(
+        if (state.value.subjects.isEmpty()) {
+            val result = subjectsRepository.getAllSubjects()
+            if (result is Result.Success) {
+                val subjects = result.data?.groupBy { it.yearName } ?: emptyMap()
+                state.value = state.value.copy(
                     subjects = subjects,
                     filteredSubjects = subjects,
                     isLoading = false
                 )
-        } else {
-            (result as Result.Error).exception.message?.let { state hasError it }
+            } else {
+                (result as Result.Error).exception.message?.let { state hasError it }
+            }
         }
     }
 }

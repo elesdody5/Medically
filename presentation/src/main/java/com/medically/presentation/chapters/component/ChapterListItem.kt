@@ -21,6 +21,7 @@ fun ChapterListItem(chapter: Chapter, onChapterSelected: (Chapter) -> Unit) {
     Card(
         backgroundColor = Color.White,
         elevation = 5.dp,
+        shape = RoundedCornerShape(4.dp),
         modifier = Modifier
             .height(210.dp)
             .width(152.dp)

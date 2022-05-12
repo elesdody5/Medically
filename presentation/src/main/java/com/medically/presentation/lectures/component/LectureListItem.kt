@@ -17,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.medically.model.Lecture
 import com.medically.presentation.R
-import com.medically.presentation.component.CircleWithIcon
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
@@ -52,23 +51,23 @@ fun LectureListItem(lecture: Lecture, index: Int, onLectureSelected: () -> Unit)
             )
         }
 
-        Row(
-            modifier = Modifier,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            CircleWithIcon(
-                iconId = R.drawable.ic_download,
-                circleSize = 35.dp,
-                circleColor = MaterialTheme.colors.secondary,
-                contentDescription = null
-            )
-            CircleWithIcon(
-                iconId = R.drawable.ic_baseline_bookmark_border_24,
-                circleSize = 35.dp,
-                circleColor = MaterialTheme.colors.secondary,
-                contentDescription = null
-            )
-        }
+//        Row(
+//            modifier = Modifier,
+//            horizontalArrangement = Arrangement.spacedBy(10.dp)
+//        ) {
+//            CircleWithIcon(
+//                iconId = R.drawable.ic_download,
+//                circleSize = 35.dp,
+//                circleColor = MaterialTheme.colors.secondary,
+//                contentDescription = null
+//            )
+//            CircleWithIcon(
+//                iconId = R.drawable.ic_baseline_bookmark_border_24,
+//                circleSize = 35.dp,
+//                circleColor = MaterialTheme.colors.secondary,
+//                contentDescription = null
+//            )
+//        }
     }
 }
 

@@ -4,19 +4,32 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.medically.local.db.dao.BookmarksDao
+import com.medically.local.db.dao.OfflineDao
+import com.medically.local.db.dao.ProgressDao
+import com.medically.local.entities.bookmark.BookmarkedChapter
+import com.medically.local.entities.bookmark.BookmarkedLecture
 import com.medically.local.entities.offline.OfflineChapter
 import com.medically.local.entities.offline.OfflineLecture
+import com.medically.local.entities.progress.ChapterProgressEntity
+import com.medically.local.entities.progress.LectureProgressEntity
 
 private const val DB_VERSION = 2
 private const val DATABASE_NAME = "offline_data"
 
 @Database(
     version = DB_VERSION,
-    entities = [OfflineLecture::class, OfflineChapter::class],
+    entities = [
+        OfflineLecture::class, OfflineChapter::class,
+        BookmarkedChapter::class, BookmarkedLecture::class,
+        ChapterProgressEntity::class, LectureProgressEntity::class
+    ],
     exportSchema = false
 )
 abstract class MedicallyDatabase : RoomDatabase() {
     abstract fun offlineDao(): OfflineDao
+    abstract fun bookmarksDao(): BookmarksDao
+    abstract fun progressDao(): ProgressDao
 
     /**
      * Define a companion object, this allows us to add functions on the MedicallyDatabase class.

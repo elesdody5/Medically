@@ -35,11 +35,27 @@ class LecturesRepository(
         //preferencesManager.setCurrentAudioPlayList(audioPlayList)
     }
 
-    override suspend fun insertLecture(chapter: Chapter, vararg lecture: Lecture) {
+    override suspend fun insertOfflineLectures(chapter: Chapter, vararg lecture: Lecture) {
         lecturesLocalDataSource.insertLecture(chapter, *lecture)
     }
 
-    override suspend fun getOfflineLectures(chapter: String): Flow<List<Lecture>> {
-        return lecturesLocalDataSource.getLectures(chapter)
+    override fun getOfflineLectures(chapter: String): Flow<List<Lecture>> {
+        return lecturesLocalDataSource.getOfflineLectures(chapter)
+    }
+
+    override suspend fun insertBookmarkLectures(chapter: Chapter, vararg lecture: Lecture) {
+        lecturesLocalDataSource.insertBookmarkLectures(chapter, *lecture)
+    }
+
+    override fun getBookmarkedLectures(chapter: String): Flow<List<Lecture>> {
+        return lecturesLocalDataSource.getBookmarkedLectures(chapter)
+    }
+
+    override suspend fun completeLecture(chapter: Chapter, lectureProgress: Lecture) {
+        lecturesLocalDataSource.completeLecture(chapter, lectureProgress)
+    }
+
+    override suspend fun getCompletedLectures(chapter: Chapter): Flow<List<Lecture>> {
+        return lecturesLocalDataSource.getCompletedLectures(chapter)
     }
 }

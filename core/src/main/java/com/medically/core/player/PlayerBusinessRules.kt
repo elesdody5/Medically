@@ -22,7 +22,31 @@ fun PlayerPort.onPlaybackStateChanged(playbackState: PlaybackState?) {
 
 fun PlayerPort.onMetaDataChanged(nowPlayingMetadata: NowPlayingMetadata?) {
     nowPlayingMetadata?.let {
+        if (isNewAudioPlaying(nowPlayingMetadata)) completeLecture(nowPlayingMetadata)
         state.value = state.value.copy(mediaMetadata = nowPlayingMetadata)
+    }
+}
+
+private fun PlayerPort.isNewAudioPlaying(newMetadata: NowPlayingMetadata?): Boolean {
+    val nowPlayingMetadata = state.value.mediaMetadata
+    return newMetadata?.duration != 0L && nowPlayingMetadata?.title != newMetadata?.title
+}
+
+fun PlayerPort.completeLecture(nowPlaying: NowPlayingMetadata?) {
+    val chapter = Data.chaptersRepository.currentChapter
+    if (nowPlaying != null) {
+        val lectureProgress =
+            Lecture(
+                name = nowPlaying.title ?: "",
+                chapterName = chapter?.name ?: "",
+                url = nowPlaying.url,
+                isCompleted = true
+            )
+
+        scope.launch {
+            if (chapter != null)
+                Data.lecturesRepository.completeLecture(chapter, lectureProgress)
+        }
     }
 }
 
@@ -54,10 +78,6 @@ suspend fun PlayerPort.checkPlaybackPosition() {
     }
 }
 
-fun PlayerPort.bindDoctor() {
-    val doctor = Data.doctorsRepository.currentDoctor
-    state.value = state.value.copy(currentDoctor = doctor)
-}
 
 fun PlayerPort.bindChapter() {
     val chapter = Data.chaptersRepository.currentChapter
@@ -99,6 +119,14 @@ fun PlayerPort.downLoadAudio() {
     val downloader = Framework.downLoaderManager
     val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
     chapter?.let { downloader.downLoad(lecture, it) }
+}
+
+fun PlayerPort.bookmarkCurrentAudio() {
+    val nowPlaying = state.value.mediaMetadata
+    val chapter = Data.chaptersRepository.currentChapter
+    val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
+    if (chapter != null)
+        scope.launch { Data.lecturesRepository.insertBookmarkLectures(chapter, lecture) }
 }
 
 

@@ -44,9 +44,17 @@ class MedicallyApplication : Application(), Configuration.Provider {
             with doctorsRemoteDataSource DoctorsRemoteDataSourceImp()
             with subjectDetailsRemoteDataSource SubjectDetailsRemoteDataSourceImp()
             with chaptersRemoteDataSource ChaptersRemoteDataSourceImp()
-            with chaptersLocalDataSource ChaptersLocalDataSourceImp(db.offlineDao())
+            with chaptersLocalDataSource ChaptersLocalDataSourceImp(
+                db.offlineDao(),
+                db.bookmarksDao(),
+                db.progressDao()
+            )
             with lecturesRemoteDataSource LecturesRemoteDataSourceImp()
-            with lecturesLocalDataSource LecturesLocalDataSourceImp(db.offlineDao())
+            with lecturesLocalDataSource LecturesLocalDataSourceImp(
+                db.offlineDao(),
+                db.bookmarksDao(),
+                db.progressDao()
+            )
         }
 
         coreIntegration {

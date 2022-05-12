@@ -47,7 +47,7 @@ fun AudioPlayerScreen(goBack: () -> Boolean) {
             LectureInfo(
                 imageUrl = state.currentChapter?.imageUrl ?: "",
                 lectureTitle = state.mediaMetadata?.title ?: "",
-                doctorName = state.currentDoctor?.name ?: ""
+                doctorName = state.currentChapter?.doctorName ?: ""
             )
 
             PlayerControllers(
@@ -59,7 +59,8 @@ fun AudioPlayerScreen(goBack: () -> Boolean) {
                 viewModel::skipForward,
                 viewModel::skipBackward,
                 viewModel::speed,
-                viewModel::getLectureSize
+                viewModel::getLectureSize,
+                viewModel::bookmarkCurrentAudio
             )
         }
     }

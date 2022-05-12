@@ -27,7 +27,6 @@ object FirebaseImp : NetworkServices {
         } catch (e: Exception) {
             ApiResponse(e)
         }
-
     }
 
     override suspend fun getDoctors(year: String, subjectId: String): ApiResponse<List<Doctor>> {
@@ -55,7 +54,7 @@ object FirebaseImp : NetworkServices {
             val chaptersList = doctorCollection.get().await()
                 .filter { it.id != "video" && it.id != "pdf" }
                 .map {
-                    RemoteChapter(it.id, it.id, doctorName, it.getString("image"))
+                    RemoteChapter(it.id, doctorName, it.getString("image") ?: "")
                 }
             return ApiResponse(data = chaptersList)
         }.onFailure {
