@@ -46,6 +46,7 @@ android {
     }
     buildFeatures {
         compose true
+        viewBinding true
     }
 
     packagingOptions {
@@ -78,6 +79,7 @@ dependencies {
     implementation composeActivity
     implementation workManger
     implementation room
+    implementation splash
     kapt roomAnnotation
     testImplementation test
     androidTestImplementation androidTest
