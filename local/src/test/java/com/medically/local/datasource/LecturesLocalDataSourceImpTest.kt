@@ -5,8 +5,8 @@ import com.medically.local.db.dao.BookmarksDao
 import com.medically.local.db.dao.OfflineDao
 import com.medically.local.db.dao.ProgressDao
 import com.medically.local.entities.progress.ChapterProgressQuery
-import com.medically.model.ChapterProgress
-import com.medically.model.LectureProgress
+import com.medically.model.Chapter
+import com.medically.model.Lecture
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -46,8 +46,14 @@ class LecturesLocalDataSourceImpTest {
 
     @Test
     fun completeLecture() = runTest {
-        val lectureProgress = LectureProgress("lecture", chapterName = "chapter", url = "")
-        val chapterProgress = ChapterProgress("chapter", "doctor", "chapter", 10, 50)
+        val lectureProgress = Lecture("lecture", chapterName = "chapter", url = "")
+        val chapterProgress = Chapter(
+            name = "chapter",
+            doctorName = "doctor",
+            imageUrl = "",
+            progress = 10,
+            lecturesCount = 50
+        )
         val progress = (chapterProgress.progress.toDouble() / 50) * 100
         coEvery {
             progressDao.getCompletedLecturesCount(
@@ -59,8 +65,16 @@ class LecturesLocalDataSourceImpTest {
         coEvery { progressDao.insertLecture(any()) } just Runs
         coEvery { progressDao.updateChapterProgress(any()) } just Runs
 
-        lecturesLocalDataSource.completeLecture("chapter", lectureProgress)
+        lecturesLocalDataSource.completeLecture(chapterProgress, lectureProgress)
 
-        coVerify { progressDao.updateChapterProgress(ChapterProgressQuery(progress.toInt())) }
+        coVerify {
+            progressDao.updateChapterProgress(
+                ChapterProgressQuery(
+                    progress.toInt(),
+                    chapterProgress.name,
+                    chapterProgress.doctorName
+                )
+            )
+        }
     }
 }

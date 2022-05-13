@@ -19,6 +19,7 @@ fun PlayerControllers(
     currentPosition: Long,
     duration: Long,
     isPlaying: Boolean,
+    isBookmarked: Boolean,
     toggleState: () -> Unit,
     seekTo: (Long) -> Unit,
     skipForward: () -> Unit,
@@ -61,7 +62,8 @@ fun PlayerControllers(
             Modifier.padding(top = 15.dp),
             changeSpeed = changeSpeed,
             downLoadAudio,
-            bookmarkAudio
+            bookmarkAudio,
+            isBookmarked
         )
     }
 }
@@ -74,6 +76,7 @@ fun PreviewPlayerController() {
             0,
             0,
             true,
+            isBookmarked = false,
             toggleState = {},
             skipForward = {},
             skipBackward = {},

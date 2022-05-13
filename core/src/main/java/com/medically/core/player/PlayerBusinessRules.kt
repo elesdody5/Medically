@@ -22,8 +22,18 @@ fun PlayerPort.onPlaybackStateChanged(playbackState: PlaybackState?) {
 
 fun PlayerPort.onMetaDataChanged(nowPlayingMetadata: NowPlayingMetadata?) {
     nowPlayingMetadata?.let {
-        if (isNewAudioPlaying(nowPlayingMetadata)) completeLecture(nowPlayingMetadata)
+        if (isNewAudioPlaying(nowPlayingMetadata)) {
+            completeLecture(nowPlayingMetadata)
+            isCurrentBookmarked(nowPlayingMetadata)
+        }
         state.value = state.value.copy(mediaMetadata = nowPlayingMetadata)
+    }
+}
+
+fun PlayerPort.isCurrentBookmarked(nowPlayingMetadata: NowPlayingMetadata) {
+    scope.launch {
+        val isBookmarked = Data.lecturesRepository.isLectureBookmarked(nowPlayingMetadata.url)
+        state.value = state.value.copy(isBookmarked = isBookmarked)
     }
 }
 
@@ -126,7 +136,15 @@ fun PlayerPort.bookmarkCurrentAudio() {
     val chapter = Data.chaptersRepository.currentChapter
     val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
     if (chapter != null)
-        scope.launch { Data.lecturesRepository.insertBookmarkLectures(chapter, lecture) }
+        scope.launch {
+            if (state.value.isBookmarked) {
+                state.value = state.value.copy(isBookmarked = false)
+                Data.lecturesRepository.removeBookmarkLectures(lecture)
+            } else {
+                state.value = state.value.copy(isBookmarked = true)
+                Data.lecturesRepository.insertBookmarkLectures(chapter, lecture)
+            }
+        }
 }
 
 

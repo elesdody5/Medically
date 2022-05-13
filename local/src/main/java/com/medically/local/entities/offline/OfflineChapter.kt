@@ -14,5 +14,5 @@ data class OfflineChapter(
 )
 
 fun Chapter.toOfflineChapter(): OfflineChapter {
-    return OfflineChapter(doctorName ?: "", name, imageUrl)
+    return OfflineChapter(doctorName, name, imageUrl)
 }

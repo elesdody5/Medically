@@ -7,13 +7,11 @@ import com.medically.model.Lecture
 
 @Entity(tableName = "bookmark_lecture")
 data class BookmarkedLecture(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "lecture_id")
-    val id: Int = 0,
     @ColumnInfo(name = "lecture_name")
     val name: String? = null,
     @ColumnInfo(name = "lecture_url")
-    val url: String? = null,
+    @PrimaryKey
+    val url: String,
     @ColumnInfo(name = "chapter")
     val chapter: String? = null,
 )
@@ -27,5 +25,5 @@ fun Array<out Lecture>.toBookmarkedLecture(): Array<BookmarkedLecture> =
     map { it.toBookmarkLecture() }.toTypedArray()
 
 fun List<BookmarkedLecture>.toLecture(): List<Lecture> {
-    return map { Lecture(it.name ?: "", it.url ?: "", it.chapter ?: "") }
+    return map { Lecture(it.name ?: "", it.url, it.chapter ?: "") }
 }

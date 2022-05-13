@@ -8,13 +8,11 @@ import com.medically.model.Lecture
 
 @Entity(tableName = "lecturesEntry")
 class OfflineLecture(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "lecture_id")
-    var id: Int = 0,
     @ColumnInfo(name = "lecture_name")
     var name: String? = null,
     @ColumnInfo(name = "lecture_url")
-    var url: String? = null,
+    @PrimaryKey
+    var url: String,
     @ColumnInfo(name = "chapter")
     var chapter: String? = null,
 )
@@ -29,7 +27,7 @@ fun Array<out Lecture>.toLocalLecture() =
     map { it.toLocalLecture() }.toTypedArray()
 
 fun List<OfflineLecture>.toLecture(): List<Lecture> {
-    return map { Lecture(it.name ?: "", it.url ?: "", it.chapter ?: "") }
+    return map { Lecture(it.name ?: "", it.url, it.chapter ?: "") }
 }
 
 fun List<OfflineChapter>.toChapters(): List<Chapter> {

@@ -1,9 +1,6 @@
 package com.medically.local.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.medically.local.entities.bookmark.BookmarkedChapter
 import com.medically.local.entities.bookmark.BookmarkedLecture
 import kotlinx.coroutines.flow.Flow
@@ -23,4 +20,10 @@ interface BookmarksDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChapter(vararg chapter: BookmarkedChapter)
+
+    @Query("SELECT EXISTS(SELECT * FROM bookmark_lecture WHERE lecture_url = :url)")
+    suspend fun isLectureExists(url: String): Boolean
+
+    @Delete
+    suspend fun deleteLecture(vararg lecture: BookmarkedLecture)
 }
