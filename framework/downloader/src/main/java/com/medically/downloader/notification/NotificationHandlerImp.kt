@@ -48,7 +48,7 @@ class NotificationHandlerImp(private val notificationManager: NotificationManage
     override fun downLoadComplete() {
         builder.setContentText("Download Completed")
             .setOngoing(false)
-            .setSmallIcon(R.drawable.app_icon)
+            .setSmallIcon(R.drawable.ic_app_icon)
             .setProgress(0, 0, false)
         notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
