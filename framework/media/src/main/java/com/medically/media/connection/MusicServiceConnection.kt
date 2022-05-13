@@ -36,16 +36,16 @@ import com.medically.model.NowPlayingMetadata
 import com.medically.model.PlaybackState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 
 /**
  * Class that manages a connection to a [MediaBrowserServiceCompat] instance, typically a
- * [MusicService] or one of its subclasses.
+ * [MusicServiceConnection] or one of its subclasses.
  *
  * Typically it's best to construct/inject dependencies either using DI or,
- * using [CoreIntegration] in the core module. There are a few difficulties for that here:
+ * using  in the core module. There are a few difficulties for that here:
  * - [MediaBrowserCompat] is a final class, so mocking it directly is difficult.
  * - A [MediaBrowserConnectionCallback] is a parameter into the construction of
  *   a [MediaBrowserCompat], and provides callbacks to this class.
@@ -106,7 +106,6 @@ class MusicServiceConnection(
         transportControls.seekTo(position)
     }
 
-    //TODO speed not changed need to check
     override fun setSpeed(speed: Float) {
         transportControls.setPlaybackSpeed(speed)
     }

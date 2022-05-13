@@ -122,6 +122,7 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
 
         // ExoPlayer will manage the MediaSession for us.
         mediaSessionConnector = MediaSessionConnector(mediaSession)
+        mediaSessionConnector.setEnabledPlaybackActions(MediaSessionConnector.ALL_PLAYBACK_ACTIONS)
         mediaSessionConnector.setQueueNavigator(QueueNavigator(mediaSession))
 
 
