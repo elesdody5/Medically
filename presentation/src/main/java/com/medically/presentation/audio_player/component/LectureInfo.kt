@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.medically.presentation.R
 import com.medically.presentation.component.LoadImageWithShimmer
 import com.medically.presentation.ui.theme.MedicallyTheme
 
@@ -28,7 +27,6 @@ fun LectureInfo(
     ) {
         LoadImageWithShimmer(
             imageUrl = imageUrl,
-            placeholder = R.drawable.audio_placeholder,
             modifier = Modifier
                 .padding(vertical = 25.dp)
                 .size(280.dp)

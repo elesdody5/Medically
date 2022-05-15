@@ -14,5 +14,4 @@ interface PlayerPort : PresentationPort<PlayerPortState> {
     val mediaStateCollector: FlowCollector<NowPlayingMetadata?>
     val bindCollector: BusinessRule
     val bindChapter: BusinessRule
-    val bindDoctor: BusinessRule
 }

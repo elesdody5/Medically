@@ -122,6 +122,7 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
 
         // ExoPlayer will manage the MediaSession for us.
         mediaSessionConnector = MediaSessionConnector(mediaSession)
+        mediaSessionConnector.setEnabledPlaybackActions(MediaSessionConnector.ALL_PLAYBACK_ACTIONS)
         mediaSessionConnector.setQueueNavigator(QueueNavigator(mediaSession))
 
 
@@ -218,8 +219,8 @@ class MediaPlaybackService : MediaBrowserServiceCompat() {
         audioPlayList.apply {
             val mediaMetadataCompat =
                 MediaMetadataCompat.Builder()
-                    .subject(subject?.name)
-                    .doctor(doctor?.name)
+                    .subject(subjectTitle)
+                    .doctor(doctorName)
                     .chapter(chapter)
 
             currentPlaylistItems = lectures?.mapIndexed { index, lecture ->

@@ -1,6 +1,8 @@
 package com.medically.core.integration
 
+import com.medically.core.chapters.ChaptersRepositoryPort
 import com.medically.core.doctors.DoctorsRepositoryPort
+import com.medically.core.downloader.DownLoaderPort
 import com.medically.core.lectures.LecturesRepositoryPort
 import com.medically.core.player.MusicServiceConnectionPort
 import com.medically.core.subject_details.SubjectDetailsRepositoryPort
@@ -37,13 +39,23 @@ object CoreIntegrator {
     }
 
     @CoreIntegration
+    infix fun chapterRepository(repository: ChaptersRepositoryPort) {
+        Data.chaptersRepository = repository
+    }
+
+    @CoreIntegration
     infix fun lecturesRepository(repository: LecturesRepositoryPort) {
         Data.lecturesRepository = repository
     }
 
     @CoreIntegration
     infix fun musicConnection(musicServiceConnectionPort: MusicServiceConnectionPort) {
-        MediaConnection.musicServiceConnectionPort = musicServiceConnectionPort
+        Framework.musicServiceConnectionPort = musicServiceConnectionPort
+    }
+
+    @CoreIntegration
+    infix fun downLoaderManager(downLoaderPort: DownLoaderPort) {
+        Framework.downLoaderManager = downLoaderPort
     }
 
     @CoreIntegration

@@ -4,22 +4,26 @@ package com.medically.nav
  * Screen metadata for Medically.
  */
 enum class MedicallyScreens {
-    HomeScreen,
+    MainScreen,
     SubjectDetailsScreen,
     LecturesScreen,
-    ChaptersScreen,
+    DownLoadedLecturesScreen,
+    BookMarkedLecturesScreen,
+    CompletedLecturesScreen,
     AudioPlayerScreen;
 
 
     companion object {
         fun fromRoute(route: String?): MedicallyScreens =
             when (route?.substringBefore("/")) {
-                HomeScreen.name -> HomeScreen
+                MainScreen.name -> MainScreen
                 SubjectDetailsScreen.name -> SubjectDetailsScreen
-                ChaptersScreen.name -> ChaptersScreen
+                DownLoadedLecturesScreen.name -> DownLoadedLecturesScreen
+                BookMarkedLecturesScreen.name -> BookMarkedLecturesScreen
                 LecturesScreen.name -> LecturesScreen
+                CompletedLecturesScreen.name -> CompletedLecturesScreen
                 AudioPlayerScreen.name -> AudioPlayerScreen
-                null -> HomeScreen
+                null -> MainScreen
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }
     }

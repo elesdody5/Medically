@@ -20,3 +20,7 @@ data class SubjectsPortState(
     val filteredSubjects: Map<String, List<Subject>> = emptyMap(),
     val currentPlay: NowPlayingMetadata? = null
 ) : PresentationPortState(isLoading, errorMessage)
+
+infix fun MutableStateFlow<SubjectsPortState>.hasError(message: String) {
+    value = value.copy(isLoading = false, errorMessage = message)
+}

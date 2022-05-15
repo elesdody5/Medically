@@ -16,8 +16,8 @@
 
 package com.medically.media.connection
 
+import android.app.Application
 import android.content.ComponentName
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.ResultReceiver
@@ -36,16 +36,16 @@ import com.medically.model.NowPlayingMetadata
 import com.medically.model.PlaybackState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 
 /**
  * Class that manages a connection to a [MediaBrowserServiceCompat] instance, typically a
- * [MusicService] or one of its subclasses.
+ * [MusicServiceConnection] or one of its subclasses.
  *
- * Typically it's best to construct/inject dependencies either using DI or, as UAMP does,
- * using [InjectorUtils] in the app module. There are a few difficulties for that here:
+ * Typically it's best to construct/inject dependencies either using DI or,
+ * using  in the core module. There are a few difficulties for that here:
  * - [MediaBrowserCompat] is a final class, so mocking it directly is difficult.
  * - A [MediaBrowserConnectionCallback] is a parameter into the construction of
  *   a [MediaBrowserCompat], and provides callbacks to this class.
@@ -60,7 +60,7 @@ import kotlinx.coroutines.launch
  *  [MediaBrowserConnectionCallback] and [MediaBrowserCompat] objects.
  */
 class MusicServiceConnection(
-    private val context: Context,
+    private val application: Application,
     serviceComponent: ComponentName
 ) : MusicServiceConnectionPort {
     override val isConnected = MutableStateFlow(false)
@@ -76,12 +76,13 @@ class MusicServiceConnection(
     private val transportControls: MediaControllerCompat.TransportControls
         get() = mediaController.transportControls
 
-    private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(context)
+    private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback()
 
     private val mediaBrowser = MediaBrowserCompat(
-        context,
+        application,
         serviceComponent,
-        mediaBrowserConnectionCallback, null
+        mediaBrowserConnectionCallback,
+        null
     ).apply { connect() }
 
     private lateinit var mediaController: MediaControllerCompat
@@ -105,7 +106,6 @@ class MusicServiceConnection(
         transportControls.seekTo(position)
     }
 
-    //TODO speed not changed need to check
     override fun setSpeed(speed: Float) {
         transportControls.setPlaybackSpeed(speed)
     }
@@ -159,7 +159,7 @@ class MusicServiceConnection(
 
     private fun onConnected() {
         // Get a MediaController for the MediaSession.
-        mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
+        mediaController = MediaControllerCompat(application, mediaBrowser.sessionToken).apply {
             registerCallback(mediaControllerCallback)
         }
         isConnected.value = true
@@ -172,6 +172,7 @@ class MusicServiceConnection(
                     it.id!!,
                     it.trackNumber,
                     it.albumArtUri.toString(),
+                    it.mediaUri.toString(),
                     it.title?.trim(),
                     it.displaySubtitle?.trim(),
                     it.duration
@@ -191,9 +192,9 @@ class MusicServiceConnection(
         @Volatile
         private var instance: MusicServiceConnection? = null
 
-        fun getInstance(context: Context, serviceComponent: ComponentName) =
+        fun getInstance(application: Application, serviceComponent: ComponentName) =
             instance ?: synchronized(this) {
-                instance ?: MusicServiceConnection(context, serviceComponent)
+                instance ?: MusicServiceConnection(application, serviceComponent)
                     .also { instance = it }
             }
     }

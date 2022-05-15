@@ -1,12 +1,11 @@
 package com.medically.media.connection
 
-import android.content.Context
 import android.support.v4.media.MediaBrowserCompat
 import com.medically.media.connection.states.MediaBrowserState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class MediaBrowserConnectionCallback(private val context: Context) :
+class MediaBrowserConnectionCallback :
     MediaBrowserCompat.ConnectionCallback() {
 
     private val _mediaBrowserConnectionStates = MutableStateFlow<MediaBrowserState?>(null)

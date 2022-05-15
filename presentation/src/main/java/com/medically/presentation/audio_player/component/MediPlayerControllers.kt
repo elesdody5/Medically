@@ -19,11 +19,14 @@ fun PlayerControllers(
     currentPosition: Long,
     duration: Long,
     isPlaying: Boolean,
+    isBookmarked: Boolean,
     toggleState: () -> Unit,
     seekTo: (Long) -> Unit,
     skipForward: () -> Unit,
     skipBackward: () -> Unit,
-    changeSpeed: (Float) -> Unit
+    changeSpeed: (Float) -> Unit,
+    downLoadAudio: () -> Unit,
+    bookmarkAudio: () -> Unit,
 ) {
     val context = LocalContext.current
     val range = if (duration > 0f) 0f..duration.toFloat() else 0f..1f
@@ -55,7 +58,13 @@ fun PlayerControllers(
             Text(text = duration.timestampToMSS(context), style = TextStyle(fontSize = 10.sp))
         }
 
-        PlayerActions(Modifier.padding(top = 15.dp), changeSpeed = changeSpeed)
+        PlayerActions(
+            Modifier.padding(top = 15.dp),
+            changeSpeed = changeSpeed,
+            downLoadAudio,
+            bookmarkAudio,
+            isBookmarked
+        )
     }
 }
 
@@ -67,11 +76,14 @@ fun PreviewPlayerController() {
             0,
             0,
             true,
+            isBookmarked = false,
             toggleState = {},
             skipForward = {},
             skipBackward = {},
             seekTo = {},
-            changeSpeed = {})
+            changeSpeed = {},
+            downLoadAudio = {},
+            bookmarkAudio = {})
     }
 }
 

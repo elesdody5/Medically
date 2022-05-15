@@ -1,5 +1,6 @@
 package com.medically.presentation.audio_player.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +14,15 @@ import com.medically.presentation.component.CircleWithIcon
 import com.medically.presentation.ui.theme.MedicallyTheme
 
 @Composable
-fun PlayerActions(modifier: Modifier = Modifier, changeSpeed: (Float) -> Unit) {
+fun PlayerActions(
+    modifier: Modifier = Modifier,
+    changeSpeed: (Float) -> Unit,
+    downloadAudio: () -> Unit,
+    bookmarkAudio: () -> Unit,
+    isBookmarked: Boolean
+) {
+    val bookmarkIcon =
+        if (isBookmarked) R.drawable.ic_baseline_bookmark_24 else R.drawable.ic_baseline_bookmark_border_24
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -24,12 +33,14 @@ fun PlayerActions(modifier: Modifier = Modifier, changeSpeed: (Float) -> Unit) {
             CircleWithIcon(
                 circleSize = 34.dp,
                 iconId = R.drawable.ic_download,
-                contentDescription = ""
+                contentDescription = "",
+                modifier = Modifier.clickable { downloadAudio() }
             )
             CircleWithIcon(
                 circleSize = 34.dp,
-                iconId = R.drawable.ic_baseline_bookmark_border_24,
-                contentDescription = ""
+                iconId = bookmarkIcon,
+                contentDescription = "",
+                modifier = Modifier.clickable { bookmarkAudio() }
             )
         }
     }
@@ -39,6 +50,10 @@ fun PlayerActions(modifier: Modifier = Modifier, changeSpeed: (Float) -> Unit) {
 @Composable
 fun PreviewPlayerActions() {
     MedicallyTheme {
-        PlayerActions {}
+        PlayerActions(
+            changeSpeed = {},
+            downloadAudio = {},
+            isBookmarked = false,
+            bookmarkAudio = {})
     }
 }

@@ -1,29 +1,25 @@
 package com.medically.preferences
 
-import com.medically.model.*
+import com.medically.model.AudioPlayList
+import com.medically.model.Chapter
+import com.medically.model.Lecture
 
 fun PreferenceAudioPlayList.toAudioPlayList(): AudioPlayList {
     return AudioPlayList(
         lectures = lecturesList.toLecture(),
         currentPlayingPosition,
         chapter.toChapter(),
-        doctor.toDoctor(),
-        subject.toSubject()
+        doctorName,
+        subjectTitle
     )
 }
 
 fun List<PreferenceLecture>.toLecture(): List<Lecture> {
-    return map { Lecture(it.name, it.url) }
+    return map { Lecture(it.name, it.url, it.chapter) }
 }
 
 fun PreferenceChapter.toChapter(): Chapter {
-    return Chapter(id, name, doctorName, imageUrl)
+    return Chapter(doctorName, name, imageUrl)
 }
 
-fun PreferenceDoctor.toDoctor(): Doctor {
-    return Doctor(subjectId, name)
-}
 
-fun PreferenceSubject.toSubject(): Subject {
-    return Subject(id, name, yearName, icon)
-}

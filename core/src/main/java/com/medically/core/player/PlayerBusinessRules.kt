@@ -1,8 +1,9 @@
 package com.medically.core.player
 
 import com.medically.core.integration.Data
-import com.medically.core.integration.MediaConnection
+import com.medically.core.integration.Framework
 import com.medically.core.toTimeStamp
+import com.medically.model.Lecture
 import com.medically.model.NowPlayingMetadata
 import com.medically.model.PlaybackState
 import kotlinx.coroutines.Dispatchers
@@ -21,16 +22,50 @@ fun PlayerPort.onPlaybackStateChanged(playbackState: PlaybackState?) {
 
 fun PlayerPort.onMetaDataChanged(nowPlayingMetadata: NowPlayingMetadata?) {
     nowPlayingMetadata?.let {
+        if (isNewAudioPlaying(nowPlayingMetadata)) {
+            completeLecture(nowPlayingMetadata)
+            isCurrentBookmarked(nowPlayingMetadata)
+        }
         state.value = state.value.copy(mediaMetadata = nowPlayingMetadata)
+    }
+}
+
+fun PlayerPort.isCurrentBookmarked(nowPlayingMetadata: NowPlayingMetadata) {
+    scope.launch {
+        val isBookmarked = Data.lecturesRepository.isLectureBookmarked(nowPlayingMetadata.url)
+        state.value = state.value.copy(isBookmarked = isBookmarked)
+    }
+}
+
+private fun PlayerPort.isNewAudioPlaying(newMetadata: NowPlayingMetadata?): Boolean {
+    val nowPlayingMetadata = state.value.mediaMetadata
+    return newMetadata?.duration != 0L && nowPlayingMetadata?.title != newMetadata?.title
+}
+
+fun PlayerPort.completeLecture(nowPlaying: NowPlayingMetadata?) {
+    val chapter = Data.chaptersRepository.currentChapter
+    if (nowPlaying != null) {
+        val lectureProgress =
+            Lecture(
+                name = nowPlaying.title ?: "",
+                chapterName = chapter?.name ?: "",
+                url = nowPlaying.url,
+                isCompleted = true
+            )
+
+        scope.launch {
+            if (chapter != null)
+                Data.lecturesRepository.completeLecture(chapter, lectureProgress)
+        }
     }
 }
 
 fun PlayerPort.bindCollector() {
     scope.launch {
-        MediaConnection.musicServiceConnectionPort.playbackState.collect(playbackStateCollector)
+        Framework.musicServiceConnectionPort.playbackState.collect(playbackStateCollector)
     }
 
-    scope.launch { MediaConnection.musicServiceConnectionPort.nowPlaying.collect(mediaStateCollector) }
+    scope.launch { Framework.musicServiceConnectionPort.nowPlaying.collect(mediaStateCollector) }
     scope.launch { checkPlaybackPosition() }
 }
 
@@ -53,43 +88,63 @@ suspend fun PlayerPort.checkPlaybackPosition() {
     }
 }
 
-fun PlayerPort.bindDoctor() {
-    val doctor = Data.doctorsRepository.currentDoctor
-    state.value = state.value.copy(currentDoctor = doctor)
-}
 
 fun PlayerPort.bindChapter() {
-    val chapter = Data.subjectDetailsRepository.currentChapter
+    val chapter = Data.chaptersRepository.currentChapter
     state.value = state.value.copy(currentChapter = chapter)
 
 }
 
 fun PlayerPort.toggleState() {
     if (state.value.playbackState?.isPlaying == true) {
-        MediaConnection.musicServiceConnectionPort.pause()
+        Framework.musicServiceConnectionPort.pause()
     } else {
-        MediaConnection.musicServiceConnectionPort.play()
+        Framework.musicServiceConnectionPort.play()
     }
 }
 
 fun PlayerPort.speed(speed: Float) {
-    MediaConnection.musicServiceConnectionPort.setSpeed(speed)
+    Framework.musicServiceConnectionPort.setSpeed(speed)
 }
 
 fun PlayerPort.skipForward() {
     val currentPosition = state.value.playbackState?.position ?: 0
     val seconds = 10.toTimeStamp()
-    MediaConnection.musicServiceConnectionPort.seekTo(currentPosition + seconds)
+    Framework.musicServiceConnectionPort.seekTo(currentPosition + seconds)
 }
 
 fun PlayerPort.skipBackward() {
     val currentPosition = state.value.playbackState?.position ?: 0
     val seconds = 10.toTimeStamp()
-    MediaConnection.musicServiceConnectionPort.seekTo(currentPosition - seconds)
+    Framework.musicServiceConnectionPort.seekTo(currentPosition - seconds)
 }
 
 fun PlayerPort.seekTo(position: Long) {
-    MediaConnection.musicServiceConnectionPort.seekTo(position)
+    Framework.musicServiceConnectionPort.seekTo(position)
+}
+
+fun PlayerPort.downLoadAudio() {
+    val nowPlaying = state.value.mediaMetadata
+    val chapter = state.value.currentChapter
+    val downloader = Framework.downLoaderManager
+    val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
+    chapter?.let { downloader.downLoad(lecture, it) }
+}
+
+fun PlayerPort.bookmarkCurrentAudio() {
+    val nowPlaying = state.value.mediaMetadata
+    val chapter = Data.chaptersRepository.currentChapter
+    val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
+    if (chapter != null)
+        scope.launch {
+            if (state.value.isBookmarked) {
+                state.value = state.value.copy(isBookmarked = false)
+                Data.lecturesRepository.removeBookmarkLectures(lecture)
+            } else {
+                state.value = state.value.copy(isBookmarked = true)
+                Data.lecturesRepository.insertBookmarkLectures(chapter, lecture)
+            }
+        }
 }
 
 
