@@ -1,14 +1,10 @@
 package com.medically.presentation.component.list_with_header
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,19 +14,26 @@ import com.medically.model.Subject
 import com.medically.presentation.component.LoadImageWithShimmer
 import com.medically.presentation.ui.theme.MedicallyTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <T> ListItem(
     item: T,
     name: String,
     iconUrl: String? = null,
-    onItemSelected: (T) -> Unit
+    onItemClicked: (T) -> Unit,
+    onItemLongPress: (T) -> Unit,
+    selectionState: Boolean = false,
+    isSelected: Boolean = false,
 ) {
     Surface(
         color = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onItemSelected(item) },
+            .combinedClickable(
+                onClick = { onItemClicked(item) },
+                onLongClick = { onItemLongPress(item) },
+            )
     ) {
         Row(
             Modifier
@@ -44,6 +47,15 @@ fun <T> ListItem(
                         .padding(end = 13.dp)
                 )
             }
+            if (selectionState)
+                Checkbox(checked = isSelected,
+                    modifier = Modifier
+                        .height(8.dp)
+                        .padding(0.dp),
+                    colors = CheckboxDefaults.colors(MaterialTheme.colors.primary),
+                    onCheckedChange = {
+                        onItemLongPress(item)
+                    })
             Text(name, color = MaterialTheme.colors.onBackground)
         }
     }
@@ -57,6 +69,7 @@ fun SubjectListItemPreview() {
             item = Subject(name = "Anatomy", yearName = "First Year"),
             name = "Anatomy",
             iconUrl = null,
-            onItemSelected = { })
+            onItemClicked = { },
+            onItemLongPress = {})
     }
 }

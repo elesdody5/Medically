@@ -16,3 +16,10 @@ data class OfflineChapter(
 fun Chapter.toOfflineChapter(): OfflineChapter {
     return OfflineChapter(doctorName, name, imageUrl)
 }
+
+fun List<OfflineChapter>.toChapters(): List<Chapter> {
+    return map { Chapter(it.doctorName, it.name, it.imageUrl ?: "") }
+}
+
+fun Array<out Chapter>.toOfflineChapters() =
+    map { it.toOfflineChapter() }.toTypedArray()

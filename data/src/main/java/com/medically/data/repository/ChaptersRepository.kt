@@ -39,10 +39,16 @@ class ChaptersRepository(
         return chaptersLocalDatasource.getChaptersProgress()
     }
 
-    override suspend fun insertChapterProgress(
-        chapter: Chapter,
-    ) {
+    override suspend fun insertChapterProgress(chapter: Chapter) {
         chaptersLocalDatasource.insertChapterProgress(chapter)
+    }
+
+    override suspend fun removeBookmarkChapter(vararg chapter: Chapter) {
+        chaptersLocalDatasource.removeBookmarkChapter(*chapter)
+    }
+
+    override suspend fun removeOfflineChapters(vararg chapter: Chapter) {
+        chaptersLocalDatasource.removeOfflineChapters(*chapter)
     }
 
 }

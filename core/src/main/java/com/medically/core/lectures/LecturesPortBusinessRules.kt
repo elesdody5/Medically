@@ -42,8 +42,10 @@ fun LecturesPort.downLoadChapter() {
     val downloader = Framework.downLoaderManager
     val lectures = state.value.lectures
     val chapter = state.value.chapter
-    if (lectures != null && chapter != null)
+    if (lectures != null && chapter != null) {
         downloader.downLoad(lectures, chapter)
+        state.value = state.value.copy(downloadStart = true)
+    }
 }
 
 fun LecturesPort.bindCurrentChapter() {
@@ -60,6 +62,7 @@ fun LecturesPort.bookmarkChapter() {
                 chapter,
                 *lectures.toTypedArray()
             )
+            state.value = state.value.copy(bookmarked = true)
         }
 }
 
