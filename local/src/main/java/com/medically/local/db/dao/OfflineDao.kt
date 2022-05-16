@@ -23,4 +23,7 @@ interface OfflineDao {
 
     @Delete
     suspend fun deleteChapters(vararg chapter: OfflineChapter)
+
+    @Query("DELETE FROM lecturesEntry WHERE chapter=:chapter AND doctor=:doctor")
+    suspend fun deleteLectures(chapter: String, doctor: String)
 }

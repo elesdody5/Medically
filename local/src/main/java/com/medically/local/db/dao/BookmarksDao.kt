@@ -29,4 +29,7 @@ interface BookmarksDao {
 
     @Delete
     suspend fun deleteChapter(vararg chapter: BookmarkedChapter)
+
+    @Query("DELETE FROM bookmark_lecture WHERE chapter=:chapter AND doctor=:doctor")
+    suspend fun deleteLectures(chapter: String, doctor: String)
 }

@@ -30,4 +30,7 @@ interface ProgressDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE, entity = ChapterProgressEntity::class)
     suspend fun updateChapterProgress(chapterProgress: ChapterProgressQuery)
+
+    @Query("DELETE FROM lecture_progress WHERE chapter=:chapter AND doctor=:doctor")
+    suspend fun deleteLectures(chapter: String, doctor: String)
 }
