@@ -3,24 +3,23 @@ package com.medically.downloader
 import android.content.Context
 import androidx.work.*
 import com.medically.core.downloader.DownLoaderPort
+import com.medically.core.lectures.LecturesRepositoryPort
 import com.medically.downloader.entities.ChapterParams
-import com.medically.downloader.entities.LectureParams.KEY_LECTURE_CHAPTER
-import com.medically.downloader.entities.LectureParams.KEY_LECTURE_NAME
-import com.medically.downloader.entities.LectureParams.KEY_LECTURE_URL
 import com.medically.downloader.worker.FileDownLoadWorker
 import com.medically.model.Chapter
 import com.medically.model.Lecture
 
-class DownloaderManager(private val applicationContext: Context) : DownLoaderPort {
+class DownloaderManager(
+    private val applicationContext: Context,
+    private val lecturesRepositoryPort: LecturesRepositoryPort = com.medically.core.integration.Data.lecturesRepository
+) : DownLoaderPort {
 
 
-    override fun downLoad(lecture: Lecture, chapter: Chapter) {
+    override fun downLoad(lectures: List<Lecture>, chapter: Chapter) {
+        lecturesRepositoryPort.setCurrentDownLoadedLectures(lectures)
+
         val data = Data.Builder()
-
         data.apply {
-            putString(KEY_LECTURE_NAME, lecture.name)
-            putString(KEY_LECTURE_URL, lecture.url)
-            putString(KEY_LECTURE_CHAPTER, lecture.chapterName)
             putString(ChapterParams.KEY_Chapter_NAME, chapter.name)
             putString(ChapterParams.KEY_Doctor, chapter.doctorName)
             putString(ChapterParams.KEY_Chapter_IMAGE, chapter.imageUrl)

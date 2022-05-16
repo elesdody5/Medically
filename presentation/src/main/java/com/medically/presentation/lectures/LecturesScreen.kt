@@ -10,15 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.medically.core.lectures.LecturesPort
-import com.medically.core.lectures.LecturesPortState
-import com.medically.core.lectures.bookmarkChapter
-import com.medically.core.lectures.setCurrentAudioPlayList
-import com.medically.presentation.R
+import com.medically.core.lectures.*
+import com.medically.presentation.component.ChapterOverflowMenu
 import com.medically.presentation.component.LoadingProgress
-import com.medically.presentation.component.OverflowMenu
 import com.medically.presentation.component.TransparentAppBar
 import com.medically.presentation.lectures.component.LecturesList
 
@@ -64,9 +59,9 @@ fun LecturesTopAppbar(
             }
         },
         actions = {
-            OverflowMenu(
-                text = stringResource(id = R.string.bookmark),
-                onClick = viewModel::bookmarkChapter
+            ChapterOverflowMenu(
+                downloadChapter = viewModel::downLoadChapter,
+                bookmarkChapter = viewModel::bookmarkChapter
             )
         }
     )

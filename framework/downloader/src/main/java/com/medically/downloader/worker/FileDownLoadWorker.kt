@@ -7,8 +7,8 @@ import androidx.work.WorkerParameters
 import com.medically.core.lectures.LecturesRepositoryPort
 import com.medically.downloader.data_handler.DownLoadDataHandler
 import com.medically.downloader.getChapter
-import com.medically.downloader.getLecture
 import com.medically.downloader.notification.NotificationHandler
+import com.medically.model.Chapter
 import com.medically.model.Lecture
 
 class FileDownLoadWorker constructor(
@@ -28,38 +28,52 @@ class FileDownLoadWorker constructor(
      */
     override suspend fun doWork(): Result {
         return try {
-            val lecture = inputData.getLecture()
+            val lectures = lecturesRepositoryPort.getCurrentDownLoadedLectures()
             val chapter = inputData.getChapter()
-            if (lecture.name.isEmpty() || lecture.url.isEmpty()) {
+            if (lectures.isEmpty()) {
                 Result.failure()
             }
-            notificationHandler.createNotification(
-                applicationContext,
-                lecture.name,
-                chapter.name
-            )
-            val uri = dataHandler.downLoadFile(
-                applicationContext,
-                chapter.name,
-                lecture.name,
-                lecture.url
-            )
+            lectures.forEachIndexed { index, lecture ->
+                val downloaded = startDownLoad(lecture, chapter, index, lectures.size)
+                if (!downloaded) Result.failure()
+            }
 
-            return if (uri != null) {
-                notificationHandler.downLoadComplete()
-                Log.i("worker", "DownLoad success")
-                lecturesRepositoryPort.insertOfflineLectures(
-                    chapter = chapter,
-                    Lecture(lecture.name, uri.toString(), chapterName = chapter.name)
-                )
-                Result.success()
-            } else {
-                Result.failure()
-            }
+            Result.success()
         } catch (e: Exception) {
+            notificationHandler.downLoadFailed()
             Result.failure()
         }
     }
 
+    private suspend fun startDownLoad(
+        lecture: Lecture,
+        chapter: Chapter,
+        index: Int,
+        size: Int
+    ): Boolean {
+        notificationHandler.createNotification(
+            applicationContext,
+            lecture.name,
+            "${index + 1}/$size"
+        )
+        val uri = dataHandler.downLoadFile(
+            applicationContext,
+            chapter.name,
+            lecture.name,
+            lecture.url
+        )
+        return if (uri != null) {
+            notificationHandler.downLoadComplete()
+            Log.i("worker", "DownLoad success")
+            lecturesRepositoryPort.insertOfflineLectures(
+                chapter = chapter,
+                Lecture(lecture.name, uri.toString(), chapterName = chapter.name)
+            )
+            true
+        } else {
+            notificationHandler.downLoadFailed()
+            false
+        }
+    }
 
 }

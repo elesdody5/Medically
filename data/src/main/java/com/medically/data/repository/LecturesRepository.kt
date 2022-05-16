@@ -66,4 +66,12 @@ class LecturesRepository(
     override suspend fun isLectureBookmarked(url: String): Boolean {
         return lecturesLocalDataSource.isLectureBookmarked(url)
     }
+
+    override fun setCurrentDownLoadedLectures(lecture: List<Lecture>) {
+        InMemoryCache.currentDownloadedList = lecture
+    }
+
+    override fun getCurrentDownLoadedLectures(): List<Lecture> {
+        return InMemoryCache.currentDownloadedList
+    }
 }
