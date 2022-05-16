@@ -34,8 +34,8 @@ class NotificationHandlerImp(private val notificationManager: NotificationManage
             applicationContext.getString(R.string.notification_channel_id)
         )
             .setContentTitle(title)
-            .setContentText(applicationContext.getString(R.string.download_notification_title))
-            .setContentInfo(subTitle)
+            .setSubText(applicationContext.getString(R.string.download_notification_title))
+            .setContentText(subTitle)
             .setOngoing(true)
             .setProgress(0, 0, true)
             .setSmallIcon(R.drawable.ic_download)
@@ -46,7 +46,8 @@ class NotificationHandlerImp(private val notificationManager: NotificationManage
     }
 
     override fun downLoadComplete() {
-        builder.setContentText("Download Completed")
+        builder
+            .setSubText("Download Completed")
             .setOngoing(false)
             .setSmallIcon(R.drawable.ic_app_icon)
             .setProgress(0, 0, false)
@@ -55,6 +56,14 @@ class NotificationHandlerImp(private val notificationManager: NotificationManage
 
     override fun cancelDownLoadNotification() {
         notificationManager.cancel(NOTIFICATION_ID)
+    }
+
+    override fun downLoadFailed() {
+        builder.setContentText("Download Failed to complete")
+            .setOngoing(false)
+            .setSmallIcon(R.drawable.ic_app_icon)
+            .setProgress(0, 0, false)
+        notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
 
     private fun createChannel(applicationContext: Context) {

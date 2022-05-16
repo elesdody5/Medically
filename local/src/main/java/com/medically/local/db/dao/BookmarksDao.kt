@@ -26,4 +26,7 @@ interface BookmarksDao {
 
     @Delete
     suspend fun deleteLecture(vararg lecture: BookmarkedLecture)
+
+    @Delete
+    suspend fun deleteChapter(vararg chapter: BookmarkedChapter)
 }

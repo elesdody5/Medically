@@ -18,4 +18,6 @@ interface LecturesRepositoryPort {
     suspend fun completeLecture(chapter: Chapter, lectureProgress: Lecture)
     suspend fun getCompletedLectures(chapter: Chapter): Flow<List<Lecture>>
     suspend fun isLectureBookmarked(url: String): Boolean
+    fun setCurrentDownLoadedLectures(lecture: List<Lecture>)
+    fun getCurrentDownLoadedLectures(): List<Lecture>
 }

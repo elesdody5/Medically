@@ -128,7 +128,7 @@ fun PlayerPort.downLoadAudio() {
     val chapter = state.value.currentChapter
     val downloader = Framework.downLoaderManager
     val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
-    chapter?.let { downloader.downLoad(lecture, it) }
+    chapter?.let { downloader.downLoad(listOf(lecture), it) }
 }
 
 fun PlayerPort.bookmarkCurrentAudio() {
