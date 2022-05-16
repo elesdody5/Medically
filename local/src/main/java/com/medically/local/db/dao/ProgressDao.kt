@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProgressDao {
-    @Query("SELECT * FROM lecture_progress Where chapter =:chapter")
-    fun getLectures(chapter: String): Flow<List<LectureProgressEntity>>
+    @Query("SELECT * FROM lecture_progress Where chapter =:chapter AND doctor =:doctor")
+    fun getLectures(chapter: String, doctor: String): Flow<List<LectureProgressEntity>>
 
     @Query("SELECT COUNT(*) FROM lecture_progress Where chapter =:chapter AND completed =:isCompleted")
     suspend fun getCompletedLecturesCount(isCompleted: Boolean, chapter: String): Int

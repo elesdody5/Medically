@@ -39,7 +39,7 @@ class LecturesRepository(
         lecturesLocalDataSource.insertLecture(chapter, *lecture)
     }
 
-    override fun getOfflineLectures(chapter: String): Flow<List<Lecture>> {
+    override fun getOfflineLectures(chapter: Chapter): Flow<List<Lecture>> {
         return lecturesLocalDataSource.getOfflineLectures(chapter)
     }
 
@@ -51,7 +51,7 @@ class LecturesRepository(
         lecturesLocalDataSource.removeBookmark(*lecture)
     }
 
-    override fun getBookmarkedLectures(chapter: String): Flow<List<Lecture>> {
+    override fun getBookmarkedLectures(chapter: Chapter): Flow<List<Lecture>> {
         return lecturesLocalDataSource.getBookmarkedLectures(chapter)
     }
 

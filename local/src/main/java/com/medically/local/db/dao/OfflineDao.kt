@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface OfflineDao {
 
-    @Query("SELECT * FROM lecturesEntry Where chapter =:chapter")
-    fun getLectures(chapter: String): Flow<List<OfflineLecture>>
+    @Query("SELECT * FROM lecturesEntry Where chapter =:chapter AND doctor =:doctor")
+    fun getLectures(chapter: String, doctor: String): Flow<List<OfflineLecture>>
 
     @Query("SELECT * FROM chaptersEntry")
     fun getChapters(): Flow<List<OfflineChapter>>
