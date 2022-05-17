@@ -48,6 +48,7 @@ fun OfflineChaptersPort.removeSelectedChapters() {
         val selectedChapters =
             state.value.chapters.values.flatten().filter { it.isSelected }.map { it.chapter }
         Data.chaptersRepository.removeOfflineChapters(*selectedChapters.toTypedArray())
+        state.value = state.value.copy(selectionState = false)
         bindOfflineChapters()
     }
 }
