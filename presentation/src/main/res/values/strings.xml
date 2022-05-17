@@ -32,4 +32,6 @@
     <string name="download">Download</string>
     <string name="download_start">Download starting…</string>
     <string name="bookmarked">Bookmarked successfully</string>
+    <string name="download_chapter">Downloading chapter</string>
+    <string name="download_chapter_message">Downloading chapter may take long time to download.</string>
 </resources>
