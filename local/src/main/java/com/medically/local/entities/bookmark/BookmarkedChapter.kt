@@ -20,3 +20,6 @@ fun Chapter.toBookmark(): BookmarkedChapter {
 fun List<BookmarkedChapter>.toChapters(): List<Chapter> {
     return map { Chapter(doctorName = it.doctorName, name = it.name, imageUrl = it.imageUrl ?: "") }
 }
+
+fun Array<out Chapter>.toBookmarkedChapter(): Array<BookmarkedChapter> =
+    map { it.toBookmark() }.toTypedArray()

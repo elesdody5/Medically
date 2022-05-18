@@ -14,7 +14,10 @@ import com.medically.presentation.component.list_with_header.ListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SubjectsList(subjects: Map<String, List<Subject>>, onSubjectSelected: (Subject) -> Unit) {
+fun SubjectsList(
+    subjects: Map<String, List<Subject>>,
+    onSubjectClicked: (Subject) -> Unit,
+) {
     LazyColumn(
         contentPadding = PaddingValues(10.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -25,7 +28,13 @@ fun SubjectsList(subjects: Map<String, List<Subject>>, onSubjectSelected: (Subje
             }
 
             items(yearSubjects) { subject ->
-                ListItem(subject, subject.name, subject.icon, onSubjectSelected)
+                ListItem(
+                    subject,
+                    subject.name,
+                    subject.icon,
+                    onSubjectClicked,
+                    {},
+                )
             }
         }
     }

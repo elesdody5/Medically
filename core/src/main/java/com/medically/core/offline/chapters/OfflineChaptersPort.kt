@@ -1,9 +1,9 @@
 package com.medically.core.offline.chapters
 
 import com.medically.core.entities.BusinessRule
+import com.medically.core.entities.SelectedChapter
 import com.medically.core.persentation.PresentationPort
 import com.medically.core.persentation.PresentationPortState
-import com.medically.model.Chapter
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface OfflineChaptersPort : PresentationPort<OfflineChaptersState> {
@@ -13,7 +13,9 @@ interface OfflineChaptersPort : PresentationPort<OfflineChaptersState> {
 data class OfflineChaptersState(
     override val isLoading: Boolean = false,
     override val errorMessage: String? = null,
-    val chapters: Map<String, List<Chapter>> = emptyMap()
+    val selectionState: Boolean = false,
+    val selectedChaptersCount: Int = 0,
+    val chapters: Map<String, List<SelectedChapter>> = emptyMap(),
 ) : PresentationPortState()
 
 infix fun MutableStateFlow<OfflineChaptersState>.isLoading(isLoading: Boolean) {

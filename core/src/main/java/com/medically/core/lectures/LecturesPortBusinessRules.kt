@@ -1,6 +1,7 @@
 package com.medically.core.lectures
 
 import com.medically.core.integration.Data
+import com.medically.core.integration.Framework
 import com.medically.model.AudioPlayList
 import com.medically.model.Chapter
 import com.medically.model.Result
@@ -37,6 +38,16 @@ fun LecturesPort.bindBookmarkLectures() {
     }
 }
 
+fun LecturesPort.downLoadChapter() {
+    val downloader = Framework.downLoaderManager
+    val lectures = state.value.lectures
+    val chapter = state.value.chapter
+    if (lectures != null && chapter != null) {
+        downloader.downLoad(lectures, chapter)
+        state.value = state.value.copy(downloadStart = true)
+    }
+}
+
 fun LecturesPort.bindCurrentChapter() {
     val chapter = Data.chaptersRepository.currentChapter
     state.value = state.value.copy(chapter = chapter)
@@ -51,6 +62,7 @@ fun LecturesPort.bookmarkChapter() {
                 chapter,
                 *lectures.toTypedArray()
             )
+            state.value = state.value.copy(bookmarked = true)
         }
 }
 

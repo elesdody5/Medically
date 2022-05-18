@@ -11,4 +11,5 @@ interface NotificationHandler {
 
     fun downLoadComplete()
     fun cancelDownLoadNotification()
+    fun downLoadFailed()
 }

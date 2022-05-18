@@ -3,7 +3,6 @@ package com.medically.local.entities.offline
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.medically.model.Chapter
 import com.medically.model.Lecture
 
 @Entity(tableName = "lecturesEntry")
@@ -30,6 +29,3 @@ fun List<OfflineLecture>.toLecture(): List<Lecture> {
     return map { Lecture(it.name ?: "", it.url, it.chapter ?: "") }
 }
 
-fun List<OfflineChapter>.toChapters(): List<Chapter> {
-    return map { Chapter(it.doctorName, it.name, it.imageUrl ?: "") }
-}
