@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookmarksDao {
-    @Query("SELECT * FROM bookmark_lecture Where chapter =:chapter")
-    fun getLectures(chapter: String): Flow<List<BookmarkedLecture>>
+    @Query("SELECT * FROM bookmark_lecture Where chapter =:chapter AND doctor =:doctor")
+    fun getLectures(chapter: String, doctor: String): Flow<List<BookmarkedLecture>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -29,4 +29,7 @@ interface BookmarksDao {
 
     @Delete
     suspend fun deleteChapter(vararg chapter: BookmarkedChapter)
+
+    @Query("DELETE FROM bookmark_lecture WHERE chapter=:chapter AND doctor=:doctor")
+    suspend fun deleteLectures(chapter: String, doctor: String)
 }

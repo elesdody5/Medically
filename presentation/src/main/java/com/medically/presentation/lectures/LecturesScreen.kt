@@ -3,10 +3,7 @@ package com.medically.presentation.lectures
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -14,6 +11,7 @@ import com.medically.core.lectures.*
 import com.medically.presentation.R
 import com.medically.presentation.component.ChapterOverflowMenu
 import com.medically.presentation.component.LoadingProgress
+import com.medically.presentation.component.RoundedAlertDialog
 import com.medically.presentation.component.TransparentAppBar
 import com.medically.presentation.lectures.component.LecturesList
 
@@ -24,11 +22,12 @@ fun LecturesScreen(
     viewModel: LecturesPort = viewModel<LecturesViewModel>(),
 ) {
     val state by viewModel.state.collectAsState()
+    var openAlertDialog by remember { mutableStateOf(false) }
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            LecturesTopAppbar(goBack, state, viewModel)
+            LecturesTopAppbar(goBack, state, viewModel) { openAlertDialog = true }
         }
     ) {
 
@@ -39,14 +38,22 @@ fun LecturesScreen(
                 viewModel.setCurrentAudioPlayList(it)
                 goToAudioPlayer()
             }
-        ObserveState(state, scaffoldState)
+        ObserveState(
+            state,
+            scaffoldState,
+            viewModel::downLoadChapter,
+            openAlertDialog
+        ) { openAlertDialog = false }
     }
 }
 
 @Composable
 private fun ObserveState(
     state: LecturesPortState,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
+    downloadChapter: () -> Unit,
+    openAlert: Boolean,
+    dismissAlert: () -> Unit
 ) {
 
     if (state.bookmarked != null) {
@@ -55,11 +62,20 @@ private fun ObserveState(
             scaffoldState.snackbarHostState.showSnackbar(bookmark)
         })
     }
+
     if (state.downloadStart != null) {
         val downloadStart = stringResource(id = R.string.download_start)
         LaunchedEffect(key1 = state.downloadStart, block = {
             scaffoldState.snackbarHostState.showSnackbar(downloadStart)
         })
+    }
+    if (openAlert) {
+        RoundedAlertDialog(
+            title = stringResource(id = R.string.download_chapter),
+            buttonAction = downloadChapter,
+            text = stringResource(id = R.string.download_chapter_message),
+            dismissAlert = dismissAlert
+        )
     }
 }
 
@@ -67,7 +83,8 @@ private fun ObserveState(
 fun LecturesTopAppbar(
     goBack: () -> Boolean,
     state: LecturesPortState,
-    viewModel: LecturesPort
+    viewModel: LecturesPort,
+    openAlert: () -> Unit
 ) {
     TransparentAppBar(
         subTitle = state.chapter?.doctorName ?: "",
@@ -83,8 +100,8 @@ fun LecturesTopAppbar(
         },
         actions = {
             ChapterOverflowMenu(
-                downloadChapter = viewModel::downLoadChapter,
-                bookmarkChapter = viewModel::bookmarkChapter
+                bookmarkChapter = viewModel::bookmarkChapter,
+                downloadChapter = openAlert
             )
         }
     )

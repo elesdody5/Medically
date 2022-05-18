@@ -25,6 +25,7 @@ fun BookmarksChaptersPort.removeSelectedChapters() {
         val selectedChapters =
             state.value.chapters.values.flatten().filter { it.isSelected }.map { it.chapter }
         Data.chaptersRepository.removeBookmarkChapter(*selectedChapters.toTypedArray())
+        state.value = state.value.copy(selectionState = false)
         bindBookmarkedChapters()
     }
 }
