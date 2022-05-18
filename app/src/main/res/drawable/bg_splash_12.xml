@@ -4,8 +4,8 @@
         <color android:color="@color/ic_launcher_background" />
     </item>
     <item
-        android:width="250dp"
-        android:height="250dp"
+        android:width="100dp"
+        android:height="100dp"
         android:drawable="@drawable/logo_with_title"
         android:gravity="center">
 
