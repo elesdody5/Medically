@@ -15,7 +15,7 @@ fun PreferenceAudioPlayList.toAudioPlayList(): AudioPlayList {
 }
 
 fun List<PreferenceLecture>.toLecture(): List<Lecture> {
-    return map { Lecture(it.name, it.url, it.chapter) }
+    return map { Lecture(it.name, it.url, it.chapter, it.doctor) }
 }
 
 fun PreferenceChapter.toChapter(): Chapter {
