@@ -31,9 +31,9 @@ fun LecturesList(lectures: List<Lecture>, onLectureSelected: (Int) -> Unit) {
 fun PreviewLecturesList() {
     MedicallyTheme {
         LecturesList(lectures = listOf(
-            Lecture("01", "Lecture", ""),
-            Lecture("01", "Lecture", ""),
-            Lecture("01", "Lecture", ""),
+            Lecture("01", "Lecture", "", ""),
+            Lecture("01", "Lecture", "", ""),
+            Lecture("01", "Lecture", "", ""),
         ), onLectureSelected = {})
     }
 }

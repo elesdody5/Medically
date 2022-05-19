@@ -34,6 +34,7 @@ open class Lecture(
     open val name: String,
     open val url: String,
     open val chapterName: String,
+    open val doctor: String,
     open var isCompleted: Boolean = false
 )
 

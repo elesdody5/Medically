@@ -14,11 +14,13 @@ class OfflineLecture(
     var url: String,
     @ColumnInfo(name = "chapter")
     var chapter: String? = null,
+    @ColumnInfo(name = "doctor")
+    var doctor: String? = null,
 )
 
 
 fun Lecture.toLocalLecture(): OfflineLecture {
-    return OfflineLecture(name = name, url = url, chapter = chapterName)
+    return OfflineLecture(name = name, url = url, chapter = chapterName, doctor)
 }
 
 
@@ -26,6 +28,6 @@ fun Array<out Lecture>.toLocalLecture() =
     map { it.toLocalLecture() }.toTypedArray()
 
 fun List<OfflineLecture>.toLecture(): List<Lecture> {
-    return map { Lecture(it.name ?: "", it.url, it.chapter ?: "") }
+    return map { Lecture(it.name ?: "", it.url, it.chapter ?: "", it.doctor ?: "") }
 }
 

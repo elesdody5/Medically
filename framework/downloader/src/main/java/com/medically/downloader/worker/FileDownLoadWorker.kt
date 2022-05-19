@@ -67,7 +67,12 @@ class FileDownLoadWorker constructor(
             Log.i("worker", "DownLoad success")
             lecturesRepositoryPort.insertOfflineLectures(
                 chapter = chapter,
-                Lecture(lecture.name, uri.toString(), chapterName = chapter.name)
+                Lecture(
+                    lecture.name,
+                    uri.toString(),
+                    chapterName = chapter.name,
+                    chapter.doctorName
+                )
             )
             true
         } else {

@@ -21,8 +21,10 @@ fun LecturesPort.bindLectures() {
 fun LecturesPort.bindOfflineLectures() {
     scope.launch {
         val chapter = state.value.chapter
-        Data.lecturesRepository.getOfflineLectures(chapter?.name ?: "").collect {
-            state.value = state.value.copy(isLoading = false, lectures = it)
+        chapter?.let {
+            Data.lecturesRepository.getOfflineLectures(it).collect { list ->
+                state.value = state.value.copy(isLoading = false, lectures = list)
+            }
         }
 
     }
@@ -31,8 +33,10 @@ fun LecturesPort.bindOfflineLectures() {
 fun LecturesPort.bindBookmarkLectures() {
     scope.launch {
         val chapter = state.value.chapter
-        Data.lecturesRepository.getBookmarkedLectures(chapter?.name ?: "").collect {
-            state.value = state.value.copy(isLoading = false, lectures = it)
+        chapter?.let {
+            Data.lecturesRepository.getBookmarkedLectures(it).collect { list ->
+                state.value = state.value.copy(isLoading = false, lectures = list)
+            }
         }
 
     }

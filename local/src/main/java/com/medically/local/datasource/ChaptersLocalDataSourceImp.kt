@@ -40,9 +40,11 @@ class ChaptersLocalDataSourceImp(
 
     override suspend fun removeBookmarkChapter(vararg chapter: Chapter) {
         bookmarksDao.deleteChapter(*chapter.toBookmarkedChapter())
+        chapter.forEach { bookmarksDao.deleteLectures(it.name, it.doctorName) }
     }
 
     override suspend fun removeOfflineChapters(vararg chapter: Chapter) {
         offlineDao.deleteChapters(*chapter.toOfflineChapters())
+        chapter.forEach { offlineDao.deleteLectures(it.name, it.doctorName) }
     }
 }
