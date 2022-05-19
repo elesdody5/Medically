@@ -1,28 +1,31 @@
-package com.medically.presentation.component
+package com.medically.presentation.video
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.medically.presentation.ui.theme.MedicallyTheme
+import com.medically.model.Video
+import com.medically.presentation.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DropDownMenu(
+fun VideosDropDownMenu(
     modifier: Modifier = Modifier,
-    options: List<String>,
-    placeHolder: String,
-    onItemSelected: (String) -> Unit
+    options: List<Video>,
+    onItemSelected: (Video) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(placeHolder) }
+    var currentSelected by remember(options) { mutableStateOf(options.firstOrNull()) }
+    val uriHandler = LocalUriHandler.current
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(45.dp),
@@ -36,7 +39,8 @@ fun DropDownMenu(
         ) {
             TextField(
                 readOnly = true,
-                value = selectedOptionText,
+                value = currentSelected?.name ?: "",
+                modifier = Modifier.fillMaxWidth(),
                 onValueChange = {},
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(
@@ -61,35 +65,35 @@ fun DropDownMenu(
                     expanded = false
                 }
             ) {
-                options.forEach { selectionOption ->
+                options.forEach { selected ->
                     DropdownMenuItem(
                         modifier = Modifier.background(Color.White),
                         onClick = {
-                            selectedOptionText = selectionOption
+                            currentSelected = selected
                             expanded = false
-                            if (selectionOption != placeHolder) {
-                                onItemSelected(selectionOption)
-                            }
+                            onItemSelected(selected)
                         }
                     ) {
                         Text(
-                            text = selectionOption,
+                            text = selected.name ?: "",
                             color = MaterialTheme.colors.onBackground
                         )
                     }
                 }
+
+                DropdownMenuItem(
+                    modifier = Modifier.background(Color.White),
+                    onClick = {
+                        expanded = false
+                        currentSelected?.url?.let { uriHandler.openUri(it) }
+                    }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.watch_on_youtube),
+                        color = MaterialTheme.colors.onBackground
+                    )
+                }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DropDownMenuPreview() {
-    MedicallyTheme {
-        DropDownMenu(
-            options = listOf("one", "two", "three").toMutableList(),
-            placeHolder = "Level"
-        ) {}
     }
 }

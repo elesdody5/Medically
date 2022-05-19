@@ -1,9 +1,16 @@
 package com.medically.presentation.video
 
-import androidx.compose.runtime.Composable
-import com.google.accompanist.web.WebContent
-import com.google.accompanist.web.WebView
-import com.google.accompanist.web.WebViewState
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.medically.model.Video
 import com.medically.presentation.R
 import com.medically.presentation.component.EmptyTextMessage
@@ -14,19 +21,42 @@ fun VideoScreen(
     isLoading: Boolean,
     videos: List<Video>
 ) {
-    val webViewState =
-        WebViewState(
-            WebContent.Url(
-                url = videos.firstOrNull()?.url ?: "",
-            )
-        )
+
+    var video by remember(videos) {
+        mutableStateOf(videos.firstOrNull())
+    }
+
+
 
     if (isLoading)
         LoadingProgress()
     if (videos.isEmpty() && !isLoading)
         EmptyTextMessage(iconId = R.drawable.ic_pdf, message = R.string.no_video)
-    if (!isLoading)
-        WebView(webViewState,
-            onCreated = { it.settings.javaScriptEnabled = true }
-        )
+    if (!isLoading && videos.isNotEmpty())
+        Column(Modifier.fillMaxSize()) {
+
+            VideosDropDownMenu(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                options = videos,
+                onItemSelected = { video = it }
+            )
+
+            AndroidView(factory = {
+                WebView(it).apply {
+                    webViewClient = object : WebViewClient() {
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            request: WebResourceRequest?
+                        ): Boolean {
+                            return false
+                        }
+                    }
+                }
+            }, update = {
+                it.settings.javaScriptEnabled = true
+                video?.url?.let { url -> it.loadUrl(url) }
+            })
+        }
 }
