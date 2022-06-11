@@ -9,8 +9,8 @@ buildscript {
     ext.java_version = JavaVersion.VERSION_1_8
     ext.android_min_sdk_version = 28
     ext.android_sdk_version = 31
-    ext.version_code = 1
-    ext.version_name = "1.0"
+    ext.version_code = 10
+    ext.version_name = "3.0"
 
     repositories {
         google()
