@@ -1,6 +1,6 @@
 ext.versions = [
 
-        kotlin            : '1.6.10',
+        kotlin : '1.9.25',
         coroutines        : '1.6.1',
         firebase          : '29.0.0',
         appcompatx        : '1.4.1',
@@ -13,9 +13,9 @@ ext.versions = [
         exoPlayer         : "2.16.0",
         mediaSession      : "1.2.1",
         worker            : "2.7.1",
-        compose           : '1.1.1',
+        compose: '1.6.0',
         splash            : "1.0.0-beta01",
-        room              : '2.4.2',
+        room   : '2.6.1',
         pager             : "0.24.2-alpha",
         navigation        : '2.4.1',
         viewModel         : '2.4.1',

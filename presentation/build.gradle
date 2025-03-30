@@ -6,7 +6,7 @@ apply from: '../dependencies.gradle'
 
 android {
     compileSdk android_sdk_version
-
+    namespace "com.medically.presentation"
     defaultConfig {
         minSdk android_min_sdk_version
         targetSdk android_sdk_version
@@ -27,8 +27,8 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
-        useIR = true
+        jvmTarget = java_version
+//        useIR = true
     }
 
 
@@ -43,7 +43,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion versions.compose
+        kotlinCompilerExtensionVersion "1.5.15"
     }
 
     packagingOptions {

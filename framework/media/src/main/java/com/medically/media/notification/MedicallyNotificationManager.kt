@@ -121,9 +121,13 @@ class MedicallyNotificationManager(
                     .size(NOTIFICATION_LARGE_ICON_SIZE)
                     .build()
 
-                val result = (loader.execute(request) as SuccessResult).drawable
-                val bitmap = (result as BitmapDrawable).bitmap
-                bitmap
+                val result = loader.execute(request)
+                if (result is SuccessResult) {
+                    val bitmap = (result.drawable as BitmapDrawable).bitmap
+                    bitmap
+                } else {
+                    null
+                }
             }
         }
     }
