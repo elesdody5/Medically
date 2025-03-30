@@ -7,15 +7,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.medically.model.Chapter
+import com.medically.core.entities.SelectedChapter
 import com.medically.presentation.component.list_with_header.Header
 import com.medically.presentation.component.list_with_header.ListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DownloadedChaptersList(
-    chapters: Map<String, List<Chapter>>,
-    onChapterSelected: (Chapter) -> Unit
+fun OfflineChaptersList(
+    chapters: Map<String, List<SelectedChapter>>,
+    onChapterClicked: (SelectedChapter) -> Unit,
+    onChapterLongPress: (SelectedChapter) -> Unit,
+    selectionState: Boolean
 ) {
     LazyColumn(
         contentPadding = PaddingValues(10.dp),
@@ -26,7 +28,14 @@ fun DownloadedChaptersList(
                 Header(doctor)
             }
             items(doctorChapters) {
-                ListItem(item = it, name = it.name, onItemSelected = onChapterSelected)
+                ListItem(
+                    item = it,
+                    name = it.chapter.name,
+                    onItemClicked = onChapterClicked,
+                    onItemLongPress = onChapterLongPress,
+                    selectionState = selectionState,
+                    isSelected = it.isSelected
+                )
             }
         }
     }

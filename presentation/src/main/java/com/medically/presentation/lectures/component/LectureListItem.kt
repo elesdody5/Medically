@@ -75,6 +75,6 @@ fun LectureListItem(lecture: Lecture, index: Int, onLectureSelected: () -> Unit)
 @Composable
 fun PreviewLectureItem() {
     MedicallyTheme {
-        LectureListItem(lecture = Lecture("01", "Lecture", ""), 1, onLectureSelected = {})
+        LectureListItem(lecture = Lecture("01", "Lecture", "", ""), 1, onLectureSelected = {})
     }
 }

@@ -6,11 +6,11 @@ plugins {
 apply from: '../dependencies.gradle'
 
 android {
-    compileSdk 32
-
+    compileSdk 34
+    namespace "com.medically.local"
     defaultConfig {
         minSdk 28
-        targetSdk 32
+        targetSdk android_sdk_version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -23,11 +23,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility java_version
+        targetCompatibility java_version
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = java_version
     }
 }
 

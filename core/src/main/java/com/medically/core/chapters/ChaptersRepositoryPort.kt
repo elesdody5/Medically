@@ -12,4 +12,6 @@ interface ChaptersRepositoryPort {
     fun getBookmarksChapters(): Flow<List<Chapter>>
     fun getChaptersProgress(): Flow<List<Chapter>>
     suspend fun insertChapterProgress(chapter: Chapter)
+    suspend fun removeBookmarkChapter(vararg chapter: Chapter)
+    suspend fun removeOfflineChapters(vararg chapter: Chapter)
 }

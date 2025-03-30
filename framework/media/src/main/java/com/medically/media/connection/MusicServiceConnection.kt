@@ -28,9 +28,18 @@ import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
 import com.medically.core.player.MusicServiceConnectionPort
 import com.medically.media.connection.states.MediaBrowserState
-import com.medically.media.connection.states.MediaControllerState.*
+import com.medically.media.connection.states.MediaControllerState.MetadataChanged
+import com.medically.media.connection.states.MediaControllerState.PlaybackStateChanged
+import com.medically.media.connection.states.MediaControllerState.SessionDestroyed
+import com.medically.media.connection.states.MediaControllerState.SessionEvent
 import com.medically.media.entities.MediaPlaybackState
-import com.medically.media.extensions.*
+import com.medically.media.extensions.albumArtUri
+import com.medically.media.extensions.displaySubtitle
+import com.medically.media.extensions.duration
+import com.medically.media.extensions.id
+import com.medically.media.extensions.mediaUri
+import com.medically.media.extensions.title
+import com.medically.media.extensions.trackNumber
 import com.medically.media.service.NETWORK_FAILURE
 import com.medically.model.NowPlayingMetadata
 import com.medically.model.PlaybackState
@@ -142,6 +151,7 @@ class MusicServiceConnection(
                 is MediaBrowserState.IsConnected -> onConnected()
                 is MediaBrowserState.OnConnectionFailed -> isConnected.value = false
                 is MediaBrowserState.OnConnectionSuspended -> isConnected.value = false
+                else -> {}
             }
         }
     }
@@ -153,6 +163,7 @@ class MusicServiceConnection(
                 is MetadataChanged -> metaDataChanged(it.metadata)
                 is SessionEvent -> onSessionEvent(it.event)
                 is SessionDestroyed -> isConnected.value = false
+                else -> {}
             }
         }
     }

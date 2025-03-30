@@ -8,4 +8,6 @@ interface ChaptersLocalDataSource {
     fun getBookmarksChapters(): Flow<List<Chapter>>
     fun getChaptersProgress(): Flow<List<Chapter>>
     suspend fun insertChapterProgress(chapterProgress: Chapter)
+    suspend fun removeBookmarkChapter(vararg chapter: Chapter)
+    suspend fun removeOfflineChapters(vararg chapter: Chapter)
 }

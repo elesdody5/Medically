@@ -61,7 +61,7 @@ fun HomeScreen(navigateToChapters: () -> Unit) {
                     if (!state.isLoading && state.errorMessage == null)
                         SubjectsList(
                             subjects = state.filteredSubjects,
-                            onSubjectSelected = {
+                            onSubjectClicked = {
                                 viewModel.saveCurrentSubject(it)
                                 navigateToChapters()
                             }
