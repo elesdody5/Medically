@@ -2,6 +2,8 @@ package com.medically.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.MoreVert
@@ -10,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.medically.presentation.R
 
 @Composable
@@ -28,7 +31,8 @@ fun ChapterOverflowMenu(
     }
     DropdownMenu(
         expanded = showMenu,
-        onDismissRequest = { showMenu = false }
+        onDismissRequest = { showMenu = false },
+        modifier = Modifier.width(150.dp)
     ) {
         DropdownMenuItem(
             modifier = Modifier.background(Color.White),
@@ -37,6 +41,12 @@ fun ChapterOverflowMenu(
                 showMenu = false
             }
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_bookmark),
+                contentDescription = "",
+                modifier = Modifier.padding(end = 5.dp)
+            )
+
             Text(
                 stringResource(id = R.string.bookmark),
                 color = MaterialTheme.colors.onBackground
@@ -52,7 +62,8 @@ fun ChapterOverflowMenu(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_download),
-                contentDescription = ""
+                contentDescription = "",
+                modifier = Modifier.padding(end = 5.dp)
             )
             Text(
                 stringResource(id = R.string.download),

@@ -6,6 +6,7 @@ import com.medically.local.db.dao.OfflineDao
 import com.medically.local.db.dao.ProgressDao
 import com.medically.local.entities.bookmark.toBookmark
 import com.medically.local.entities.bookmark.toBookmarkedLecture
+import com.medically.local.entities.bookmark.toLecture
 import com.medically.local.entities.offline.toLecture
 import com.medically.local.entities.offline.toLocalLecture
 import com.medically.local.entities.offline.toOfflineChapter
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class LecturesLocalDataSourceImp(
-    private val dao: OfflineDao,
+    private val offlineDao: OfflineDao,
     private val bookmarksDao: BookmarksDao,
     private val progressDao: ProgressDao
 ) :
@@ -27,12 +28,12 @@ class LecturesLocalDataSourceImp(
         chapter: Chapter,
         vararg lecture: Lecture
     ) {
-        dao.insertChapter(chapter.toOfflineChapter())
-        dao.insertLecture(*lecture.toLocalLecture())
+        offlineDao.insertChapter(chapter.toOfflineChapter())
+        offlineDao.insertLecture(*lecture.toLocalLecture())
     }
 
-    override fun getOfflineLectures(chapter: String): Flow<List<Lecture>> {
-        return dao.getLectures(chapter).map { it.toLecture() }
+    override fun getOfflineLectures(chapter: Chapter): Flow<List<Lecture>> {
+        return offlineDao.getLectures(chapter.name, chapter.doctorName).map { it.toLecture() }
     }
 
     override suspend fun insertBookmarkLectures(chapter: Chapter, vararg lecture: Lecture) {
@@ -40,8 +41,8 @@ class LecturesLocalDataSourceImp(
         bookmarksDao.insertLecture(*lecture.toBookmarkedLecture())
     }
 
-    override fun getBookmarkedLectures(chapter: String): Flow<List<Lecture>> {
-        return dao.getLectures(chapter).map { it.toLecture() }
+    override fun getBookmarkedLectures(chapter: Chapter): Flow<List<Lecture>> {
+        return bookmarksDao.getLectures(chapter.name, chapter.doctorName).map { it.toLecture() }
     }
 
     override suspend fun completeLecture(chapter: Chapter, lecture: Lecture) {
@@ -60,7 +61,8 @@ class LecturesLocalDataSourceImp(
     }
 
     override suspend fun getCompletedLectures(chapter: Chapter): Flow<List<Lecture>> {
-        return progressDao.getLectures(chapter.name).map { it.toLectureProgress() }
+        return progressDao.getLectures(chapter.name, chapter.doctorName)
+            .map { it.toLectureProgress() }
     }
 
     override suspend fun isLectureBookmarked(url: String): Boolean {

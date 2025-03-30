@@ -14,10 +14,12 @@ data class BookmarkedLecture(
     val url: String,
     @ColumnInfo(name = "chapter")
     val chapter: String? = null,
+    @ColumnInfo(name = "doctor")
+    var doctor: String? = null,
 )
 
 fun Lecture.toBookmarkLecture(): BookmarkedLecture {
-    return BookmarkedLecture(name = name, url = url, chapter = chapterName)
+    return BookmarkedLecture(name = name, url = url, chapter = chapterName, doctor)
 }
 
 
@@ -25,5 +27,5 @@ fun Array<out Lecture>.toBookmarkedLecture(): Array<BookmarkedLecture> =
     map { it.toBookmarkLecture() }.toTypedArray()
 
 fun List<BookmarkedLecture>.toLecture(): List<Lecture> {
-    return map { Lecture(it.name ?: "", it.url, it.chapter ?: "") }
+    return map { Lecture(it.name ?: "", it.url, it.chapter ?: "", it.doctor ?: "") }
 }

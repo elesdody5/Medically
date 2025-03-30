@@ -65,14 +65,13 @@ class FileDownLoadWorkerTest {
     @Test
     @Throws(Exception::class)
     fun testDownloadLecture_hasInput_showNotificationAndSaveInRepo() = runTest {
-
-        val lecture = Lecture("lecture", "url")
-        val chapter = Chapter("id", "doctor", "chapter", "url")
+        val lecture = Lecture("lecture", url = "url", chapterName = "chapter", doctor = "doctor")
+        val chapter = Chapter("id", "doctor", "chapter", progress = 0, lecturesCount = 0)
         // Define input data
         val input = workDataOf(
             LectureParams.KEY_LECTURE_NAME to lecture.name,
             LectureParams.KEY_LECTURE_URL to lecture.url,
-            ChapterParams.KEY_Chapter_id to chapter.id,
+            ChapterParams.KEY_Chapter_id to "chapter.id",
             ChapterParams.KEY_Chapter_NAME to chapter.name,
         )
         val fileUri = Uri.parse("uri")

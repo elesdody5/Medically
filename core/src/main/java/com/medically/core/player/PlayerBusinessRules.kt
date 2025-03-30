@@ -50,7 +50,8 @@ fun PlayerPort.completeLecture(nowPlaying: NowPlayingMetadata?) {
                 name = nowPlaying.title ?: "",
                 chapterName = chapter?.name ?: "",
                 url = nowPlaying.url,
-                isCompleted = true
+                isCompleted = true,
+                doctor = chapter?.doctorName ?: ""
             )
 
         scope.launch {
@@ -127,14 +128,24 @@ fun PlayerPort.downLoadAudio() {
     val nowPlaying = state.value.mediaMetadata
     val chapter = state.value.currentChapter
     val downloader = Framework.downLoaderManager
-    val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
+    val lecture = Lecture(
+        nowPlaying?.title ?: "",
+        nowPlaying?.url ?: "",
+        chapter?.name ?: "",
+        chapter?.doctorName ?: ""
+    )
     chapter?.let { downloader.downLoad(listOf(lecture), it) }
 }
 
 fun PlayerPort.bookmarkCurrentAudio() {
     val nowPlaying = state.value.mediaMetadata
     val chapter = Data.chaptersRepository.currentChapter
-    val lecture = Lecture(nowPlaying?.title ?: "", nowPlaying?.url ?: "", chapter?.name ?: "")
+    val lecture = Lecture(
+        nowPlaying?.title ?: "",
+        nowPlaying?.url ?: "",
+        chapter?.name ?: "",
+        chapter?.doctorName ?: ""
+    )
     if (chapter != null)
         scope.launch {
             if (state.value.isBookmarked) {

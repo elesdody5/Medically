@@ -35,7 +35,7 @@ class LecturesLocalDataSourceImpTest {
         lecturesLocalDataSource = LecturesLocalDataSourceImp(
             progressDao = progressDao,
             bookmarksDao = bookmarksDao,
-            dao = offlineDao
+            offlineDao = offlineDao
         )
     }
 
@@ -46,7 +46,7 @@ class LecturesLocalDataSourceImpTest {
 
     @Test
     fun completeLecture() = runTest {
-        val lectureProgress = Lecture("lecture", chapterName = "chapter", url = "")
+        val lectureProgress = Lecture("lecture", chapterName = "chapter", url = "", doctor = "")
         val chapterProgress = Chapter(
             name = "chapter",
             doctorName = "doctor",

@@ -16,6 +16,8 @@ data class LectureProgressEntity(
     val chapter: String,
     @ColumnInfo(name = "completed")
     val isCompleted: Boolean = false,
+    @ColumnInfo(name = "doctor")
+    var doctor: String? = null,
 )
 
 fun Lecture.toCompleted(): LectureProgressEntity {
@@ -23,7 +25,8 @@ fun Lecture.toCompleted(): LectureProgressEntity {
         name = name,
         url = url,
         chapter = chapterName,
-        isCompleted = isCompleted
+        isCompleted = isCompleted,
+        doctor = doctor
     )
 }
 
@@ -37,7 +40,8 @@ fun List<LectureProgressEntity>.toLectureProgress(): List<Lecture> {
             name = it.name,
             url = it.url,
             chapterName = it.chapter,
-            isCompleted = it.isCompleted
+            isCompleted = it.isCompleted,
+            doctor = it.doctor ?: ""
         )
     }
 }
@@ -48,7 +52,8 @@ fun List<Lecture>.toLectureProgressEntity(): List<LectureProgressEntity> {
             name = it.name,
             url = it.url,
             chapter = it.chapterName,
-            isCompleted = it.isCompleted
+            isCompleted = it.isCompleted,
+            doctor = it.doctor
         )
     }
 }

@@ -6,12 +6,12 @@ apply from: '../../dependencies.gradle'
 
 android {
     compileSdk android_sdk_version
-
+    namespace "com.medically.downloader"
     defaultConfig {
         minSdk android_min_sdk_version
         targetSdk android_sdk_version
-        versionCode 1
-        versionName "1.0"
+        versionCode version_code
+        versionName version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -28,7 +28,12 @@ android {
 
     kotlinOptions {
         jvmTarget = java_version
-        useIR = true
+//        useIR = true
+    }
+
+    compileOptions {
+        sourceCompatibility java_version
+        targetCompatibility java_version
     }
 
 

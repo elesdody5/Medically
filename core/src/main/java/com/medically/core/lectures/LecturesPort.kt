@@ -17,6 +17,8 @@ interface LecturesPort : PresentationPort<LecturesPortState> {
 data class LecturesPortState(
     override val isLoading: Boolean = false,
     override val errorMessage: String? = null,
+    val bookmarked: Boolean? = null,
+    val downloadStart: Boolean? = null,
     val chapter: Chapter? = null,
     val lectures: List<Lecture>? = null
 

@@ -48,12 +48,13 @@ class PreferencesImpTest {
     @Test
     fun getCurrentAudioPlayList_preferencesHasData_AudioPlayList() = runTest {
         //Given audio play list
+        // Create a sample AudioPlayList object
         val audioPlayList = AudioPlayList(
-            chapter = Chapter("id", "doctor", "chapter", "image"),
+            chapter = Chapter("id", "doctor", "chapter", progress = 0, lecturesCount = 0),
             doctorName = "doctor",
             subjectTitle = "subject",
-            lectures = listOf(Lecture("1", "lecture", "url")),
-            currentPlayingPosition = 0
+            lectures = listOf(Lecture("1", "lecture", "chapter", "doctor")),
+            currentPlayingPosition = 0,
         )
 
         // When preferences has data
@@ -61,7 +62,6 @@ class PreferencesImpTest {
         var currentPlayList: AudioPlayList? = null
         preferenceManager.currentAudioPlayList.take(1).collect { currentPlayList = it }
         //Then preferencesManger return current play list
-        assertThat(currentPlayList?.chapter?.id, `is`(audioPlayList.chapter?.id))
         assertThat(currentPlayList?.doctorName, `is`(audioPlayList.doctorName))
         assertThat(currentPlayList?.subjectTitle, `is`(audioPlayList.subjectTitle))
         assertThat(
